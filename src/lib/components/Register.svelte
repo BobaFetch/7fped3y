@@ -6,7 +6,7 @@
    let email
    let companyName
    let clientUrl
-   let inviteLink
+   let inviteLink = 'https://www.bogusinvitelink.com/208329023'
 
   let registrationStep = 5
 
@@ -16,6 +16,12 @@
 
   const handleRegistrationStep = () => {
     registrationStep += 1
+  }
+
+  const handleCopyText = async () => {
+    await navigator.clipboard.writeText(inviteLink)
+    //this is dumb. write a better solution than alert
+    alert('copied!')
   }
 </script>
 
@@ -59,9 +65,9 @@
     <h6 class="text-xs text-[#cccccc]">Step 3 of 3</h6>
     <h1 class='text-brandWhite text-center text-4xl sm:text-5xl md:text-6xl italic font-bold mb-5'>Lastly, who's working on this YouTube deal with you?</h1>
     <h4 class="text-[#cccccc] my-5">Share this invite link with your colleagues so you can work together</h4>
-    <div class="w-1/2">
-      <input type="text" bind:value={clientUrl} placeholder="ex: www.youtube.com/MrBeast" class="my-5 mr-0 p-3 rounded-lg bg-[#ddf0f2]" />
-      <input type="button" class="bg-[#52c0cc] ml-0 p-3 rounded-r-lg" value="copy">
+    <div class="w-1/2 flex flex-row justify-center items-center">
+      <input type="text" bind:value={inviteLink} placeholder="ex: www.youtube.com/MrBeast" class="my-5 mr-0 p-3 rounded-l-lg bg-[#ddf0f2] flex-1" />
+      <input type="button" class="bg-[#52c0cc] ml-0 p-3 h-1/2 rounded-r-lg cursor-pointer" value="copy" on:click|preventDefault={handleCopyText}>
     </div>
     <button class="bg-[#52c0cc] w-1/2 p-3 rounded" on:click|preventDefault={handleRegistrationStep} class:opacity-50={!clientUrl} disabled={!clientUrl ? true : false}>Finish</button>
   </div>
