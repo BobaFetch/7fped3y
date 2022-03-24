@@ -1,0 +1,43 @@
+[
+	{
+		"name": "Antoinette Victoria",
+		"title": "Fashion Blogger",
+		"location": "New York, NY",
+		"deals": 1,
+		"socials": [
+			{
+				"platform": "tiktok",
+				"followers": "200k"
+			},
+			{
+				"platform": "instagram",
+				"followers": "54k"
+			},
+			{
+				"platform": "youtube",
+				"followers": "2k"
+			}
+		]
+	},
+	{
+		"name": "Carly Lawrence",
+		"title": "Comedy & Lifestyle Youtuber",
+		"location": "Los Angeles, CA",
+		"deals": 3,
+		"socials": [{}]
+	},
+	{
+		"name": "David Robb",
+		"title": "Comedian",
+		"location": "Toronto, ON",
+		"deals": 2,
+		"socials": []
+	},
+	{
+		"name": "Emma Stevenson",
+		"title": "Vlogger",
+		"location": "Boston, MA",
+		"deals": 0,
+		"socials": []
+	}
+]

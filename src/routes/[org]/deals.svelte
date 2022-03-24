@@ -18,7 +18,7 @@
   <!-- this is just thrown together a lot of copy/paste, need to break it down and streamline this bad boy -->
   <div class="flex flex-row my-10 w-screen static ">
 
-    <div class='w-64 mx-3 p-1 shrink-0 border border-white'>
+    <div class='w-64 mx-3 p-1 shrink-0'>
       <div class="flex justify-between">
         <h5 class="text-brandWhite text-xl">Leads</h5>
         <div class='bg-brandTeal w-5 h-5 text-center rounded-full'>

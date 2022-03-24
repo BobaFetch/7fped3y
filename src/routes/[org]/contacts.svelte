@@ -1,14 +1,14 @@
 <script>
   import SearchHeader from "$lib/components/SearchHeader.svelte";
   import ContactCard from '$lib/components/ContactCard.svelte'
-  import data from '$lib/mock_data.json'
+  import contacts from '$lib/mock_contacts.json'
 
 </script>
 
 <div>
   <SearchHeader title={'Contacts'} />
   <div class="my-10">
-    {#each data as contact}
+    {#each contacts as contact}
       <ContactCard {contact} />
     {/each}
   </div>
