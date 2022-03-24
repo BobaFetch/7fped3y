@@ -2,10 +2,8 @@
   import logo from '$lib/assets/logo.svg'
   import Login from '$lib/components/Login.svelte'
   import Register from '$lib/components/Register.svelte'
-  let newSignUp = $page.url.pathname === '/login' ? false : true
+  export let newSignUp = true
 
-  import {page} from '$app/stores'
-  console.log($page)
 </script>
 
 <div>
