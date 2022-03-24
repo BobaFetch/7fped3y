@@ -1,6 +1,5 @@
 <script>
   import {fly} from 'svelte/transition'
-  import {user} from '$lib/stores/tempStore'
 
   export let newSignUp
    let email
@@ -8,7 +7,7 @@
    let clientUrl
    let inviteLink = 'https://www.bogusinvitelink.com/208329023'
 
-  let registrationStep = 5
+  let registrationStep = 1
 
   const handleLogin = () => {
     newSignUp = false

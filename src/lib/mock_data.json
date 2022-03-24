@@ -1,0 +1,12 @@
+[
+	{
+		"name": "firstName lastName",
+		"organization": "oraganization",
+		"status": "CONTACTING"
+	},
+	{
+		"name": "Emma Chamberlain",
+		"organization": "oraganization",
+		"status": "LEAD"
+	}
+]

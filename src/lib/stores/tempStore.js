@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store';
 
-export const user = writable({ email: null });
+export const authenticated = writable(false);
