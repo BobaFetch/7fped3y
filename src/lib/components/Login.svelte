@@ -3,16 +3,16 @@
   import { goto } from '$app/navigation'; 
 
   import {authenticated} from '$lib/stores/tempStore'
-  export let newSignup
+  export let newSignUp
   let email
 
   const handleSignUp = () => {
-    newSignup = true
+    newSignUp = true
   }
 
   const handleLogin = () => {
     $authenticated = true
-    goto('/demoorg/deals')
+    goto('/demo/deals')
   }
 </script>
 

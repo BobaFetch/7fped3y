@@ -1,23 +1,19 @@
 <script>
-  import { page } from "$app/stores";
-  import Card from '$lib/components/Card.svelte'
-  import data from '$lib/mock_data'
+
+  import DealsCard from '$lib/components/DealsCard.svelte'
+  import SearchHeader from '$lib/components/SearchHeader.svelte'
+  import data from '$lib/mock_data.json'
 
   const leads = data.filter(item => item.status === 'LEAD')
   const contacting = data.filter(item => item.status === 'CONTACTING')
   const negotiating = data.filter(item => item.status === 'NEGOTIATING')
   const finalizing = data.filter(item => item.status === 'FINALIZING')
 
-  console.log($page.params.org)
 </script>
 
-<div class="static m-3">
+<div class="">
   <!-- header stuff -->
-  <div class="flex flex-row w-full my-3 static">
-    <h4 class="text-brandWhite text-2xl ">Deals</h4>
-    <input type="text" placeholder="Search Deals" class="mx-auto rounded-xl w-1/2 sm:w-72 text-center" />
-    <input type="button" value="+ Add a Deal" class="bg-brandTeal rounded p-2 cursor-pointer" />
-  </div>
+  <SearchHeader title={'Deals'} />
   <!-- body  -->
   <!-- this is just thrown together a lot of copy/paste, need to break it down and streamline this bad boy -->
   <div class="flex flex-row my-10 w-screen static ">
@@ -31,10 +27,10 @@
       </div>
       {#if leads.length > 0}
         {#each leads as l}
-          <Card props={l} />
+          <DealsCard props={l} />
         {/each}
       {:else}
-        <Card props={null} />
+        <DealsCard props={null} />
       {/if}
     </div>  
     <div class="w-64 mx-3 shrink-0">
@@ -46,10 +42,10 @@
       </div>
       {#if contacting.length > 0}
         {#each contacting as c}
-          <Card props={c} />
+          <DealsCard props={c} />
         {/each}
       {:else}
-        <Card props={null} />
+        <DealsCard props={null} />
       {/if}
     </div>
     <div class="w-64 mx-3 shrink-0">
@@ -61,10 +57,10 @@
       </div>
       {#if negotiating.length > 0}
         {#each negotiating as n}
-          <Card props={n} />
+          <DealsCard props={n} />
         {/each}
       {:else}
-        <Card props={null} />
+        <DealsCard props={null} />
       {/if}
     </div>
     <div class="w-64 mx-3 shrink-0">
@@ -76,10 +72,10 @@
       </div>
       {#if finalizing.length > 0}
         {#each finalizing as f}
-          <Card props={f} />
+          <DealsCard props={f} />
         {/each}
       {:else}
-        <Card props={null} />
+        <DealsCard props={null} />
       {/if}
     </div>
   </div>

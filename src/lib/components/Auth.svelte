@@ -13,7 +13,7 @@
   {#if newSignUp}
   <Register bind:newSignUp/>
   {:else}
-  <Login />
+  <Login bind:newSignUp />
   {/if}
 </div>
 

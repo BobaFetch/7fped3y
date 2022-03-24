@@ -1,7 +1,13 @@
 <script>
   import {authenticated} from '$lib/stores/tempStore'
-  import SideMenu from "$lib/components/SideMenu.svelte";
-  import { goto } from '$app/navigation';
+  import {goto} from '$app/navigation'
+
+  import SideMenu from "$lib/components/SideMenu.svelte";  
+  import Auth from '$lib/components/Auth.svelte';
+
+  if (!$authenticated) {
+    goto('/login')
+  }
 </script>
 
 {#if $authenticated}
@@ -9,10 +15,10 @@
   <div class="col-span-1 border-r-[.5px] border-brandTeal">
     <SideMenu />
   </div>
-  <div class="col-span-7">
+  <div class="col-span-7 mx-3">
     <slot />
   </div>
 </div>
-{:else}
-{location.replace('/login')}
+<!-- {:else}
+<Auth /> -->
 {/if}
