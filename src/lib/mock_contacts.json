@@ -1,6 +1,7 @@
 [
 	{
-		"name": "Antoinette Victoria",
+		"firstName": "Antoinette",
+		"lastName": "Victoria",
 		"title": "Fashion Blogger",
 		"location": "New York, NY",
 		"deals": 1,
@@ -20,21 +21,24 @@
 		]
 	},
 	{
-		"name": "Carly Lawrence",
+		"firstName": "Carly",
+		"lastName": "Lawrence",
 		"title": "Comedy & Lifestyle Youtuber",
 		"location": "Los Angeles, CA",
 		"deals": 3,
 		"socials": [{}]
 	},
 	{
-		"name": "David Robb",
+		"firstName": "David",
+		"lastName": "Robb",
 		"title": "Comedian",
 		"location": "Toronto, ON",
 		"deals": 2,
 		"socials": []
 	},
 	{
-		"name": "Emma Stevenson",
+		"firstName": "Emma",
+		"lastName": "Stevenson",
 		"title": "Vlogger",
 		"location": "Boston, MA",
 		"deals": 0,

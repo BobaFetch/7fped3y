@@ -25,7 +25,7 @@
     on:close={handleToggleModal}
   >
   <svelte:fragment slot="body">
-    <NewContactForm />
+    <NewContactForm bind:showModal/>
   </svelte:fragment>
 </Modal>
 </div>
