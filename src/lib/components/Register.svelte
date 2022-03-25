@@ -1,5 +1,7 @@
 <script>
   import {fly} from 'svelte/transition'
+  import { goto } from '$app/navigation';
+  import {authenticated} from '$lib/stores/tempStore'
 
   export let newSignUp
    let email
@@ -15,6 +17,11 @@
 
   const handleRegistrationStep = () => {
     registrationStep += 1
+  }
+
+  const handleRegistrationComplete = () => {
+    $authenticated = true
+    goto('/demo/deals')
   }
 
   const handleCopyText = async () => {
@@ -68,7 +75,7 @@
       <input type="text" bind:value={inviteLink} placeholder="ex: www.youtube.com/MrBeast" class="my-5 mr-0 p-3 rounded-l-lg bg-[#ddf0f2] flex-1" />
       <input type="button" class="bg-[#52c0cc] ml-0 p-3 h-1/2 rounded-r-lg cursor-pointer" value="copy" on:click|preventDefault={handleCopyText}>
     </div>
-    <button class="bg-[#52c0cc] w-1/2 p-3 rounded" on:click|preventDefault={handleRegistrationStep} class:opacity-50={!clientUrl} disabled={!clientUrl ? true : false}>Finish</button>
+    <button class="bg-[#52c0cc] w-1/2 p-3 rounded" on:click|preventDefault={handleRegistrationComplete} class:opacity-50={!clientUrl} disabled={!clientUrl ? true : false}>Finish</button>
   </div>
   {/if}
 </div>

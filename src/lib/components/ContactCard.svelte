@@ -12,13 +12,14 @@ import { escape } from "svelte/internal";
 
 </script>
 
-<div class='w-full m-3 bg-blue-900 text-brandWhite rounded grid grid-cols-13 md:grid-cols-12 gap-0.5 p-5 content-center'>
+<div class='w-full m-3 bg-blue-900 text-brandWhite rounded grid grid-cols-13 sm:grid-cols-12 gap-0.5 p-5 content-center'>
   <div class='w-10 h-10 bg-brandWhite rounded-full mr-3 col-span-1'></div>
   <p class='col-span-3'>{contact.name}</p>
   <p class="col-span-3 text-xs">{contact.location}</p>
   <p class='col-span-3 text-xs'>{contact.deals > 0 ? contact.deals > 1 ? contact.deals + ' DEALS' : contact.deals + ' DEAL' : ''}</p>
   <div class='col-span-2 flex'>
     {#each contact.socials as social}
+    <!-- add icons -->
       <p class="text-xs mx-1">{social.followers ? social.followers : ''}</p>
     {/each}
   </div>
