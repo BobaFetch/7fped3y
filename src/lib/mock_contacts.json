@@ -2,46 +2,30 @@
 	{
 		"firstName": "Antoinette",
 		"lastName": "Victoria",
-		"title": "Fashion Blogger",
+		"email": "email@email.com",
+		"phone": null,
+		"category": "Fashion Blogger",
+		"info": "",
+		"description": "",
 		"location": "New York, NY",
 		"deals": 1,
+		"status": "LEAD",
 		"socials": [
 			{
 				"platform": "tiktok",
+				"url": "https://www.tiktok.com",
 				"followers": "200k"
 			},
 			{
 				"platform": "instagram",
+				"url": "https://instagram.com",
 				"followers": "54k"
 			},
 			{
 				"platform": "youtube",
+				"url": "https//youtube.com",
 				"followers": "2k"
 			}
 		]
-	},
-	{
-		"firstName": "Carly",
-		"lastName": "Lawrence",
-		"title": "Comedy & Lifestyle Youtuber",
-		"location": "Los Angeles, CA",
-		"deals": 3,
-		"socials": [{}]
-	},
-	{
-		"firstName": "David",
-		"lastName": "Robb",
-		"title": "Comedian",
-		"location": "Toronto, ON",
-		"deals": 2,
-		"socials": []
-	},
-	{
-		"firstName": "Emma",
-		"lastName": "Stevenson",
-		"title": "Vlogger",
-		"location": "Boston, MA",
-		"deals": 0,
-		"socials": []
 	}
 ]

@@ -1,14 +1,27 @@
-[
-	{
-		"name": "firstName lastName",
-		"organization": "oraganization",
-		"status": "CONTACTING"
-	},
-	{
-		"name": "Emma Chamberlain",
-		"organization": "oraganization",
-		"status": "LEAD",
-		"deals": 1,
-		"viewers": "2k"
-	}
-]
+{
+	"users": [
+		{
+			"user_id": 1,
+			"name": "Amamda Emmanuel",
+			"company": "Dealflow",
+			"email": "amanda@dealflow.com",
+			"phone": null,
+			"role": "ADMIN"
+		},
+		{
+			"user_id": 2,
+			"name": "Biacna Chatham",
+			"company": "Dealflow",
+			"email": "bianca@dealflow.com",
+			"phone": null,
+			"role": "EDITOR"
+		}
+	],
+	"company": [
+		{
+			"company_id": 1,
+			"name": "Dealflow",
+			"team": [1, 2]
+		}
+	]
+}

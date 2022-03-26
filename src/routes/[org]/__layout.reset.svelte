@@ -1,16 +1,7 @@
 <script>
-  import {authenticated} from '$lib/stores/tempStore'
-  import {goto} from '$app/navigation'
-
   import SideMenu from "$lib/components/SideMenu.svelte";  
-  import Auth from '$lib/components/Auth.svelte';
-
-  if (!$authenticated) {
-    goto('/login')
-  }
 </script>
 
-{#if $authenticated}
 <div class=" h-screen bg-brandBlue grid grid-cols-8">
   <div class="col-span-1 border-r-[.5px] border-brandTeal">
     <SideMenu />
@@ -19,6 +10,3 @@
     <slot />
   </div>
 </div>
-<!-- {:else}
-<Auth /> -->
-{/if}

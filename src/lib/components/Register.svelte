@@ -21,7 +21,7 @@
 
   const handleRegistrationComplete = () => {
     $authenticated = true
-    goto('/demo/deals')
+    goto('/deals')
   }
 
   const handleCopyText = async () => {

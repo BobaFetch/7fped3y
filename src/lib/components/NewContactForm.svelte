@@ -1,5 +1,6 @@
 <script>
   import {fly} from 'svelte/transition'
+  import {contactStore} from '$lib/stores/tempStore'
   
   export let showModal
 
@@ -58,8 +59,8 @@
   const handleAddCreator = () => {
     //TODO
     //write logic to add creator info to db
-    
-    console.log(contact)
+    $contactStore.push(contact)
+    console.log($contactStore)
     showModal = false
   }
 

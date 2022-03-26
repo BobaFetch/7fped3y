@@ -1,16 +1,30 @@
-<script>
-  import '../app.css'
-  import {authenticated} from '$lib/stores/tempStore'
-  import Auth from '$lib/components/Auth.svelte'
-  
+<script context="module">
+  import {guard} from '$lib/protection'
+
+  export async function load(url) {
+    return (guard(url))
+  }
+
+  export const ssr = false
 </script>
 
+<script>
+  import '../app.css'
+  import SideMenu from '$lib/components/SideMenu.svelte'
+  import {authenticated} from '$lib/stores/tempStore'
+</script>
 
-<div class="h-screen bg-brandBlue">
-
-  {#if $authenticated}
-  <slot />
-  {:else}
-  <Auth />
-  {/if}
+{#if $authenticated}
+<div class=" h-screen bg-brandBlue grid grid-cols-12">
+  <div class="col-span-1 border-r-[.5px] border-brandTeal">
+    <SideMenu />
+  </div>
+  <div class="col-span-11 mx-3">
+    <slot />
+  </div>
 </div>
+{:else}
+<div class="h-screen bg-brandBlue p-3">
+  <slot />
+</div>
+{/if}

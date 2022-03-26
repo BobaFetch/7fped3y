@@ -13,6 +13,6 @@
   <div class='bg-brandWhite rounded-full w-10 h-10 p-1.5'>
     <Fa icon={faUser} size='2x' />
   </div>
-  <span class="text-white ml-2">{props.name}</span>
+  <span class="text-white ml-2">{props.firstName} {props.lastName}</span>
 </div>
 {/if}

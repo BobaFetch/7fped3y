@@ -12,6 +12,6 @@
     <a href="/demo/contacts" class="text-brandWhite font-thin"><Fa icon={faUser} size='2x' /></a>
   </div>
   <div class='my-5'>
-    <div class="w-10 h-10 bg-white rounded-full" />
+      <a href="/settings/user"><div class="w-10 h-10 bg-white rounded-full" /></a>
   </div>
 </div>
