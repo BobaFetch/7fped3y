@@ -15,7 +15,7 @@ routes:
 
 - example of an admin user
 - not finished
-  -WORKING
+  **WORKING**
   - profile edit button
   - remove user from team
 

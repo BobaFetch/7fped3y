@@ -5,7 +5,6 @@ export async function get({ params }) {
 	const user = data.users.filter((i) => i.user_id == params.id);
 	const company = data.company.filter((c) => user[0].company_id === c.company_id);
 	const team = data.users.filter((u) => u.company_id === company[0].company_id);
-	console.log({ user, company, team });
 	return {
 		body: {
 			user: user[0],

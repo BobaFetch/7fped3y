@@ -7,7 +7,7 @@
 			"company_id": 1,
 			"email": "amanda@dealflow.com",
 			"phone": "555-555-5555",
-			"role": "ADMIN"
+			"role": "Admin"
 		},
 		{
 			"user_id": 2,
@@ -16,7 +16,7 @@
 			"company_id": 1,
 			"email": "bianca@dealflow.com",
 			"phone": null,
-			"role": "EDITOR"
+			"role": "Editor"
 		}
 	],
 	"company": [
@@ -24,6 +24,37 @@
 			"company_id": 1,
 			"name": "Dealflow",
 			"team": [1, 2]
+		}
+	],
+	"contacts": [
+		{
+			"firstName": "Antoinette",
+			"lastName": "Victoria",
+			"email": "email@email.com",
+			"phone": null,
+			"category": "Fashion Blogger",
+			"info": "",
+			"description": "",
+			"location": "New York, NY",
+			"deals": 1,
+			"status": "LEAD",
+			"socials": [
+				{
+					"platform": "tiktok",
+					"url": "https://www.tiktok.com",
+					"followers": "200k"
+				},
+				{
+					"platform": "instagram",
+					"url": "https://instagram.com",
+					"followers": "54k"
+				},
+				{
+					"platform": "youtube",
+					"url": "https//youtube.com",
+					"followers": "2k"
+				}
+			]
 		}
 	]
 }

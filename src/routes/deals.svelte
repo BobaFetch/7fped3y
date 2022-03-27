@@ -2,16 +2,16 @@
 
   import DealsCard from '$lib/components/DealsCard.svelte'
   import SearchHeader from '$lib/components/SearchHeader.svelte'
-  import data from '$lib/mock_contacts.json'
+  import data from '$lib/mock_data.json'
 
-  const leads = data.filter(item => item.status === 'LEAD')
-  const contacting = data.filter(item => item.status === 'CONTACTING')
-  const negotiating = data.filter(item => item.status === 'NEGOTIATING')
-  const finalizing = data.filter(item => item.status === 'FINALIZING')
+  const leads = data.contacts.filter(item => item.status === 'LEAD')
+  const contacting = data.contacts.filter(item => item.status === 'CONTACTING')
+  const negotiating = data.contacts.filter(item => item.status === 'NEGOTIATING')
+  const finalizing = data.contacts.filter(item => item.status === 'FINALIZING')
 
 </script>
 
-<div class="">
+<div class="bg-brandBlue">
   <!-- header stuff -->
   <SearchHeader title={'Deals'} />
   <!-- body  -->
