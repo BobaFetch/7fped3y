@@ -5,7 +5,7 @@
   export let company
   export let team
 
-  let isRemoveModalOpen = true
+  let isRemoveModalOpen = false
   let i 
   const handleRemoveTeamMember = () => {
     const temp = team
@@ -35,13 +35,13 @@
             <Card>
               <svelte:fragment slot="body">
                 <!-- <div class=""> -->
-                  <div class="h-10 w-10 bg-brandWhite rounded-full col-span-1" />
-                  <p class="text-xs col-span-2">{member.firstName} {member.lastName}</p>
-                  <p class="text-xs col-span-1">{member.role}</p>
-                  <p class="text-xs col-span-1">{member.email}</p>
-                  <p class="text-xs col-span-1 col-start-6">{'xxx'}</p>
+                  <div class="h-10 w-10 bg-brandWhite rounded-full" />
+                  <p class="text-xs">{member.firstName} {member.lastName}</p>
+                  <p class="text-xs">{member.role}</p>
+                  <p class="text-xs">{member.email}</p>
+                  <p class="text-xs">{member.phone ? member.phone : 'XXX-XXX-XXXX'}</p>
                   {#if user.role === 'ADMIN'}
-                    <input type="button" value="Remove" class="text-red-500 text-xs col-span-1" on:click={() => {isRemoveModalOpen = true
+                    <input type="button" value="Remove" class="text-red-500 text-xs col-span-1 col-start-7" on:click={() => {isRemoveModalOpen = true
                     i = index}}/>
                   {/if}
                 <!-- </div> -->
