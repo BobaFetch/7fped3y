@@ -1,18 +1,24 @@
 <script>
   import Card from '$lib/components/Card.svelte'
   import Modal from '$lib/components/Modal.svelte'
+  import EditUser from '$lib/components/EditUser.svelte'
+
   export let user
   export let company
   export let team
 
   let isRemoveModalOpen = false
+  let isEditModalOpen = false
   let i 
+
   const handleRemoveTeamMember = () => {
     const temp = team
     temp.splice(i, 1)
     team = temp
     isRemoveModalOpen = false
   }
+
+  
 </script>
 
 <div class='grid sm:grid-cols-12 gird-cols-13'>
@@ -25,7 +31,7 @@
             <h5 class='text-xs'>{user.firstName} {user.lastName}</h5>
           </div>
           <div class="">
-            <a href="/settings/edit/[user]" class="text-xs text-brandTeal">EDIT</a>
+            <input type="button" class="text-xs text-brandTeal" value="EDIT" on:click={() => isEditModalOpen = true} />
           </div>
         </svelte:fragment>
       </Card>
@@ -52,13 +58,19 @@
       {/if}
 
   </div>
-  <Modal open={isRemoveModalOpen} on:close={() => isRemoveModalOpen = false}>
+  <Modal open={isRemoveModalOpen} title={false} on:close={() => isRemoveModalOpen = false}>
     <svelte:fragment slot="body">
       <h1 class="text-brandWhite text-center text-2xl font-bold">Are you sure you want to remove this member?</h1>
       <div class='flex justify-around m-10'>
         <input type="button" value='CANCEL' class="bg-red-400 p-5 rounded-2xl" on:click|preventDefault={() => isRemoveModalOpen = false}/>
         <input type="button" value='CONTINUE' class='bg-brandTeal p-5 rounded-2xl' on:click|preventDefault={handleRemoveTeamMember}/>
       </div>
+    </svelte:fragment>
+  </Modal>
+
+  <Modal open={isEditModalOpen} on:close={() => isEditModalOpen = false} title={false}>
+    <svelte:fragment slot="body">
+      <EditUser bind:isEditModalOpen bind:user />
     </svelte:fragment>
   </Modal>
 </div>

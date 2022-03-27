@@ -22,6 +22,7 @@
 
   <Modal 
     open={showModal}
+    title={false}
     on:close={handleToggleModal}
   >
   <svelte:fragment slot="body">

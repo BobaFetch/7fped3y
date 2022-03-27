@@ -5,9 +5,24 @@ this process currently does not have any actual process in place, you can click 
 not fully mobile friendly
 
 routes:
-slug is currently set to demo in linking as the team/company name
-/[slug]/deals
+**CHANGED ROUTES**
+/deals
 
-- working on this page
-  /[slug]/contacts
-- add new contacts button started.
+- this is a sample of what the deals page would look like to a logged in user
+- not finished
+
+/settings/1
+
+- example of an admin user
+- not finished
+  -WORKING
+  - profile edit button
+  - remove user from team
+
+/settings/2
+
+- example of a team user
+
+/contacts
+
+- contact page example
