@@ -2,16 +2,18 @@
 	"users": [
 		{
 			"user_id": 1,
-			"name": "Amamda Emmanuel",
-			"company": "Dealflow",
+			"firstName": "Amamda",
+			"lastName": "Emmanuel",
+			"company_id": 1,
 			"email": "amanda@dealflow.com",
 			"phone": null,
 			"role": "ADMIN"
 		},
 		{
 			"user_id": 2,
-			"name": "Biacna Chatham",
-			"company": "Dealflow",
+			"firstName": "Bianca",
+			"lastName": "Chatham",
+			"company_id": 1,
 			"email": "bianca@dealflow.com",
 			"phone": null,
 			"role": "EDITOR"
