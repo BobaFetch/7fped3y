@@ -10,7 +10,7 @@
 
   let editCategory, editIntro, editDescription, editLocation, editSocials, editEmail, editPhone = false
 
-  editPhone = true
+  editPhone = false
   //temp variables
   let tempCategory, tempIntro, tempDescription, tempLocation, tempSocials, tempEmail, tempPhone
   tempEmail = contact.email
@@ -248,7 +248,7 @@
   <svelte:fragment slot="body">
     <div>
       <input type="text" class="bg-blue-800 p-2 rounded-lg w-full text-white" bind:value={tempPhone} placeholder={tempPhone ? tempPhone : 'XXX-XXX-XXXX'} />
-      <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" 
+      <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" disabled={tempPhone ? false : true}
         on:click|preventDefault={() => {
           contact.phone = tempPhone 
           editPhone = false

@@ -17,6 +17,7 @@
     description: '',
     location: '',
     title: '',
+    owner_id: 1,
     socials: [
       {
         platform: '',

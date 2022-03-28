@@ -1,4 +1,5 @@
 import data from '$lib/mock_data.json';
+import { contactStore } from '$lib/stores/tempStore';
 
 export async function get({ params }) {
 	const contact_id = params.contact;
@@ -9,6 +10,11 @@ export async function get({ params }) {
 	const test = data.users.filter((user) =>
 		deals.map((deal) => deal.owner_id).includes(user.user_id)
 	);
+
+	const dealData = {
+		client: contact,
+		deals: deals
+	};
 
 	console.log(test);
 	return {
