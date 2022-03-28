@@ -7,6 +7,8 @@
 
   let showModal = false
 
+  console.log($contactStore.length)
+
   const handleToggleModal = () => {
     showModal = !showModal
   }
@@ -16,7 +18,7 @@
   <SearchHeader title={'Contacts'} bind:showModal />
   <div class="my-10">
     {#each $contactStore as contact}
-      <ContactCard {contact} />
+      <a href={`/contact/${contact.contact_id}`}><ContactCard {contact} /></a>
     {/each}
   </div>
 

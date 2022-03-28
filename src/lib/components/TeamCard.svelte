@@ -1,9 +1,14 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
+
   export let member
   export let user
   export let isRemoveModalOpen
   export let index
   export let i
+  
+  const dispatch = createEventDispatcher()
 
   let selectedValue
 
@@ -13,7 +18,7 @@
   ]
 </script>
 
-<div class="bg-blue-900 rounded-lg text-brandWhite p-5 m-1 grid items-center">
+<div class="bg-blue-900 rounded-lg text-brandWhite p-5 mb-1 grid items-center">
   <div class="h-10 w-10 bg-brandWhite rounded-full" />
                   <p class="text-xs">{member.firstName} {member.lastName}</p>
                   {#if user.role === 'Admin'}
@@ -32,7 +37,6 @@
                   <p class="text-xs">{member.email}</p>
                   <p class="text-xs col-span-6 col-start-6">{member.phone ? member.phone : 'XXX-XXX-XXXX'}</p>
                   {#if user.role === 'Admin'}
-                    <input type="button" value="Remove" class="text-red-500 text-xs col-span-1 col-start-12" on:click={() => {isRemoveModalOpen = true
-                    i = index}}/>
+                    <input type="button" value="Remove" class="text-red-500 text-xs col-span-1 col-start-12" on:click={() => dispatch('delete')}/>
                   {/if}
 </div>

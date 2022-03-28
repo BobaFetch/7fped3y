@@ -1,11 +1,11 @@
 import { writable } from 'svelte/store';
 
-import contacts from '$lib/mock_contacts.json';
+import data from '$lib/mock_data.json';
 
 export const authenticated = writable(true);
 
 const contactStore = writable(null, (set) => {
-	set(contacts);
+	set(data.contacts);
 });
 
 export { contactStore };

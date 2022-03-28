@@ -4,7 +4,10 @@
   
   export let showModal
 
+  let contactsArray = $contactStore
+
   let contact = {
+    contact_id: $contactStore.length + 1,
     firstName: '',
     lastName: '',
     email: '',
@@ -22,21 +25,10 @@
     ]
   }
   
-  const socials = ['YouTube', 'TikTock', 'Instagram', 'Twitter']
+  const socials = ['YouTube', 'TikTok', 'Instagram', 'Twitter']
+  let selectedPlatform
   let screen = 1
   let xParams = 0
-
-  //contact vars
-  // let tempSocials = [{
-  //   platform: '',
-  //   url: ''
-  // }
-  // ]
-  // let socialObj = {
-  //   platform: '',
-  //   url: ''
-  // }
-  
 
   const handleNextScreen = () => {
     screen += 1
@@ -50,16 +42,21 @@
 
   const handleNewSocial = () => {
     //not rerendering page currently need to fix
+
     contact.socials.push({
       platform: '',
       url: ''
     })
+
+    contact.socials = contact.socials
   }
 
   const handleAddCreator = () => {
     //TODO
     //write logic to add creator info to db
-    $contactStore.push(contact)
+    contactsArray.push(contact)
+
+    $contactStore = contactsArray
     console.log($contactStore)
     showModal = false
   }
@@ -86,13 +83,16 @@
       <!--  -->
       {#each contact.socials as value, index}
         <div>
-          <select class="my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm">
+          <select bind:value={value.platform} class="my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm">
             {#each socials as social}
-            <option value={value.platform}>{social}</option>
+            <option value={social}>{social}</option>
             {/each}
           </select>
           <input type="text" class="my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm w-1/2" bind:value={value.url} placeholder='ex:http://www.youtube.com/mrbeast' />
-          <button class="p-1 rounded-full m-4" on:click={() => contact.socials.splice(index, 1)}>
+          <button class="p-1 rounded-full m-4" on:click={() => {
+            contact.socials.splice(index, 1)
+            contact.socials = contact.socials
+          }}>
             <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="24px" fill="#52c0cc"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
           </button>
         </div>

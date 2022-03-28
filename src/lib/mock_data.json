@@ -28,6 +28,7 @@
 	],
 	"contacts": [
 		{
+			"contact_id": 1,
 			"firstName": "Antoinette",
 			"lastName": "Victoria",
 			"email": "email@email.com",
@@ -37,7 +38,8 @@
 			"description": "",
 			"location": "New York, NY",
 			"deals": 1,
-			"status": "LEAD",
+			"status": "Lead",
+			"owner_id": 1,
 			"socials": [
 				{
 					"platform": "tiktok",
@@ -55,6 +57,43 @@
 					"followers": "2k"
 				}
 			]
+		},
+		{
+			"contact_id": 2,
+			"firstName": "Kara",
+			"lastName": "Jewel",
+			"email": "kara@mail.com",
+			"phone": null,
+			"category": "Influencer",
+			"info": "",
+			"description": "",
+			"location": "Los Angeles, CA",
+			"deals": 4,
+			"status": "Negotiating",
+			"owner_id": 2,
+			"socials": [
+				{
+					"platform": "instagram",
+					"url": "https://instagram.com",
+					"followers": "250k"
+				}
+			]
+		}
+	],
+	"deals": [
+		{
+			"client_id": 2,
+			"owner_id": 2,
+			"dealName": "Kara Jewel X iOS App Promo",
+			"active": false,
+			"status": "Paid"
+		},
+		{
+			"client_id": 2,
+			"owner_id": 1,
+			"dealName": "Kara Jewel",
+			"active": true,
+			"status": "Lead"
 		}
 	]
 }

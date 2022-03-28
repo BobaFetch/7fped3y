@@ -15,11 +15,11 @@
 </script>
 
 {#if $authenticated}
-<div class=" h-screen bg-brandBlue grid grid-cols-12">
+<div class=" h-screen bg-brandBlue grid grid-cols-12 overflow-hidden">
   <div class="col-span-1 border-r-[.5px] border-brandTeal">
     <SideMenu />
   </div>
-  <div class="col-span-11 mx-3">
+  <div class="col-span-11 mt-5 m-3 overflow-auto">
     <slot />
   </div>
 </div>

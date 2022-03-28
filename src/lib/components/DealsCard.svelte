@@ -1,18 +1,31 @@
 <script>
   import Fa from 'svelte-fa'
-  import { faUser } from '@fortawesome/free-regular-svg-icons'
-  export let props
+  import { faUserCircle } from '@fortawesome/free-regular-svg-icons'
+  export let deal
+  export let contact
+  export let owner
   console.log()
 </script>
 
 
-{#if props === null}
+{#if deal === null}
   <div class="w-62 h-20 rounded my-5 border border-brandWhite border-dotted"></div>
 {:else}
-<div class='flex flex-row bg-blue-900 p-2 w-62 h-20 rounded my-5'>
-  <div class='bg-brandWhite rounded-full w-10 h-10 p-1.5'>
-    <Fa icon={faUser} size='2x' />
+<div class='flex flex-col bg-blue-800 p-2 w-62 h-20 rounded my-5 hover:bg-blue-400'>
+  <div class='flex'>
+    <div class='bg-brandWhite rounded-full w-10 h-10 p-1.5 flex justify-center items-center'>
+      <Fa icon={faUserCircle} size='2x' color="black" />
+    </div>
+    <span class="text-white ml-2 text-sm">{deal.dealName}</span>
   </div>
-  <span class="text-white ml-2">{props.firstName} {props.lastName}</span>
+
+  <div class="flex items-center justify-between mt-1">
+    <div class="text-right">
+      {#each contact.socials as social}
+      <span class='text-xs text-white p-1'>{social.platform[0]} {social.followers}</span>
+      {/each}
+    </div>
+    <div class="bg-brandTeal w-5 h-5 text-xs text-black rounded-full flex justify-center items-center">{owner.firstName[0]}{owner.lastName[0]}</div>
+  </div>
 </div>
 {/if}

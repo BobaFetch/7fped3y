@@ -16,19 +16,19 @@
   let isContactModalOpen = false 
   let isPhoneModalOpen = false
 
-  let selected
+  let selected 
   let i 
+  let toBeDeleted = team[0]
+  let newOwner
 
   const handleLogout = () => {
     $authenticated = false 
     goto('/auth')
   }
 
-  const handleRemoveTeamMember = () => {
-    const temp = team
-    temp.splice(i, 1)
-    team = temp
-    isRemoveModalOpen = false
+  const handleRemoveTeamMember = (member) => {
+    toBeDeleted = member
+    isRemoveModalOpen = true
   }
 
   //quick and dirty
@@ -36,14 +36,22 @@
     user.phone = number
     isPhoneModalOpen = false
   }
+
+  const handleNewOwner = () => {
+
+  }
+
+  const handleSearch = (array, params) => {
+    
+  }
   
 </script>
 
 <div class="flex">
   <h1 class="text-2xl text-brandWhite font-bold my-2 flex-1">SETTINGS</h1>
-  <input type="button" value="Logout" class="bg-brandTeal px-5 m-2 rounded-xl" on:click|preventDefault={handleLogout} />
+  <input type="button" value="Logout" class="bg-brandTeal px-5 m-2 rounded-lg" on:click|preventDefault={handleLogout} />
 </div>
-<div class='grid sm:grid-cols-12 gird-cols-13 '>
+<div class='grid sm:grid-cols-12 gird-cols-13 gap-2'>
   <!-- LEFT SIDE -->
   <div class="col-span-8">
       <Card>
@@ -68,6 +76,7 @@
               index={index}
               {i}
               bind:member
+              on:delete={() => handleRemoveTeamMember(member)}
             />
           {/each}
         </div>
@@ -114,12 +123,20 @@
   <!-- MODALS -->
 
   <!-- REMOVE TEAM MEMBER MODAL -->
-  <Modal open={isRemoveModalOpen} title={false} on:close={() => isRemoveModalOpen = false}>
+  <Modal open={isRemoveModalOpen} title={'Delete Team Member'} on:close={() => isRemoveModalOpen = false}>
     <svelte:fragment slot="body">
-      <h1 class="text-brandWhite text-center text-2xl font-bold">Are you sure you want to remove this member?</h1>
+      <div class="bg-blue-800 text-white flex flex-col items-center justify-around p-8 mb-5">
+        <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center my-2" ><p class="text-black text-5xl text-center">{toBeDeleted.firstName[0]}{toBeDeleted.lastName[0]}</p></div>
+        <p class="my-2">{toBeDeleted.firstName} {toBeDeleted.lastName}</p>
+      </div>
+      <p class="text-gray-400 text-sm text-center my-3">Before deleting this contact, who will take over their deals?</p>
+      <p class="text-gray-400 my-3 text-sm">NEW OWNER</p>
+      <div class="bg-blue-800 text-white flex items-center justify-start mx-auto rounded-lg mt-2">
+        <input type="search" bind:value={user.firstName} placeholder={''} class="w-full p-2 rounded-lg bg-blue-800" />
+      </div>
       <div class='flex justify-around m-10'>
-        <input type="button" value='CANCEL' class="bg-red-400 p-5 rounded-2xl" on:click|preventDefault={() => isRemoveModalOpen = false}/>
-        <input type="button" value='CONTINUE' class='bg-brandTeal p-5 rounded-2xl' on:click|preventDefault={handleRemoveTeamMember}/>
+        <!-- <input type="button" value='CANCEL' class="bg-red-400 p-5 rounded-2xl" on:click|preventDefault={() => isRemoveModalOpen = false}/> -->
+        <input type="button" value='Delete Team Member & Transfer Ownership' class='bg-red-600 p-5 rounded-2xl text-white' on:click|preventDefault={handleRemoveTeamMember}/>
       </div>
     </svelte:fragment>
   </Modal>
