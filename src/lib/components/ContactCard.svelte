@@ -1,12 +1,7 @@
 <script>
 
   export let contact
-
-  const handleFollowerCount = (number) => {
-    let dec = number.toString().split('').length - 1
-    
-   //todo
-  }
+  const socials = JSON.parse(contact.socials)
 
 </script>
 
@@ -14,11 +9,12 @@
   <div class='w-10 h-10 bg-brandWhite rounded-full mr-3 col-span-1'></div>
   <p class='col-span-3'>{contact.firstName} {contact.lastName}</p>
   <p class="col-span-3 text-xs">{contact.location}</p>
-  <p class='col-span-3 text-xs'>{contact.deals > 0 ? contact.deals > 1 ? contact.deals + ' DEALS' : contact.deals + ' DEAL' : ''}</p>
+  <p class='col-span-3 text-xs'>{'DEALS'}</p>
+  <!-- NEED TO FIX -->
   <div class='col-span-2 flex'>
-    {#each contact.socials as social}
+    {#each socials as social}
     <!-- add icons -->
-      <p class="text-xs mx-1">{social.followers ? social.followers : ''}</p>
+      <p class="text-xs mx-1">{social.platform[0]} {social.followers ? social.followers : ''}</p>
     {/each}
   </div>
 </div>

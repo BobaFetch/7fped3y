@@ -3,11 +3,10 @@
   import ContactCard from '$lib/components/ContactCard.svelte'
   import Modal from '$lib/components/Modal.svelte'
   import NewContactForm from "$lib/components/NewContactForm.svelte";
-  import {contactStore} from '$lib/stores/tempStore'
 
+  export let contacts
+  console.log(contacts[0])
   let showModal = false
-
-  console.log($contactStore.length)
 
   const handleToggleModal = () => {
     showModal = !showModal
@@ -17,7 +16,7 @@
 <div>
   <SearchHeader title={'Contacts'} bind:showModal />
   <div class="my-10">
-    {#each $contactStore as contact}
+    {#each contacts as contact}
       <a href={`/contact/${contact.contact_id}`}><ContactCard {contact} /></a>
     {/each}
   </div>

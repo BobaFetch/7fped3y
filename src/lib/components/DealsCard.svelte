@@ -21,8 +21,8 @@
 
   <div class="flex items-center justify-between mt-1">
     <div class="text-right">
-      {#each contact.socials as social}
-      <span class='text-xs text-white p-1'>{social.platform[0]} {social.followers}</span>
+      {#each JSON.parse(contact.socials) as social}
+      <span class='text-xs text-white p-1'>{social.platform} {social.followers}</span>
       {/each}
     </div>
     <div class="bg-brandTeal w-5 h-5 text-xs text-black rounded-full flex justify-center items-center">{owner.firstName[0]}{owner.lastName[0]}</div>

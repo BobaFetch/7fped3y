@@ -1,28 +1,31 @@
 import data from '$lib/mock_data.json';
+import db from '$lib/db';
 import { contactStore } from '$lib/stores/tempStore';
 
 export async function get({ params }) {
-	const contact_id = params.contact;
-	const contact = data.contacts.find((c) => c.contact_id == contact_id);
-	const deals = data.deals.filter((d) => d.client_id == contact_id);
-	const owner = data.users.find((u) => u.user_id === contact.owner_id);
+	const contact_id = parseInt(params.contact);
+	let contactData, contact, deals, team;
 
-	const test = data.users.filter((user) =>
-		deals.map((deal) => deal.owner_id).includes(user.user_id)
-	);
-
-	const dealData = {
-		client: contact,
-		deals: deals
-	};
-
-	console.log(test);
+	contact = await db
+		.prepare(
+			`SELECT contact_id, firstName, lastName, email, phone, category, info, description, location,
+		json_group_array(json_object('platform', socials.platform, 'url', socials.url, 'followers', socials.followers))
+		 as socials from contacts join socials on contact_id = client_id WHERE contact_id = ${params.contact} LIMIT 1`
+		)
+		.all();
+	deals = await db.prepare(`SELECT * FROM deals WHERE client_id = ${params.contact}`).all();
+	team = await db
+		.prepare(
+			`SELECT users.* FROM users LEFT JOIN deals ON users.company_id = deals.team_id 
+			 LEFT JOIN contacts ON contacts.contact_id = deals.client_id WHERE deals.client_id = ${params.contact}`
+		)
+		.all();
+	console.log(contact);
 	return {
 		body: {
-			contact,
+			contact: contact[0],
 			deals,
-			owner,
-			team: test
+			team
 		}
 	};
 }

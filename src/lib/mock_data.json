@@ -78,6 +78,32 @@
 					"followers": "250k"
 				}
 			]
+		},
+		{
+			"contact_id": 3,
+			"firstName": "David",
+			"lastName": "Robb",
+			"email": "david@mail.com",
+			"phone": "555-555-7777",
+			"category": "Comedian",
+			"info": "",
+			"description": "",
+			"location": "Toronto,ON",
+			"deals": 2,
+			"status": "Contacting",
+			"owner_id": 1,
+			"socials": [
+				{
+					"platform": "instagram",
+					"url": "https://instagram.com",
+					"followers": "250k"
+				},
+				{
+					"platform": "Youtube",
+					"url": "https://youtube.com",
+					"followers": "500k"
+				}
+			]
 		}
 	],
 	"deals": [

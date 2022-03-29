@@ -5,8 +5,8 @@
 
   export let contact
   export let deals
-  export let owner
   export let team
+
 
   let editCategory, editIntro, editDescription, editLocation, editSocials, editEmail, editPhone = false
 
@@ -14,13 +14,13 @@
   //temp variables
   let tempCategory, tempIntro, tempDescription, tempLocation, tempSocials, tempEmail, tempPhone
   tempEmail = contact.email
-  tempSocials = contact.socials 
+  tempSocials = contact.socials
   tempPhone = contact.phone
 
   let socials = ['Instagram', 'TikTok', 'Twitter']
 
-  const activeDeals = deals.filter(deal => deal.active === true)
-  const archivedDeals = deals.filter(deal => deal.active === false)
+  const activeDeals = deals.filter(deal => deal.active === 1)
+  const archivedDeals = deals.filter(deal => deal.active === 0)
 
   const handleNewSocial = () => {
     tempSocials.push({
@@ -53,7 +53,7 @@
 
       <div class="bg-blue-900 mt-3 rounded-xl">
 
-        {#if deals.length > 0}
+        {#if deals}
           <p class="text-white text-2xl p-2">Deals</p>
           <div class="grid grid-cols-2 gap-2">
             <!-- active -->
@@ -114,14 +114,14 @@
         <svelte:fragment slot="body">
           <h4 class="text-lg my-1">Socials<span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editSocials = true}>EDIT</span></h4>
           <p class="text-xs text-gray-400">SOCIALS</p>
-          {#each contact.socials as social}
+          <!-- {#each contact.socials as social}
             <div class="grid grid-cols-3 gap-2 my-1">
-              <!-- no icons currently -->
+               no icons currently 
                 <p class="text-xs">{social.platform}</p>
                 <p class="text-xs">{social.followers} Followers</p>
                 <p class="text-xs">{'50% Engagement'}</p>
             </div>
-          {/each}
+          {/each} -->
         </svelte:fragment>
       </Card>
         

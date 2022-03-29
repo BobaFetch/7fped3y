@@ -7,24 +7,20 @@
   let contactsArray = $contactStore
 
   let contact = {
-    contact_id: $contactStore.length + 1,
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    category: '',
-    into: '',
-    description: '',
-    location: '',
-    title: '',
-    owner_id: 1,
-    socials: [
-      {
-        platform: '',
-        url: ''
-      }
-    ]
-  }
+    contact_id: contactsArray.length + 1,
+			firstName: "",
+			lastName: "",
+			email: "",
+			phone: "",
+			category: "",
+			info: "",
+			description: "",
+			location: "",
+			deals: 0,
+			status: "",
+			owner_id: 1,
+			socials: []
+		}
   
   const socials = ['YouTube', 'TikTok', 'Instagram', 'Twitter']
   let selectedPlatform
