@@ -1,13 +1,10 @@
 <script>
   import {fly} from 'svelte/transition'
-  import {contactStore} from '$lib/stores/tempStore'
   
   export let showModal
 
-  let contactsArray = $contactStore
 
   let contact = {
-    contact_id: contactsArray.length + 1,
 			firstName: "",
 			lastName: "",
 			email: "",
@@ -38,7 +35,6 @@
   }
 
   const handleNewSocial = () => {
-    //not rerendering page currently need to fix
 
     contact.socials.push({
       platform: '',
@@ -48,14 +44,22 @@
     contact.socials = contact.socials
   }
 
-  const handleAddCreator = () => {
+  const handleAddCreator = async () => {
     //TODO
     //write logic to add creator info to db
-    contactsArray.push(contact)
+    try {
 
-    $contactStore = contactsArray
-    console.log($contactStore)
-    showModal = false
+      await fetch('/contacts', {
+        method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify(contact)
+      })
+    } catch (err) {
+      throw err
+    } finally {
+      showModal = false
+      location.reload()
+    }
   }
 
 </script>

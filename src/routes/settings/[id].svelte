@@ -89,7 +89,7 @@
       <svelte:fragment slot="body">
         <h4 class="text-lg my-1">Company</h4>
         <h6 class="text-xs text-gray-400 my-2">NAME</h6>
-        <h6 class="text-xs my-1">{company.name}</h6>
+        <h6 class="text-xs my-1">{user.company.name}</h6>
       </svelte:fragment>
     </Card>
     <Card>

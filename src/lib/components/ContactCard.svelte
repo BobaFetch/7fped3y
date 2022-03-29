@@ -1,7 +1,7 @@
 <script>
 
   export let contact
-  const socials = JSON.parse(contact.socials)
+  // const socials = JSON.parse(contact.socials)
 
 </script>
 
@@ -12,9 +12,9 @@
   <p class='col-span-3 text-xs'>{'DEALS'}</p>
   <!-- NEED TO FIX -->
   <div class='col-span-2 flex'>
-    {#each socials as social}
-    <!-- add icons -->
+    <!-- {#each socials as social}
+    add icons
       <p class="text-xs mx-1">{social.platform[0]} {social.followers ? social.followers : ''}</p>
-    {/each}
+    {/each} -->
   </div>
 </div>

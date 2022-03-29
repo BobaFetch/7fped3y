@@ -1,19 +1,23 @@
 import db from '$lib/db';
 
 export async function get() {
-	const contacts = await db
+	const deals = db.prepare('SELECT * FROM deals').all();
+	const contacts = db
 		.prepare(
 			`SELECT contact_id, firstName, lastName, email, phone, category, info, description, location,
 			json_group_array(json_object('platform', socials.platform, 'url', socials.url, 'followers', socials.followers))
-			 as socials from contacts join socials on contact_id = client_id group by contact_id`
+			 as socials from contacts LEFT JOIN socials on contact_id = client_id group by contact_id`
 		)
 		.all();
+	const users = db.prepare('SELECT * FROM users').all();
 
-	console.log(contacts);
-
+	// console.log(contacts);
 	return {
+		status: 200,
 		body: {
-			contacts
+			deals,
+			contacts,
+			users
 		}
 	};
 }

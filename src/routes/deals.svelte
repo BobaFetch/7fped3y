@@ -2,9 +2,10 @@
 
   import DealsCard from '$lib/components/DealsCard.svelte'
   import SearchHeader from '$lib/components/SearchHeader.svelte'
-  import data from '$lib/mock_data.json'
   
-  const {deals, contacts, users} = data
+  export let deals
+  export let contacts
+  export let users
 
   const leads = deals.filter(item => item.status === 'Lead')
   const contacting = deals.filter(item => item.status === 'Contacting')
@@ -15,8 +16,6 @@
   const paid = deals.filter(item => item.status === 'Paid')
   const archived = deals.filter(item => item.status === 'Archived')
 
-  // const {contacts} = data.contacts
-  // const {users} = data.users
 
 </script>
 

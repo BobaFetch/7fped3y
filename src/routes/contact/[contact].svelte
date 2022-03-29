@@ -14,7 +14,7 @@
   //temp variables
   let tempCategory, tempIntro, tempDescription, tempLocation, tempSocials, tempEmail, tempPhone
   tempEmail = contact.email
-  tempSocials = contact.socials
+  tempSocials = JSON.parse(contact.socials)
   tempPhone = contact.phone
 
   let socials = ['Instagram', 'TikTok', 'Twitter']
