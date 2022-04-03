@@ -7,6 +7,11 @@
   export let deals
   export let team
 
+  const testData = {
+    platform: 'Youtube',
+    url: 'http://youtube.com'
+  }
+
 
   let editCategory, editIntro, editDescription, editLocation, editSocials, editEmail, editPhone = false
 
@@ -24,12 +29,28 @@
 
   const handleNewSocial = () => {
     tempSocials.push({
+      client_id: contact.contact_id,
       platform: '',
       url: '',
       followers: ''
     })
 
     tempSocials = tempSocials
+  }
+
+  const editSocial = async () => {
+    await fetch('/api/editSocial', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(tempSocials)
+    }).then(() => {
+      editSocials = false 
+      // console.log(tempSocials)
+      //
+    })
   }
 </script>
 
@@ -220,10 +241,7 @@
       <button class=" text-brandTeal text-xs text-left my-2" on:click|preventDefault={handleNewSocial}>+ Add a social channel</button>
       <!--  -->
       <div class='mt-8 flex justify-around '>  
-        <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" on:click={() => {
-          contact.socials = tempSocials
-          editSocials = false
-        }}>
+        <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" on:click={editSocial}>
       </div>
     </div>
   </svelte:fragment>

@@ -4,7 +4,7 @@ import { contactStore } from '$lib/stores/tempStore';
 
 export async function get({ params }) {
 	const contact_id = parseInt(params.contact);
-	let contactData, contact, deals, team;
+	let socials, contact, deals, team;
 	// const socials = db
 	// 	.prepare(
 	// 		`SELECT contacts.*,
@@ -17,7 +17,7 @@ export async function get({ params }) {
 	contact = await db
 		.prepare(
 			`SELECT contact_id, firstName, lastName, email, phone, category, info, description, location,
-		json_group_array(json_object('platform', socials.platform, 'url', socials.url, 'followers', socials.followers))
+		json_group_array(json_object('client_id', socials.client_id, 'platform', socials.platform, 'url', socials.url, 'followers', socials.followers))
 		 as socials from contacts LEFT JOIN socials on contact_id = client_id WHERE contact_id = ${params.contact} LIMIT 1`
 		)
 		.all();
@@ -28,12 +28,15 @@ export async function get({ params }) {
 			 LEFT JOIN contacts ON contacts.contact_id = deals.client_id WHERE deals.client_id = ${params.contact}`
 		)
 		.all();
-	// console.log(contact);
+
+	socials = await db.prepare(`SELECT * FROM socials where client_id = ${params.contact}`).all();
+	console.log(socials);
 	return {
 		body: {
 			contact: contact[0],
 			deals,
-			team
+			team,
+			socials
 		}
 	};
 }
