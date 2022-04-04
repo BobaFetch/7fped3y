@@ -14,7 +14,8 @@ export async function get({ params }) {
 			`SELECT users.* FROM companies LEFT JOIN users on users.company_id = companies.company_id WHERE companies.company_id = ${user[0].company_id}`
 		)
 		.all();
-	// console.log(team);
+
+	// console.log(user);
 	return {
 		body: {
 			user: user[0],

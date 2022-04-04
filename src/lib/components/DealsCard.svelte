@@ -9,9 +9,9 @@
 
 
 {#if deal === null}
-  <div class="w-62 h-20 rounded my-5 border border-brandWhite border-dotted"></div>
+  <div class="w-60 h-20 rounded my-5 border border-brandWhite border-dotted"></div>
 {:else}
-<div class='flex flex-col bg-blue-800 p-2 w-62 h-20 rounded my-5 hover:bg-blue-400'>
+<div class='flex flex-col bg-blue-800 p-2 w-60 h-20 rounded my-5 hover:bg-blue-400'>
   <div class='flex'>
     <div class='bg-brandWhite rounded-full w-10 h-10 p-1.5 flex justify-center items-center'>
       <Fa icon={faUserCircle} size='2x' color="black" />

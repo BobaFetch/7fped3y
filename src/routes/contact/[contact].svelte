@@ -2,34 +2,32 @@
   import DealsCard from '$lib/components/DealsCard.svelte'
   import Card from '$lib/components/Card.svelte'
   import Modal from '$lib/components/Modal.svelte'
+  import { goto } from '$app/navigation';
 
   export let contact
+  export let socials
   export let deals
   export let team
 
-  const testData = {
-    platform: 'Youtube',
-    url: 'http://youtube.com'
-  }
+  console.log(deals)
 
-
-  let editCategory, editIntro, editDescription, editLocation, editSocials, editEmail, editPhone = false
-
-  editPhone = false
+  let editCategory, editIntro, editDescription, editLocation, editSocials, editEmail, editPhone, moreOptionsModal= false
+  let showMoreOptions = true
+  
   //temp variables
   let tempCategory, tempIntro, tempDescription, tempLocation, tempSocials, tempEmail, tempPhone
   tempEmail = contact.email
-  tempSocials = JSON.parse(contact.socials)
+  tempSocials = socials
   tempPhone = contact.phone
 
-  let socials = ['Instagram', 'TikTok', 'Twitter']
+  let socialChoices = ['Instagram', 'TikTok', 'Twitter', 'Youtube']
 
   const activeDeals = deals.filter(deal => deal.active === 1)
   const archivedDeals = deals.filter(deal => deal.active === 0)
 
   const handleNewSocial = () => {
     tempSocials.push({
-      client_id: contact.contact_id,
+      contact_id: contact.contact_id,
       platform: '',
       url: '',
       followers: ''
@@ -39,18 +37,47 @@
   }
 
   const editSocial = async () => {
+    let toBeChanged = []
+
+    //right now this will update all socials for a contact
+    //not really affecting much so I'll save this issue for later
     await fetch('/api/editSocial', {
-      method: 'POST',
+      method: 'PUT',
       mode: 'cors',
       headers: {
         'content-type': 'application/json'
       },
       body: JSON.stringify(tempSocials)
-    }).then(() => {
-      editSocials = false 
-      // console.log(tempSocials)
-      //
+    }
+    ).then(res => res.json()).then(json => {
+      socials = json.socials
+      editSocials = false
     })
+  }
+
+  const deleteSocial = async (id) => {
+    await fetch(`/api/editSocial?id=${id}&contact=${contact.contact_id}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).then(res => res.json()).then(json => {
+      socials = json.socials 
+      tempSocials = socials
+    }).catch(err => console.log(err))
+  }
+
+  const handleMoreOptions = () => showMoreOptions = !showMoreOptions
+
+  const deleteContact = async () => {
+    await fetch(`/contacts?id=${contact.contact_id}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).then(() => goto('/contacts')).catch(err => console.log(err))
   }
 </script>
 
@@ -62,7 +89,14 @@
       </div>
       <p class="mx-2 text-2xl font-bold italic">{contact.firstName} {contact.lastName}</p>
     </div>
-    <input type="button" value="More Options +" class="bg-brandTeal p-2 rounded-xl" />
+    <div class="block">
+      <input type="button" value="More Options +" class="bg-brandTeal p-2 rounded-xl" on:click={handleMoreOptions}/>
+      <!-- FIX -->
+      <ul class:hidden={showMoreOptions} class="block text-center">
+        <li class='mt-1'><input class='bg-red-400 p-1 rounded-lg hover:bg-red-300' type="button" value="Delete Contact" on:click|preventDefault={() => moreOptionsModal = true}/></li>
+      </ul>
+    </div>
+    
   </div>
   <!--  -->
   <div class=" grid grid-cols-12 gap-2 my-5">
@@ -74,7 +108,7 @@
 
       <div class="bg-blue-900 mt-3 rounded-xl">
 
-        {#if deals}
+        {#if deals.length > 0}
           <p class="text-white text-2xl p-2">Deals</p>
           <div class="grid grid-cols-2 gap-2">
             <!-- active -->
@@ -92,6 +126,8 @@
               {/each}
             </div>
           </div>
+        {:else}
+        <p class="text-white text-2xl p-2 text-center">No Current Deals</p>
         {/if}
       </div>
     </div>
@@ -135,14 +171,14 @@
         <svelte:fragment slot="body">
           <h4 class="text-lg my-1">Socials<span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editSocials = true}>EDIT</span></h4>
           <p class="text-xs text-gray-400">SOCIALS</p>
-          <!-- {#each contact.socials as social}
+          {#each socials as social}
             <div class="grid grid-cols-3 gap-2 my-1">
-               no icons currently 
+               <!-- no icons currently  -->
                 <p class="text-xs">{social.platform}</p>
                 <p class="text-xs">{social.followers} Followers</p>
                 <p class="text-xs">{'50% Engagement'}</p>
             </div>
-          {/each} -->
+          {/each}
         </svelte:fragment>
       </Card>
         
@@ -226,15 +262,13 @@
       {#each tempSocials as value, index}
         <div class="w-full flex justify-between">
           <select bind:value={value.platform} class="m-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm">
-            {#each socials as social}
+            {#each socialChoices as social}
             <option value={social}>{social}</option>
             {/each}
           </select>
           <input type="text" class="my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm flex-1" bind:value={value.url} placeholder='ex: http://www.youtube.com/mrbeast' />
-          <button class="p-1 rounded-full m-4" on:click={() => {
-            tempSocials.splice(index, 1) 
-            tempSocials = tempSocials}}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="24px" fill="#52c0cc"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+          <button class="p-1 rounded-full m-4" on:click={() => deleteSocial(value.social_id)}>
+            <svg height="15px" viewBox="0 0 24 24" width="24px" fill="#52c0cc"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
           </button>
         </div>
       {/each}
@@ -271,6 +305,20 @@
           contact.phone = tempPhone 
           editPhone = false
         }}>
+    </div>
+  </svelte:fragment>
+</Modal>
+
+<!-- more options/delete contact change to dropdown-->
+<Modal open={moreOptionsModal} on:close={() => moreOptionsModal = false} title={'Delete Contact'}>
+  <svelte:fragment slot="body">
+    <div>
+      <div class="bg-blue-900 rounded-xl flex flex-col items-center justify-center p-10">
+        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">{contact.firstName[0]}{contact.lastName[0]}</div>
+        <p class="font-bold text-white text-2xl pt-3">{contact.firstName} {contact.lastName}</p>
+      </div>
+      <p class='text-gray-300 text-center my-3 '>Are you sure you want to delete this contact?</p>
+      <input type="button" value="Delete" class='bg-red-500 text-white text-xl p-2 w-full rounded-xl' on:click|preventDefault={deleteContact}/>
     </div>
   </svelte:fragment>
 </Modal>

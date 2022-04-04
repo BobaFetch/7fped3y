@@ -8,7 +8,6 @@
   import EditContact from '$lib/components/EditContact.svelte'
 
   export let user
-  export let company
   export let team
 
   let isRemoveModalOpen = false
@@ -89,7 +88,7 @@
       <svelte:fragment slot="body">
         <h4 class="text-lg my-1">Company</h4>
         <h6 class="text-xs text-gray-400 my-2">NAME</h6>
-        <h6 class="text-xs my-1">{user.company.name}</h6>
+        <h6 class="text-xs my-1">{user.company}</h6>
       </svelte:fragment>
     </Card>
     <Card>
@@ -98,7 +97,7 @@
         <h6 class="text-xs text-gray-400 my-2">YOUR ROLE</h6>
         <h6 class="text-xs my-1">{user.role}</h6>
         <h6 class="text-xs text-gray-400 my-2">COMPANY ADMIN</h6>
-        {#each team.filter(m => m.role === 'ADMIN') as admin}
+        {#each team.filter(m => m.role === 'Admin') as admin}
         <h6 class="text-xs my-1">
           {admin.firstName} {admin.lastName}
         </h6>

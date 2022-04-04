@@ -5,23 +5,15 @@ import { contactStore } from '$lib/stores/tempStore';
 export async function get({ params }) {
 	const contact_id = parseInt(params.contact);
 	let socials, contact, deals, team;
-	// const socials = db
-	// 	.prepare(
-	// 		`SELECT contacts.*,
-	// 	(SELECT socials.platform FROM socials WHERE client_id = contacts.contact_id) as socials
-	// 	FROM contacts where contact_id = 2`
-	// 	)
-	// 	.all();
-	// console.log(socials);
 
 	contact = await db
 		.prepare(
-			`SELECT contact_id, firstName, lastName, email, phone, category, info, description, location,
-		json_group_array(json_object('client_id', socials.client_id, 'platform', socials.platform, 'url', socials.url, 'followers', socials.followers))
-		 as socials from contacts LEFT JOIN socials on contact_id = client_id WHERE contact_id = ${params.contact} LIMIT 1`
+			`SELECT contact_id, firstName, lastName, email, phone, category, info, description, location FROM contacts WHERE contact_id = ${params.contact} LIMIT 1`
 		)
 		.all();
+
 	deals = await db.prepare(`SELECT * FROM deals WHERE client_id = ${params.contact}`).all();
+
 	team = await db
 		.prepare(
 			`SELECT users.* FROM users LEFT JOIN deals ON users.company_id = deals.team_id 
@@ -29,8 +21,9 @@ export async function get({ params }) {
 		)
 		.all();
 
-	socials = await db.prepare(`SELECT * FROM socials where client_id = ${params.contact}`).all();
-	console.log(socials);
+	socials = await db.prepare(`SELECT * FROM socials where contact_id = ${params.contact}`).all();
+
+	// console.log(socials);
 	return {
 		body: {
 			contact: contact[0],

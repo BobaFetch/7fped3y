@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS deals(
   status TEXT NOT NULL);
 
 CREATE TABLE IF NOT EXISTS socials(
-  client_id INTEGER NOT NULL,
+  social_id INTEGER NOT NULL PRIMARY KEY,
+  contact_id INTEGER NOT NULL,
   platform TEXT NOT NULL,
   url TEXT NOT NULL,
   followers TEXT
@@ -57,13 +58,13 @@ db.exec(initialize);
 // ('Amanda', 'Emmanuel', 1, 'amanda@company.com', '555-555-1415', 'Admin'),
 // ('Bianca', 'Chatham', 1, 'bianca@company.com', NULL, 'Editor');
 
-// INSERT INTO companies(name) VALUES('Dealflow');
+// INSERT INTO companies(name, admin_id) VALUES('Dealflow');
 
 // INSERT INTO deals(client_id, owner_id, team_id, dealName, active, status) VALUES
 // (2, 2, 1, 'Kara Jewel X iOS App Promo', 0, 'Paid'),
 // (2, 1, 1, 'Kara Jewel', 1, 'Lead');
 
-// INSERT INTO socials(client_id, platform, url, followers) VALUES
+// INSERT INTO socials(contact_id, platform, url, followers) VALUES
 // (3, 'Instagram', 'https://instagram.com', '250k'),
 // (3, 'Youtube', 'https://youtube.com', '500k'),
 // (2, 'TikTok', 'https://tiktok.com', '175k'),
