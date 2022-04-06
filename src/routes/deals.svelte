@@ -2,6 +2,7 @@
 
   import DealsCard from '$lib/components/DealsCard.svelte'
   import SearchHeader from '$lib/components/SearchHeader.svelte'
+  import NewDeal from '$lib/components/NewDeal.svelte'
   
   export let deals
   export let contacts
@@ -19,16 +20,18 @@
 
 </script>
 
-<div class="bg-brandBlue">
+<div class="bg-brandBlue overflow-x-hidden">
   <!-- header stuff -->
-  <SearchHeader title={'Deals'} />
+  <div class=''>
+    <SearchHeader title={'Deals'} />
+  </div>
   <!-- body  -->
   <!-- this is just thrown together a lot of copy/paste, need to break it down and streamline this bad boy -->
-  <div class='relative overflow-x-hidden'>
+  <div class='overflow-x-hidden'>
 
-    <div class="grid grid-cols-4 gap-2">
+    <div class="flex flex-row justify-between overflow-auto">
       <!--  -->
-      <div class='w-62 p-1 shrink-0 col-span-1'>
+      <div class='mx-2 w-64 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Leads</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -48,7 +51,7 @@
         {/if}
       </div>  
       <!--  -->
-      <div class="w-62 shrink-0 col-span-1">
+      <div class='mx-2 w-64 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Contacting</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -60,7 +63,7 @@
         <DealsCard 
           deal={c} 
           contact={contacts.find(contact => contact.contact_id === c.client_id)}
-          owner={users.find(user => user.user_id === c.owner_id)}
+          owner={users.dfind(user => user.user_id === c.owner_id)}
         />
         {/each}
         {:else}
@@ -68,7 +71,7 @@
         {/if}
       </div>
       <!--  -->
-      <div class="w-62 shrink-0 col-span-1">
+      <div class='mx-2 w-64 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Negotiating</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -88,7 +91,7 @@
         {/if}
       </div>
       <!-- Finalizing Contract -->
-      <div class="w-62 shrink-0 col-span-1">
+      <div class='mx-2 w-64 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Finalizing Contract</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -108,7 +111,7 @@
         {/if}
       </div>
       <!-- Pending Deliverables -->
-      <div class='w-62 p-1 shrink-0 col-span-1'>
+      <div class='w-64 p-1 shrink-0 col-span-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Pending Deliverables</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -128,7 +131,7 @@
         {/if}
       </div>  
       <!-- Pending Payment -->
-      <div class='w-62 p-1 shrink-0'>
+      <div class='w-64 p-1 shrink-0'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Pending Payment</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -148,7 +151,7 @@
         {/if}
       </div>  
       <!-- Paid -->
-      <div class='w-62 p-1 shrink-0'>
+      <div class='w-64 p-1 shrink-0'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Paid</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -168,7 +171,7 @@
         {/if}
       </div>
       <!-- Archived -->
-      <div class='w-62 p-1 shrink-0'>
+      <div class='w-64 p-1 shrink-0'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Archived</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -190,4 +193,5 @@
 
     </div>
   </div>
+  <NewDeal open={true} />
   </div>
