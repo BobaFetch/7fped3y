@@ -4,12 +4,16 @@
   // import ContactCard from "$lib/components/ContactCard.svelte";
   import Modal from "$lib/components/Modal.svelte";
 
-  export let open = true
+  const dispatch = createEventDispatcher()
+
+  export let open = false
   let step = 0
   // modal on modal action
   let selectCreator = false
   let creators 
   let socials
+  let selectedCreator = null
+  let selectedSocials = null
 
   let newDeal = {
     // switch contact_id to creator_id in db for better readability
@@ -31,8 +35,11 @@
     }
   ]
 
-  let selectedCreator = null
-  let selectedSocials = null
+  const handleNewDeliverable = () => {
+    deliverablesArray.push(deliverable)
+    deliverablesArray = deliverablesArray
+  }
+
 
   let stepContent = [
     {
@@ -54,7 +61,6 @@
       description: `What will <Creator> be delivering for this deal`
     }
   ]
-  const dispatch = createEventDispatcher()
 
   const getCreators = async () => {
     await fetch('/api/creators')
@@ -73,6 +79,10 @@
 
   const handleSocials = (contact) => {
     selectedSocials = socials.filter(social => social.contact_id === contact.contact_id)
+  }
+
+  const handleAddDeal = () => {
+    console.log(deliverablesArray)
   }
 
   onMount(() => {
@@ -119,24 +129,33 @@
               {/if}
             </div>
           {/if}
-            <input type="button" value="Continue" class="bg-brandTeal p-3 w-full rounded-lg my-3" on:click={() => step += 1} />
+            <input type="button" value="Continue" class="bg-brandTeal p-3 w-full rounded-lg my-3" on:click={() => step += 1} disabled={!selectedCreator}/>
         </div>
       </div>
     {:else if step === 1}
+    <!-- Add a Title -->
       <div in:fly={{x: 200, duration: 200}} class='p-8'>
         <div class="w-full">
           <p class='text-gray-400 text-xs'>TITLE</p>
           <input type="text" 
             class="w-full p-3 rounded-lg mt-3"
-            bind:value={newDeal.dealName} placeholder={`Ex: ${selectedCreator.firstName} ${selectedCreator.lastName} Deal`} 
+            bind:value={newDeal.dealName} 
+            placeholder={`Ex: ${selectedCreator.firstName} ${selectedCreator.lastName} Deal`} 
           />
           <div class='flex items-center justify-between'>
             <input type="button" value="Back" class="bg-gray-400 text-white p-3 w-1/2 mr-1 rounded-lg my-3" on:click={() => step -= 1} />
-            <input type="button" value="Next" class="bg-brandTeal p-3 w-1/2 ml-1 rounded-lg my-3" on:click={() => step += 1} />
+            <input 
+              type="button" 
+              value="Next" 
+              class="bg-brandTeal p-3 w-1/2 ml-1 rounded-lg my-3"
+              on:click={() => step += 1} 
+              />
+              <!-- disabled={!newDeal.dealName} -->
           </div>
         </div>
       </div>
     {:else if step === 2}
+    <!-- Add a Description -->
       <div in:fly={{x: 200, duration: 200}} class='p-8'>
         <div class="w-full">
           <p class='text-gray-400 text-xs'>DESCRIPTION</p>
@@ -147,22 +166,46 @@
           />
           <div class='flex items-center justify-between'>
             <input type="button" value="Back" class="bg-gray-400 text-white p-3 w-1/2 mr-1 rounded-lg my-3" on:click={() => step -= 1} />
-            <input type="button" value="Next" class="bg-brandTeal p-3 w-1/2 ml-1 rounded-lg my-3" on:click={() => step += 1} />
+            <input 
+              type="button" 
+              value="Next" 
+              class="bg-brandTeal p-3 w-1/2 ml-1 rounded-lg my-3" 
+              on:click={() => step += 1} 
+              />
+              <!-- disabled={!newDeal.description}   -->
           </div>
         </div>
       </div>
     {:else if step === 3}
+    <!-- Add delivarables -->
       <div in:fly={{x: 200, duration: 200}} class='p-8'>
         <div class="w-full">
           <p class='text-gray-400 text-xs'>DELIVERABLES</p>
-          <input type="text" 
-            class="w-full p-3 rounded-lg mt-3"
-            bind:value={} 
-            placeholder={'Ex: 30 second ad read'} 
-          />
+          {#each deliverablesArray as d}
+            <div class='flex items-center'>
+              <input type="text" 
+              class="w-full p-3 rounded-lg mt-3 mr-1"
+              bind:value={d.description} 
+              placeholder={'Ex: 30 second ad read'} 
+              />
+              <input type="date" 
+                class='ml-1 rounded-lg p-3' 
+                bind:value={d.dueDate} />
+            </div>
+          {/each}
+          <input 
+            type="button" 
+            value="+ Add a deliverable" 
+            class="text-brandTeal my-3"
+            on:click={handleNewDeliverable}>
           <div class='flex items-center justify-between'>
             <input type="button" value="Back" class="bg-gray-400 text-white p-3 w-1/2 mr-1 rounded-lg my-3" on:click={() => step -= 1} />
-            <input type="button" value="Next" class="bg-brandTeal p-3 w-1/2 ml-1 rounded-lg my-3" on:click={() => step += 1} />
+            <input 
+              type="button" 
+              value="Next" 
+              class="bg-brandTeal p-3 w-1/2 ml-1 rounded-lg my-3" 
+              on:click={handleAddDeal} 
+            />
           </div>
         </div>
       </div>
