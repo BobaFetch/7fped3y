@@ -20,10 +20,10 @@ export async function post({ request }) {
 
 export async function put({ request }) {
 	const body = await request.json();
-	const delivered = body.delivered === true ? 0 : 1;
+	const delivered = body.delivered == true ? 0 : 1;
 	const deliveredDate = new Date(Date.now());
 
-	if (delivered === 1) {
+	if (delivered == 1) {
 		db.prepare(
 			`UPDATE deliverables SET delivered = 1, deliveredDate = '${deliveredDate}' WHERE deliverable_id = ${body.deliverable_id}`
 		).run();
@@ -33,10 +33,8 @@ export async function put({ request }) {
 		).run();
 	}
 
-	const data = db
-		.prepare(`SELECT * FROM deliverables WHERE deliverable_id = ${body.deal_id}`)
-		.all();
-
+	const data = db.prepare(`SELECT * FROM deliverables WHERE deal_id = ${body.deal_id}`).all();
+	console.log(data);
 	return {
 		body: {
 			data

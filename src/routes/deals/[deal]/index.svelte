@@ -67,7 +67,8 @@
   }
 
   const handleUpdateDeliverable = async (deliverable) => {
-    const res = await fetch(`/api/deliverable?deliverable=${deliverable.deliverable_id}`, {
+    
+    const res = await fetch(`/api/deliverable`, {
       method: 'PUT',
       mode: 'cors',
       headers: {
