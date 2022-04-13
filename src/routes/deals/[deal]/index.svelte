@@ -11,7 +11,9 @@
   export let deliverables
   export let socials 
   export let creator
+
   let deliverableModal = false
+  let editDescription = false
 
   // console.log(socials)
 
@@ -82,6 +84,17 @@
     }
   }
 
+  const handleUpdateDealStatus = async () => {
+    const res = await fetch(`/api/deal`, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify(deal)
+    })
+    //just in case
+    editDescription = false
+  }
+
   onDestroy(() => {
     // update database
     
@@ -103,7 +116,7 @@
         <div class="my-5">
           <div class="flex justify-between">
             <p class="text-gray-300 text-sm mb-2">DESCRIPTION</p>
-            <input class="text-brandTeal" type="button" value="Edit">
+            <input class="text-brandTeal cursor-pointer" type="button" value="Edit" on:click={() => editDescription = true}>
           </div>
           <p class="font-thin pl-1">{deal.dealDescription}</p>
         </div>
@@ -134,7 +147,7 @@
                     />
                   </td>
                   <td class="text-center">{deliverable.deliveredDate === null ? '' : new Date(deliverable.deliveredDate).toLocaleDateString()}</td>
-                  <td><input class="text-brandTeal" type="button" value="X" on:click={() => handleDelDeliverable(deliverable)} /></td>
+                  <td><input class="text-brandTeal cursor-pointer p-2" type="button" value="X" on:click={() => handleDelDeliverable(deliverable)} /></td>
                 </tr>
               {/each}
             </tbody>
@@ -157,6 +170,7 @@
           <p class="text-brandWhite mb-3 font-bold">Status</p>
           <select 
             bind:value={deal.status}
+            on:change={handleUpdateDealStatus}
             class="bg-gray-800 p-2 rounded-lg w-full"  
           >
             {#each statusOptions as status}
@@ -183,6 +197,8 @@
       
     </div>
   </div>
+
+  <!-- Deliverable Modal -->
   <Modal open={deliverableModal} title={'Add a New Deliverable'} on:close={() => deliverableModal = false}>
     <svelte:fragment slot="body">
       <div class="grid grid-cols-2 gap-4">
@@ -211,6 +227,24 @@
         value="Add Deliverable"  
         on:click={handleAddDeliverable}
       />
+    </svelte:fragment>
+  </Modal>
+
+  <!-- Description Modal -->
+  <Modal open={editDescription} title={"Edit Description"} on:close={() => editDescription = false}>
+    <svelte:fragment slot="body">
+      <div class="flex flex-col">
+        <input 
+          type="text" 
+          bind:value={deal.dealDescription} 
+          class="p-2 rounded-lg my-2"
+          placeholder="Ex: some example">
+        <input 
+          type="button" 
+          on:click={handleUpdateDealStatus} 
+          class="bg-brandTeal p-2 rounded-lg my-2"
+          value="Update">
+      </div>
     </svelte:fragment>
   </Modal>
 </div>

@@ -11,7 +11,7 @@
   const leads = deals.filter(item => item.status === 'Lead')
   const contacting = deals.filter(item => item.status === 'Contacting')
   const negotiating = deals.filter(item => item.status === 'Negotiating')
-  const finalizing = deals.filter(item => item.status === 'Finalizing')
+  const finalizing = deals.filter(item => item.status === 'Finalizing Contract')
   const pendingDel = deals.filter(item => item.status === 'Pending Deliverables')
   const pendingPay = deals.filter(item => item.status === 'Pending Payment')
   const paid = deals.filter(item => item.status === 'Paid')
