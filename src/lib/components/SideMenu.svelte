@@ -5,7 +5,7 @@
 
 <div class="flex flex-col items-center h-screen sticky">
   <div class="flex flex-col flex-1 my-5 w-full items-center ">
-    <div class="w-10 h-10 bg-white rounded-full text-center ">logo</div>
+    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center ">logo</div>
     <a href='/deals' class="my-5 text-brandWhite ">
       <Fa icon={faMap} size='2x'/>
     </a>
