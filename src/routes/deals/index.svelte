@@ -31,9 +31,9 @@
   <!-- this is just thrown together a lot of copy/paste, need to break it down and streamline this bad boy -->
   <div class='overflow-x-hidden'>
 
-    <div class="flex flex-row justify-between overflow-auto">
+    <div class="flex flex-row justify-between overflow-auto py-5 h-screen">
       <!--  -->
-      <div class='mx-2 w-64 p-1'>
+      <div class='mx-2 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Leads</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -53,7 +53,7 @@
         {/if}
       </div>  
       <!--  -->
-      <div class='mx-2 w-64 p-1'>
+      <div class='mx-2 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Contacting</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -73,7 +73,7 @@
         {/if}
       </div>
       <!--  -->
-      <div class='mx-2 w-64 p-1'>
+      <div class='mx-2 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Negotiating</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -93,7 +93,7 @@
         {/if}
       </div>
       <!-- Finalizing Contract -->
-      <div class='mx-2 w-64 p-1'>
+      <div class='mx-2 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Finalizing Contract</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -113,7 +113,7 @@
         {/if}
       </div>
       <!-- Pending Deliverables -->
-      <div class='w-64 p-1 shrink-0 col-span-1'>
+      <div class='mx-2 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Pending Deliverables</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -133,7 +133,7 @@
         {/if}
       </div>  
       <!-- Pending Payment -->
-      <div class='w-64 p-1 shrink-0'>
+      <div class='mx-2 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Pending Payment</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -153,7 +153,7 @@
         {/if}
       </div>  
       <!-- Paid -->
-      <div class='w-64 p-1 shrink-0'>
+      <div class='mx-2 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Paid</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>
@@ -173,7 +173,7 @@
         {/if}
       </div>
       <!-- Archived -->
-      <div class='w-64 p-1 shrink-0'>
+      <div class='mx-2 p-1'>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl">Archived</h5>
           <div class='bg-brandTeal w-5 h-5 rounded-full flex items-center justify-center'>

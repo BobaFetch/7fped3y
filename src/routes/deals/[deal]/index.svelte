@@ -1,38 +1,19 @@
 <script>
+  import { onDestroy } from "svelte";
+  import { goto } from '$app/navigation'
+  import CreatorCard from '$lib/components/CreatorCard.svelte'
+  import Modal from "$lib/components/Modal.svelte";
+
+
   //get data
+  // export let deals
   export let deal 
   export let deliverables
+  export let socials 
+  export let creator
+  let deliverableModal = false
 
-  deal = {
-    deal_id: 1,
-    title: "Carly Marier X Shoutouts",
-    description: "Series of shoutouts",
-    status: 'Pending Deliverables'
-  }
-
-  deliverables = [
-  {
-    deal_id: 1,
-    description: "[TikTok] 1 renegade dance with shoutouts",
-    dueDate: "2022-07-02",
-    delivered: 1,
-    deliveredDate: "2022-07-02"
-  },
-  {
-    deal_id: 1,
-    description: "[TikTok] 1 duet with our company account",
-    dueDate: "2022-07-09",
-    delivered: 0,
-    deliveredDate: null
-  },
-  {
-    deal_id: 1,
-    description: "1 Instagram post with #tournamentshoutouts hashtag",
-    dueDate: "2022-07-09",
-    delivered: 0,
-    deliveredDate: null,
-  }
-  ]
+  // console.log(socials)
 
   const statusOptions =[
     'Lead',
@@ -44,12 +25,74 @@
     'Paid',
     'Archived'
   ]
+
+  let newDeliverable = {
+    deal_id: deal.deal_id,
+    description: '',
+    dueDate: '',
+    delivered: 0,
+    deliveredDate: null
+  }
+
+  const handleAddDeliverable = async () => {
+    const res = await fetch('/api/deliverable', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(newDeliverable)
+    })
+    if(res.ok) {
+      let { data } = await res.json()
+      deliverables = data
+    }
+    deliverableModal = false
+  }
+
+  const handleDelDeliverable = async (deliverable) => {
+    const res = await fetch(`/api/deliverable?deliverable=${deliverable.deliverable_id}&deal=${deliverable.deal_id}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+
+    if (res.ok) {
+      let { data } = await res.json()
+      deliverables = data
+    }
+    
+  }
+
+  const handleUpdateDeliverable = async (deliverable) => {
+    const res = await fetch(`/api/deliverable?deliverable=${deliverable.deliverable_id}`, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(deliverable)
+    })
+    if (res.ok) {
+      let { data } = await res.json()
+      deliverables = data
+    }
+  }
+
+  onDestroy(() => {
+    // update database
+    
+  })
 </script>
 
 <div>
   <div class="flex items-center mb-5">
-    <button class="text-gray-900 border border-gray-900 px-4 py-3 rounded-lg bg-brandTeal">{"<"}</button>
-    <h1 class="text-brandWhite mx-5 text-4xl italic bold">{deal.title}</h1>
+    <button
+      on:click={() => goto('/deals')} 
+      class="text-gray-900 border border-gray-900 px-4 py-3 rounded-lg bg-brandTeal">{"<"}</button>
+    <h1 class="text-brandWhite mx-5 text-4xl italic bold">{deal.dealName}</h1>
   </div>
   <div class="grid grid-cols-12 gap-2 text-white my-2">
     <!-- details -->
@@ -57,11 +100,16 @@
       <div class="bg-blue-900 rounded-lg p-3">
         <h3 class="text-2xl">Details</h3>
         <div class="my-5">
-          <p class="text-gray-300 text-sm mb-2">DESCRIPTION</p>
-          <p class="font-thin pl-1">{deal.description}</p>
+          <div class="flex justify-between">
+            <p class="text-gray-300 text-sm mb-2">DESCRIPTION</p>
+            <input class="text-brandTeal" type="button" value="Edit">
+          </div>
+          <p class="font-thin pl-1">{deal.dealDescription}</p>
         </div>
         <div>
           <p class="text-gray-300 text-sm">DELIVERABLES</p>
+
+          {#if deliverables.length > 0}
           <table class="w-full">
             <thead>
               <tr>
@@ -73,19 +121,30 @@
               </tr>
             </thead>
             <tbody class='font-thin'>
-              {#each deliverables as {description, dueDate, delivered, deliveredDate}}
+              {#each deliverables as deliverable}
                 <tr class="py-3">
-                  <td>{description}</td>
-                  <td class="text-center">{new Date(dueDate).toLocaleDateString()}</td>
+                  <td>{deliverable.description}</td>
+                  <td class="text-center">{new Date(deliverable.dueDate).toDateString()}</td>
                   <td class="text-center">
-                    <input type="checkbox" bind:checked={delivered} />
+                    <input 
+                      type="checkbox" 
+                      bind:checked={deliverable.delivered}  
+                      on:click={() => handleUpdateDeliverable(deliverable)}
+                    />
                   </td>
-                  <td class="text-center">{deliveredDate === null ? '' : new Date(deliveredDate).toLocaleDateString()}</td>
-                  <td><input type="button" value="X" /></td>
+                  <td class="text-center">{deliverable.deliveredDate === null ? '' : new Date(deliverable.deliveredDate).toLocaleDateString()}</td>
+                  <td><input class="text-brandTeal" type="button" value="X" on:click={() => handleDelDeliverable(deliverable)} /></td>
                 </tr>
               {/each}
             </tbody>
           </table>
+          <!-- add an else clause to display no deliverables? -->
+          {/if}
+          <input 
+            class="my-3 text-brandTeal italic font-light"
+            type="button" 
+            value="+ Add a deliverable" 
+            on:click={() => deliverableModal = true}/>
         </div>
       </div>
     </div>
@@ -117,34 +176,40 @@
         </div>
         <!-- creator -->
         <div class="row-span-3 bg-blue-900 rounded-lg p-3">
-          <p class="font-bold">CREATOR</p>
-          <div class="my-2 flex items-center">
-            <div class="h-10 w-10 bg-white rounded-full flex items-center justify-center">
-              <p class="text-black">CM</p>
-            </div>
-            <p class="ml-5">Carly Marier</p>
-          </div>
-          <p class="text-gray-400 font-light text-sm mt-5">SOCIALS</p>
-          <div class="my-2 grid grid-rows gap-3">
-            <div class='grid grid-cols-5 gap-2 text-sm font-light'>
-              <p class="col-span-1">TikTok</p>
-              <p class="col-span-2">340K Followers</p>
-              <p class="col-span-2">54% Engagement</p>
-            </div>
-            <div class='grid grid-cols-5 gap-2 text-sm font-light'>
-              <p class="col-span-1">Instagram</p>
-              <p class="col-span-2">102K Followers</p>
-              <p class="col-span-2">10% Engagement</p>
-            </div>
-            <div class='grid grid-cols-5 gap-2 text-sm font-light'>
-              <p class="col-span-1">Youtube</p>
-              <p class="col-span-2">10K Followers</p>
-              <p class="col-span-2">33% Engagement</p>
-            </div>
-          </div>
+          <CreatorCard {creator} {socials} />
         </div>
       </div>
       
     </div>
   </div>
+  <Modal open={deliverableModal} title={'Add a New Deliverable'} on:close={() => deliverableModal = false}>
+    <svelte:fragment slot="body">
+      <div class="grid grid-cols-2 gap-4">
+        <label class="flex flex-col text-white" for="description">Description
+          <input 
+            type="text" 
+            name="description" 
+            class="text-gray-800"
+            bind:value={newDeliverable.description} 
+            placeholder="Ex: 1 company shoutout" 
+          />
+        </label>
+
+        <label class="flex flex-col text-white" for="due-date">Due Date
+          <input 
+            type="date" 
+            name="due-date" 
+            class="text-gray-800"
+            bind:value={newDeliverable.dueDate} 
+            />
+        </label>
+      </div>
+      <input 
+        type="button" 
+        class="bg-brandTeal p-3 rounded-lg mt-5 w-full"
+        value="Add Deliverable"  
+        on:click={handleAddDeliverable}
+      />
+    </svelte:fragment>
+  </Modal>
 </div>

@@ -2,6 +2,7 @@ import db from '$lib/db';
 
 export async function get() {
 	const deals = db.prepare('SELECT * FROM deals').all();
+
 	const contacts = db
 		.prepare(
 			`SELECT contacts.contact_id, firstName, lastName, email, phone, category, info, description, location,

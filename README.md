@@ -4,25 +4,15 @@ this process currently does not have any actual process in place, you can click 
 
 not fully mobile friendly
 
-routes:
-**CHANGED ROUTES**
-/deals
+## _ROUTES_
 
-- this is a sample of what the deals page would look like to a logged in user
-- not finished
+- /deals
+  - /deals/[deal_id]
+- /contacts
+  - /contacts/[contact_id]
+- /settings/[user_id]
 
-/settings/1
+## _TODO_
 
-- example of an admin user
-- not finished
-  **WORKING**
-  - profile edit button
-  - remove user from team
-
-/settings/2
-
-- example of a team user
-
-/contacts
-
-- contact page example
+- [ ] Break down pieces into reusable components
+- [ ] Search bar functionality
