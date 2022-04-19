@@ -16,7 +16,7 @@
 
   let deliverableModal = false
   let editDescription = false
-  let deleteDeal = true
+  let deleteDeal = false
 
   // console.log(deal)
 
@@ -252,10 +252,11 @@
   </Modal>
 
   <!-- DELETE CONFIRMATION -->
-  <Modal open={deleteDeal} title={null} on:close={() => deleteDeal = false}>
+  <Modal open={deleteDeal} title={"Delete Deal"} on:close={() => deleteDeal = false}>
     <svelte:fragment slot="body">
       <div class="flex flex-col">
-        <p class="text-white text-2xl font-thin text-center mb-10">Are you sure you want to delete this deal?</p>
+        <!-- <p class="text-2xl text-white font-bold">DELETE DEAL</p> -->
+        <p class="text-gray-300 text-sm font-thin mb-10">Are you sure you want to delete this deal?</p>
         <div class="grid grid-cols-2 gap-2">
           <input class="bg-red-400 p-2 rounded-lg" type="button" value="Cancel" on:click={() => deleteDeal = false}>
           <input class="bg-brandTeal p-2 rounded-lg" type="button" value="Confirm" on:click={handleDeleteDeal} />
