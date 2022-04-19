@@ -13,27 +13,30 @@ export async function get() {
 export async function post({ request }) {
 	const body = await request.json();
 	console.log(body);
-	body.map((deliverable) =>
-		db
-			.prepare(
-				`INSERT INTO deliverables(deal_id, description, dueDate, delivered) VALUES (${deliverable.deal_id}, '${deliverable.description}', '${deliverable.dueDate}', '${deliverable.delivered}')`
-			)
-			.run()
-	);
-	// db.prepare(
-	// 	`
-	//   INSERT INTO deliverables(deal_id, description, dueDate, delivered)
-	//   VALUES
-	//   (${body.deal_id}, '${body.description}', '${body.dueDate}', '${body.delivered}')
-	// `
-	// ).run();
+	if (body.length > 1) {
+		body.map((deliverable) =>
+			db
+				.prepare(
+					`INSERT INTO deliverables(deal_id, description, dueDate, delivered) VALUES (${deliverable.deal_id}, '${deliverable.description}', '${deliverable.dueDate}', '${deliverable.delivered}')`
+				)
+				.run()
+		);
+	} else {
+		db.prepare(
+			`
+				  INSERT INTO deliverables(deal_id, description, dueDate, delivered)
+				  VALUES
+				  (${body.deal_id}, '${body.description}', '${body.dueDate}', '${body.delivered}')
+				`
+		).run();
+	}
 
 	// const row_id = db.prepare('SELECT last_insert_rowid()').all();
 
-	// const data = db.prepare(`SELECT * FROM deliverables WHERE deal_id = ${body.deal_id}`).all();
+	const data = db.prepare(`SELECT * FROM deliverables WHERE deal_id = ${body.deal_id}`).all();
 	return {
 		body: {
-			data: 'success'
+			data: data
 		}
 	};
 }

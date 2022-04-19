@@ -16,6 +16,7 @@
 
   let deliverableModal = false
   let editDescription = false
+  let deleteDeal = true
 
   // console.log(deal)
 
@@ -118,7 +119,7 @@
       class="text-gray-900 border border-gray-900 px-4 py-2 rounded-lg bg-brandTeal">{"<"}</button>
       <h1 class="text-brandWhite mx-5 text-4xl italic bold">{deal.dealName}</h1>
     </div>
-    <input class="bg-brandTeal p-2 rounded-lg" type="button" value="Delete" on:click={handleDeleteDeal}>
+    <input class="bg-brandTeal p-2 rounded-lg" type="button" value="Delete" on:click={() => deleteDeal = true}>
   </div>
   <div class="grid grid-cols-12 gap-2 text-white my-2">
     <!-- details -->
@@ -228,7 +229,7 @@
   <!-- Deliverable Modal -->
   <Modal open={deliverableModal} title={'Add a New Deliverable'} on:close={() => deliverableModal = false}>
     <svelte:fragment slot="body">
-      <NewDeliverableModal on:newDeliverable={handleAddDeliverable} bind:newDeliverable />
+      <NewDeliverableModal on:addDeliverable={handleAddDeliverable} bind:newDeliverable  />
     </svelte:fragment>
   </Modal>
 
@@ -246,6 +247,19 @@
           on:click={handleUpdateDealStatus} 
           class="bg-brandTeal p-2 rounded-lg my-2"
           value="Update">
+      </div>
+    </svelte:fragment>
+  </Modal>
+
+  <!-- DELETE CONFIRMATION -->
+  <Modal open={deleteDeal} title={null} on:close={() => deleteDeal = false}>
+    <svelte:fragment slot="body">
+      <div class="flex flex-col">
+        <p class="text-white text-2xl font-thin text-center mb-10">Are you sure you want to delete this deal?</p>
+        <div class="grid grid-cols-2 gap-2">
+          <input class="bg-red-400 p-2 rounded-lg" type="button" value="Cancel" on:click={() => deleteDeal = false}>
+          <input class="bg-brandTeal p-2 rounded-lg" type="button" value="Confirm" on:click={handleDeleteDeal} />
+        </div>
       </div>
     </svelte:fragment>
   </Modal>

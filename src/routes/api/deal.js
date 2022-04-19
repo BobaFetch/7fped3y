@@ -37,6 +37,7 @@ export async function del({ url }) {
 	const deal_id = await url.searchParams.get('deal_id');
 
 	db.prepare(`DELETE FROM deals WHERE deal_id = ${deal_id}`).run();
+	db.prepare(`DELETE FROM deliverables WHERE deal_id = ${deal_id}`).run();
 
 	return {
 		status: 303,
