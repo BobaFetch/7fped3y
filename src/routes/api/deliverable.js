@@ -1,19 +1,39 @@
 import db from '$lib/db';
 
-export async function post({ request }) {
-	const body = await request.json();
-	db.prepare(
-		`
-    INSERT INTO deliverables(deal_id, description, dueDate, delivered)
-    VALUES
-    (${body.deal_id}, '${body.description}', '${body.dueDate}', '${body.delivered}')
-  `
-	).run();
+export async function get() {
+	const dealId = db.prepare('SELECT deal_id FROM deals ORDER BY deal_id desc LIMIT 1').all();
 
-	const data = db.prepare(`SELECT * FROM deliverables WHERE deal_id = ${body.deal_id}`).all();
 	return {
 		body: {
-			data
+			dealId: dealId[0]
+		}
+	};
+}
+
+export async function post({ request }) {
+	const body = await request.json();
+	console.log(body);
+	body.map((deliverable) =>
+		db
+			.prepare(
+				`INSERT INTO deliverables(deal_id, description, dueDate, delivered) VALUES (${deliverable.deal_id}, '${deliverable.description}', '${deliverable.dueDate}', '${deliverable.delivered}')`
+			)
+			.run()
+	);
+	// db.prepare(
+	// 	`
+	//   INSERT INTO deliverables(deal_id, description, dueDate, delivered)
+	//   VALUES
+	//   (${body.deal_id}, '${body.description}', '${body.dueDate}', '${body.delivered}')
+	// `
+	// ).run();
+
+	// const row_id = db.prepare('SELECT last_insert_rowid()').all();
+
+	// const data = db.prepare(`SELECT * FROM deliverables WHERE deal_id = ${body.deal_id}`).all();
+	return {
+		body: {
+			data: 'success'
 		}
 	};
 }

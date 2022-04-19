@@ -9,10 +9,6 @@ export async function get() {
 		)
 		.all();
 
-	// const del = db.prepare(`DELETE FROM contacts where contacts.firstName = 'Andrew'`);
-
-	// del.run();
-
 	return {
 		body: {
 			contacts
@@ -22,7 +18,7 @@ export async function get() {
 
 export async function post({ request }) {
 	let body = await request.json();
-	console.log(body);
+	console.log(body.socials);
 	const { firstName, lastName, email, phone, category, info, description, location, owner_id } =
 		body;
 

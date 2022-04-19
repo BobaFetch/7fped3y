@@ -1,6 +1,4 @@
-import data from '$lib/mock_data.json';
 import db from '$lib/db';
-import { contactStore } from '$lib/stores/tempStore';
 
 export async function get({ params }) {
 	const contact_id = parseInt(params.contact);

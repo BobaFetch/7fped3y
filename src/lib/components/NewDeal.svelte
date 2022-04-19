@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher, onMount } from "svelte";
   import {fly} from 'svelte/transition'
+  import { goto } from "$app/navigation";
   // import ContactCard from "$lib/components/ContactCard.svelte";
   import Modal from "$lib/components/Modal.svelte";
 
@@ -23,14 +24,16 @@
     dealName: '',
     description: '',
     active: 1,
-    status: ''
+    status: 'Lead'
   }
 
-  let deliverable = {description: '', dueDate: ''}
+  let deliverable = {deal_id: 0, description: '', delivered: 0, dueDate: ''}
 
   let deliverablesArray = [
     {
+      deal_id: 0,
       description: '',
+      delivered: 0,
       dueDate: ''
     }
   ]
@@ -73,20 +76,44 @@
 
     selectedCreator = creators[0]
     handleSocials(selectedCreator)
-
-    // console.log(selectedSocials)
+    console.log(selectedCreator)
   }
 
   const handleSocials = (contact) => {
     selectedSocials = socials.filter(social => social.contact_id === contact.contact_id)
   }
 
-  const handleAddDeal = () => {
-    console.log(deliverablesArray)
+  const handleAddDeal = async () => {
+    newDeal.contact_id = selectedCreator.contact_id
+    newDeal.owner_id = selectedCreator.owner_id
+    newDeal.team_id = selectedCreator.team_id
+    const res = await fetch(`/api/deal`, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(newDeal)
+    })
+    if (res.ok) {
+      let {lastInsertRowid} = await res.json()
+      console.log(lastInsertRowid)
+      deliverablesArray.map(del => del.deal_id = lastInsertRowid)
+      await fetch('/api/deliverable', {
+        method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify(deliverablesArray)
+      }).then(() => goto(`/deals/${lastInsertRowid}`))
+    }
+
+    // deliverablesArray = [{deal_id: 0, description: '', dueDate: ''}]
   }
 
   onMount(() => {
     getCreators()
+    console.log('open')
+    //get previous deal_id  this is trash and only woeks one at a time
+    fetch('/api/deliverable',
+    {
+      method: 'GET'
+    }).then(res => res.json()).then(json => console.log(json))
   })
 </script>
 
@@ -182,14 +209,14 @@
         <div class="w-full">
           <p class='text-gray-400 text-xs'>DELIVERABLES</p>
           {#each deliverablesArray as d}
-            <div class='flex items-center'>
+            <div class='flex items-center justify-between'>
               <input type="text" 
-              class="w-full p-3 rounded-lg mt-3 mr-1"
+              class="flex-1 p-3 rounded-lg"
               bind:value={d.description} 
               placeholder={'Ex: 30 second ad read'} 
               />
               <input type="date" 
-                class='ml-1 rounded-lg p-3' 
+                class='flex-1 ml-1 rounded-lg p-3' 
                 bind:value={d.dueDate} />
             </div>
           {/each}

@@ -3,6 +3,7 @@
   import { goto } from '$app/navigation'
   import CreatorCard from '$lib/components/CreatorCard.svelte'
   import Modal from "$lib/components/Modal.svelte";
+  import NewDeliverableModal from "$lib/components/NewDeliverableModal.svelte";
 
 
   //get data
@@ -11,11 +12,12 @@
   export let deliverables
   export let socials 
   export let creator
+  export let team
 
   let deliverableModal = false
   let editDescription = false
 
-  // console.log(socials)
+  // console.log(deal)
 
   const statusOptions =[
     'Lead',
@@ -95,6 +97,13 @@
     editDescription = false
   }
 
+  const handleDeleteDeal = async () => {
+    await fetch(`/api/deal?deal_id=${deal.deal_id}`, {
+      method: 'DELETE',
+      mode: 'cors'
+    }).then(() => goto('/deals'))
+  }
+
   onDestroy(() => {
     // update database
     
@@ -102,11 +111,14 @@
 </script>
 
 <div>
-  <div class="flex items-center mb-5">
-    <button
+  <div class="flex items-center justify-between mb-5">
+    <div class="flex items-center">
+      <button
       on:click={() => goto('/deals')} 
-      class="text-gray-900 border border-gray-900 px-4 py-3 rounded-lg bg-brandTeal">{"<"}</button>
-    <h1 class="text-brandWhite mx-5 text-4xl italic bold">{deal.dealName}</h1>
+      class="text-gray-900 border border-gray-900 px-4 py-2 rounded-lg bg-brandTeal">{"<"}</button>
+      <h1 class="text-brandWhite mx-5 text-4xl italic bold">{deal.dealName}</h1>
+    </div>
+    <input class="bg-brandTeal p-2 rounded-lg" type="button" value="Delete" on:click={handleDeleteDeal}>
   </div>
   <div class="grid grid-cols-12 gap-2 text-white my-2">
     <!-- details -->
@@ -179,14 +191,29 @@
           </select>
         </div>
         <!-- team  -->
-        <div class='bg-blue-900 rounded-lg p-3'>
+        <div class='bg-blue-900 rounded-lg p-3 row-span-2'>
           <p class="font-bold">Team</p>
-          <p class="font-light text-gray-400 text-sm my-2">OWNER</p>
-          <div class="flex items-center my-2">
-            <div class="h-10 w-10 bg-brandWhite rounded-full flex justify-center items-center">
-              <p class='text-black'>KS</p>
+          <div>
+            <p class="font-light text-gray-400 text-sm my-2">OWNER</p>
+            <div class="flex items-center my-2 ml-2">
+              <div class="h-10 w-10 bg-brandWhite rounded-full flex justify-center items-center">
+                <p class='text-black'>{deal.owner.split(' ').map(n => n[0]).join('')}</p>
+              </div>
+              <p class='ml-5'>{deal.owner}</p>
             </div>
-            <p class='ml-5'>Keisha Smith</p>
+          </div>
+          <div>
+            {#if team}
+            <p class="font-light text-gray-400 text-sm mt-8">MEMBERS</p>
+              {#each team.filter(val => `${val.firstName} ${val.lastName}` !== deal.owner) as t}
+              <div class="flex items-center my-2 ml-2">
+                <div class="h-10 w-10 bg-brandWhite rounded-full flex justify-center items-center">
+                  <p class="text-black">{t.firstName[0]+t.lastName[0]}</p>
+                </div>
+                <p class="ml-5">{t.firstName} {t.lastName}</p>
+              </div>
+              {/each}
+            {/if}
           </div>
         </div>
         <!-- creator -->
@@ -201,32 +228,7 @@
   <!-- Deliverable Modal -->
   <Modal open={deliverableModal} title={'Add a New Deliverable'} on:close={() => deliverableModal = false}>
     <svelte:fragment slot="body">
-      <div class="grid grid-cols-2 gap-4">
-        <label class="flex flex-col text-white" for="description">Description
-          <input 
-            type="text" 
-            name="description" 
-            class="text-gray-800"
-            bind:value={newDeliverable.description} 
-            placeholder="Ex: 1 company shoutout" 
-          />
-        </label>
-
-        <label class="flex flex-col text-white" for="due-date">Due Date
-          <input 
-            type="date" 
-            name="due-date" 
-            class="text-gray-800"
-            bind:value={newDeliverable.dueDate} 
-            />
-        </label>
-      </div>
-      <input 
-        type="button" 
-        class="bg-brandTeal p-3 rounded-lg mt-5 w-full"
-        value="Add Deliverable"  
-        on:click={handleAddDeliverable}
-      />
+      <NewDeliverableModal on:newDeliverable={handleAddDeliverable} bind:newDeliverable />
     </svelte:fragment>
   </Modal>
 

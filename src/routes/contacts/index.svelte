@@ -16,7 +16,9 @@
   <SearchHeader title={'Contacts'} bind:showModal />
   <div class="my-10">
     {#each contacts as contact}
-      <a href={`/contact/${contact.contact_id}`}><ContactCard {contact} /></a>
+      <a href={`/contacts/${contact.contact_id}`}>
+        <ContactCard {contact} />
+      </a>
     {/each}
   </div>
 
@@ -25,8 +27,8 @@
     title={false}
     on:close={handleToggleModal}
   >
-  <svelte:fragment slot="body">
-    <NewContactForm bind:showModal/>
-  </svelte:fragment>
+    <svelte:fragment slot="body">
+      <NewContactForm bind:showModal/>
+    </svelte:fragment>
 </Modal>
 </div>
