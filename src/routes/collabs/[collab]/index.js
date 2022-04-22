@@ -1,7 +1,7 @@
 import db from '$lib/db';
 
 export async function get({ params }) {
-	const deal_id = params.deal;
+	const deal_id = params.collab;
 
 	let deal;
 	let deliverables;

@@ -7,7 +7,7 @@ export async function guard({ url }) {
 	if (isAuthenticated && url.pathname === '/auth') {
 		return {
 			status: 302,
-			redirect: '/deals'
+			redirect: '/collabs'
 		};
 	} else if (!isAuthenticated && url.pathname !== '/auth') {
 		return {

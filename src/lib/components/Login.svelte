@@ -13,7 +13,7 @@
 
   const handleLogin = () => {
     $authenticated = true
-    goto('/deals')
+    goto('/collabs')
   }
 </script>
 

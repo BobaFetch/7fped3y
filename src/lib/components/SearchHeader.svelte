@@ -34,12 +34,12 @@
 
 </script>
 
-<div class="flex flex-row justify-between w-full mb-3">
-  <h4 class="text-brandWhite text-2xl ">{title}</h4>
+<div class="flex flex-row justify-between w-full mb-3 px-3">
+  <h4 class="text-gray-300 text-2xl font-header ">{title}</h4>
   <div class="relative">
     <input type="search" 
       placeholder={`Search ${title}`} 
-      class="mx-auto rounded-xl w-1/2 sm:w-72 p-2" 
+      class="mx-auto rounded-xl w-1/2 sm:w-72 p-2 bg-gray-500 text-gray-200" 
       list="search-data"
       on:change={doSomething}
     />

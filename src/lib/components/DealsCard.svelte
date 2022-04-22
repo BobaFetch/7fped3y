@@ -10,10 +10,10 @@ import { goto } from '$app/navigation';
 
 
 {#if deal === null}
-  <div class="w-72 h-20 rounded border border-brandWhite border-dotted my-1"></div>
+  <div class="w-64 h-20 rounded border border-brandWhite border-dotted my-1"></div>
 {:else}
 
-<div class='flex flex-col bg-blue-800 p-2 w-72 h-20 rounded my-1 hover:bg-blue-400 ' on:click={() => goto(`/deals/${deal.deal_id}`)}>
+<div class='flex flex-col bg-blue-800 p-2 w-64 h-20 rounded my-1 hover:bg-blue-400 ' on:click={() => goto(`/collabs/${deal.deal_id}`)}>
   <div class='flex'>
     <div class='bg-brandWhite rounded-full w-10 h-10 p-1.5 flex justify-center items-center'>
       <Fa icon={faUserCircle} size='2x' color="black" />
@@ -29,7 +29,6 @@ import { goto } from '$app/navigation';
       {/each}
     </div>
     {/if}
-    <div class="bg-brandTeal w-5 h-5 text-xs text-black rounded-full flex justify-center items-center">{owner.firstName[0]}{owner.lastName[0]}</div>
   </div>
 </div>
 {/if}

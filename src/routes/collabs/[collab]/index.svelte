@@ -115,7 +115,7 @@
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center">
       <button
-      on:click={() => goto('/deals')} 
+      on:click={() => goto('/collabs')} 
       class="text-gray-900 border border-gray-900 px-4 py-2 rounded-lg bg-brandTeal">{"<"}</button>
       <h1 class="text-brandWhite mx-5 text-4xl italic bold">{deal.dealName}</h1>
     </div>

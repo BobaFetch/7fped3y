@@ -1,6 +1,5 @@
 <script context="module">
   import {guard} from '$lib/protection'
-
   export async function load(url) {
     return (guard(url))
   }
@@ -10,21 +9,21 @@
 
 <script>
   import '../app.css'
-  import SideMenu from '$lib/components/SideMenu.svelte'
   import {authenticated} from '$lib/stores/tempStore'
+  import Header from '$lib/components/Header.svelte';
 </script>
 
 {#if $authenticated}
-<div class=" h-screen bg-brandBlue grid grid-cols-12 overflow-hidden">
-  <div class="col-span-1 border-r-[.5px] border-brandTeal">
-    <SideMenu />
+<div class="container-full h-screen bg-gray-800 flex flex-col overflow-hidden">
+  <div class="">
+    <Header />
   </div>
-  <div class="col-span-11 mt-5 m-3 overflow-auto">
+  <div class="overflow-auto">
     <slot />
   </div>
 </div>
 {:else}
-<div class="h-screen bg-brandBlue p-3">
+<div class="h-screen bg-gray-800">
   <slot />
 </div>
 {/if}

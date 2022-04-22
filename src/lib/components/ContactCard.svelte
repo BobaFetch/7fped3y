@@ -1,7 +1,8 @@
 <script>
-
+  // import * as avatars from '$lib/assets/avatars'
   export let contact
   // const socials = JSON.parse(contact.socials)
+  // console.log(avatars)
 
 </script>
 

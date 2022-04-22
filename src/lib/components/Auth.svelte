@@ -7,7 +7,7 @@
 </script>
 
 <div>
-  <img src={logo} alt="monette logo" width="400" class="mx-auto">
+  <img src={logo} alt="monette logo" width="400" class="mx-auto bg-gray-800">
   {#if newSignUp}
   <Register bind:newSignUp/>
   {:else}
