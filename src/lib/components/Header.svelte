@@ -16,13 +16,13 @@
   </div>
   <!-- Collabs | Contacts | Settings/Profile -->
   <div class="flex items-center">
-    <a href="/collabs" title="Collabs" class="h-10 w-10 mx-3">
+    <a href="/collabs" title="Collabs" class="h-6 w-6 mx-3">
       <Icon src={Edit} theme="outline" size="100%" class="text-gray-400 hover:text-gray-200 stroke-1" />
     </a>
-    <a href="/contacts" title="Contacts" class="h-10 w-10 mx-3">
+    <a href="/contacts" title="Contacts" class="h-6 w-6 mx-3">
       <Icon src={Columns} theme="outline" size="100%" class="text-gray-400 hover:text-gray-200 stroke-1" />
     </a>
-    <a href="/settings/1" title="Settings" class="h-10 w-10 mx-3">
+    <a href="/settings/1" title="Settings" class="h-6 w-6 mx-3">
       <Icon src={Settings} theme="outline" size="100%" class="text-gray-400 hover:text-gray-200 stroke-1" />
     </a>
   </div>

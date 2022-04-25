@@ -18,12 +18,12 @@
   <div class="">
     <Header />
   </div>
-  <div class="overflow-auto">
+  <div class="overflow-auto font-body">
     <slot />
   </div>
 </div>
 {:else}
-<div class="h-screen bg-gray-800">
+<div class="container-full h-screen bg-gray-800">
   <slot />
 </div>
 {/if}

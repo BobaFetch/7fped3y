@@ -29,7 +29,6 @@
   const handleDelay = () => {
     loadingModal = false
     setTimeout(() => {
-      loadingModal = true
       handleRegistrationComplete()
     }, 2000)
   }
@@ -40,7 +39,7 @@
   <div in:fly={{x:200, duration: 400}} class='flex flex-col justify-center items-center w-full mb-5'>
     <h1 class='text-brandWhite text-center text-4xl sm:text-5xl md:text-6xl italic font-bold mb-5'>First, enter your email</h1>
     <h4 class="text-[#cccccc] my-5">We suggest using the email address you use at work</h4>
-    <input type="email" bind:value={email} placeholder="ex: name@work-email.com" class="w-1/2 my-5 p-3 rounded-lg bg-[#ddf0f2]" />
+    <input type="email" bind:value={email} placeholder="ex: name@work-email.com" class="w-1/2 my-5 p-3 rounded-lg bg-[#ddf0f2]" autofocus/>
     <button 
       class="bg-[#52c0cc] w-1/2 p-3 rounded-lg"
       class:bg-teal-600={!email} 
@@ -52,7 +51,7 @@
     <div in:fly={{x:200, duration: 400}} class='flex flex-col justify-center items-center w-full mb-5'>
       <h1 class='text-brandWhite text-center text-4xl sm:text-5xl md:text-6xl italic font-bold mb-5'>And your password</h1>
       <h4 class="text-[#cccccc] my-5">Make it memorable</h4>
-      <input type="password" bind:value={password} placeholder="Password" class="w-1/2 my-5 p-3 rounded-lg bg-[#ddf0f2]" />
+      <input type="password" bind:value={password} placeholder="Password" class="w-1/2 my-5 p-3 rounded-lg bg-[#ddf0f2]" autofocus/>
       <button 
       class="bg-[#52c0cc] w-1/2 p-3 rounded-lg" 
       class:bg-teal-600={!password}
@@ -65,7 +64,7 @@
       <!-- <h6 class="text-xs text-[#cccccc]">Step 1 of 3</h6> -->
       <h1 class='text-brandWhite text-center text-4xl sm:text-5xl md:text-6xl italic font-bold mb-5'>What's your company's name?</h1>
       <h4 class="text-[#cccccc] my-5">Choose something your team will recognize</h4>
-      <input type="text" bind:value={companyName} placeholder="" class="w-1/2 my-5 p-3 rounded-lg bg-[#ddf0f2]" />
+      <input type="text" bind:value={companyName} placeholder="" class="w-1/2 my-5 p-3 rounded-lg bg-[#ddf0f2]" autofocus />
       <!-- <button class="bg-[#52c0cc] w-1/2 p-3 rounded-lg" on:click|preventDefault={handleRegistrationStep} class:opacity-50={!companyName} disabled={!companyName ? true : false}>Continue</button> -->
       <button class="bg-[#52c0cc] w-1/2 p-3 rounded" on:click|preventDefault={handleDelay}  disabled={!companyName ? true : false}>Finish</button>
     </div>

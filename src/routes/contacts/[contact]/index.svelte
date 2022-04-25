@@ -1,5 +1,5 @@
 <script>
-  import DealsCard from '$lib/components/DealsCard.svelte'
+  import CollabCard from '$lib/components/CollabCard.svelte'
   import Card from '$lib/components/Card.svelte'
   import Modal from '$lib/components/Modal.svelte'
   import { goto } from '$app/navigation';
@@ -9,7 +9,7 @@
   export let deals
   export let team
 
-  console.log(deals)
+  // console.log(deals)
 
   let editCategory, editIntro, editDescription, editLocation, editSocials, editEmail, editPhone, moreOptionsModal= false
   let showMoreOptions = true
@@ -115,14 +115,14 @@
             <div class="px-2">
               <p class="text-xs text-gray-400">ACTIVE</p>
               {#each activeDeals as deal}
-              <DealsCard deal={deal} contact={contact} owner={team.find(owner => owner.user_id === deal.owner_id)} />
+              <CollabCard deal={deal} contact={contact} owner={team.find(owner => owner.user_id === deal.owner_id)} />
               {/each}
             </div>
             <!-- archived -->
             <div class="px-2">
               <p class="text-xs text-gray-400">ARCHIVED</p>
               {#each archivedDeals as deal}
-              <DealsCard deal={deal} contact={contact} owner={team.find(owner => owner.user_id === deal.owner_id)}/>
+              <CollabCard deal={deal} contact={contact} owner={team.find(owner => owner.user_id === deal.owner_id)}/>
               {/each}
             </div>
           </div>

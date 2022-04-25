@@ -1,6 +1,6 @@
 <script>
 
-  import DealsCard from '$lib/components/DealsCard.svelte'
+  import CollabCard from '$lib/components/CollabCard.svelte'
   import SearchHeader from '$lib/components/SearchHeader.svelte'
   import data from '$lib/mock_data.json'
 
@@ -27,10 +27,10 @@
       </div>
       {#if leads.length > 0}
         {#each leads as l}
-          <DealsCard props={l} />
+          <CollabCard props={l} />
         {/each}
       {:else}
-        <DealsCard props={null} />
+        <CollabCard props={null} />
       {/if}
     </div>  
     <div class="w-64 mx-3 shrink-0">
@@ -42,10 +42,10 @@
       </div>
       {#if contacting.length > 0}
         {#each contacting as c}
-          <DealsCard props={c} />
+          <CollabCard props={c} />
         {/each}
       {:else}
-        <DealsCard props={null} />
+        <CollabCard props={null} />
       {/if}
     </div>
     <div class="w-64 mx-3 shrink-0">
@@ -57,10 +57,10 @@
       </div>
       {#if negotiating.length > 0}
         {#each negotiating as n}
-          <DealsCard props={n} />
+          <CollabCard props={n} />
         {/each}
       {:else}
-        <DealsCard props={null} />
+        <CollabCard props={null} />
       {/if}
     </div>
     <div class="w-64 mx-3 shrink-0">
@@ -72,10 +72,10 @@
       </div>
       {#if finalizing.length > 0}
         {#each finalizing as f}
-          <DealsCard props={f} />
+          <CollabCard props={f} />
         {/each}
       {:else}
-        <DealsCard props={null} />
+        <CollabCard props={null} />
       {/if}
     </div>
   </div>
