@@ -2,6 +2,7 @@
   import CollabCard from '$lib/components/CollabCard.svelte'
   import Card from '$lib/components/Card.svelte'
   import Modal from '$lib/components/Modal.svelte'
+  import BlurModal from '$lib/components/BlurModal.svelte';
   import { goto } from '$app/navigation';
 
   export let contact
@@ -9,10 +10,11 @@
   export let deals
   export let team
 
-  // console.log(deals)
+  let imgSrc = `/avatars/${contact.contact_id}.jpg`
 
   let editCategory, editIntro, editDescription, editLocation, editSocials, editEmail, editPhone, moreOptionsModal= false
   let showMoreOptions = true
+  let editModal = false
   
   //temp variables
   let tempCategory, tempIntro, tempDescription, tempLocation, tempSocials, tempEmail, tempPhone
@@ -79,9 +81,19 @@
       }
     }).then(() => goto('/contacts')).catch(err => console.log(err))
   }
+
+  const handleEditDetails = () => {
+    //does not permanently save
+    contact.category = tempCategory
+    contact.intro = tempIntro
+    contact.description = tempDescription
+    contact.location = tempLocation
+
+    editModal = false
+  }
 </script>
 
-<div class="text-brandWhite">
+<div class="text-brandWhite" class:blur-sm={editModal}>
   <div class="flex items-center p-2">
     <div class="flex-1 flex items-center">
       <div class="bg-white w-10 h-10 rounded-full flex justify-center items-center">
@@ -101,12 +113,14 @@
   <!--  -->
   <div class=" grid grid-cols-12 gap-2 my-5">
     <div class="col-span-7">
-      <div class="bg-blue-900 rounded-xl flex flex-col items-center justify-center p-10">
-        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">{contact.firstName[0]}{contact.lastName[0]}</div>
+      <div class="bg-slate-600 rounded-xl flex flex-col items-center justify-center p-10">
+        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">
+          <img src={imgSrc} class="rounded-full" alt="avatar" />
+        </div>
         <p class="font-bold text-2xl pt-3">{contact.firstName} {contact.lastName}</p>
       </div>
 
-      <div class="bg-blue-900 mt-3 rounded-xl">
+      <div class="bg-slate-600 mt-3 pb-5 rounded-xl">
 
         {#if deals.length > 0}
           <p class="text-white text-2xl p-2">Deals</p>
@@ -134,34 +148,36 @@
     <div class="col-span-5">
       <Card>
         <svelte:fragment slot="body">
-          <h4 class="text-lg my-1">About</h4>
+          <div class="flex items-center justify-between">
+            <h4 class="text-lg my-1">About</h4>
+            <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editModal = true}>EDIT</span>
+          </div>
           <div class="flex items-center justify-between">
             <div>
               <h6 class="text-xs text-gray-400 my-2">CATEGORY</h6>
               <h6 class="text-xs my-1">{contact.category}</h6>
             </div>
-            <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editCategory = true}>EDIT</span>
           </div>
           <div class="flex items-center justify-between">
             <div>
               <h6 class="text-xs text-gray-400 my-2">INTRO</h6>
               <h6 class="text-xs my-1">{contact.intro ? contact.intro : 'No Intro'}</h6>
             </div>
-            <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editIntro = true}>EDIT</span>
+            <!-- <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editIntro = true}>EDIT</span> -->
           </div>
           <div class="flex items-center justify-between">
             <div>
               <h6 class="text-xs text-gray-400 my-2">DESCRIPTION</h6>
               <h6 class="text-xs my-1">{contact.description ? contact.description : 'No Description'}</h6>
             </div>
-            <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editDescription = true}>EDIT</span>
+            <!-- <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editDescription = true}>EDIT</span> -->
           </div>
           <div class="flex items-center justify-between">
             <div>
               <h6 class="text-xs text-gray-400 my-2">LOCATION</h6>
               <h6 class="text-xs my-1">{contact.location ? contact.location : 'Not Set'}</h6>
             </div>
-            <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editLocation = true}>EDIT</span>
+            <!-- <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editLocation = true}>EDIT</span> -->
           </div>
           
         </svelte:fragment>
@@ -200,57 +216,29 @@
 </div>
 
 <!-- MODALS -->
-<!-- edit category -->
-<Modal open={editCategory} on:close={() => editCategory = false} title={'Edit Category'}>
+<BlurModal open={editModal} on:close={() => editModal = false} title={'Edit Contact'}> 
   <svelte:fragment slot="body">
-    <div>
-      <input type="text" class="bg-blue-800 p-2 rounded-lg w-full text-white" bind:value={tempCategory} placeholder={contact.category} />
-      <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" on:click={() => {
-        contact.category = tempCategory
-        editCategory = false
-      }}>
+    <div class="">
+      <div class="my-1">
+        <label for="category" class="text-gray-200">Category</label>
+        <input id="category" name="category" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={tempCategory} placeholder={'Ex: Influencer'} />
+      </div>
+      <div class="my-1">
+        <label for="intro" class="text-gray-200">Intro</label>
+        <input id="intro" name="intro" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={tempIntro} placeholder={contact.intro ? contact.intro : 'Add Intro'} />
+      </div>
+      <div class="my-1">
+        <label for="description" class="text-gray-200">Description</label>
+        <input id="description" name="description" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={tempDescription} placeholder={contact.description ? contact.description : 'Add Description'} />
+      </div>
+      <div class="my-1">
+        <label for="location" class="text-gray-200">Location</label>
+        <input id="location" name="location" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={tempLocation} placeholder={contact.location ? contact.location : 'Add Location'} />
+      </div>
+        <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" on:click={handleEditDetails}>
     </div>
   </svelte:fragment>
-</Modal>
-
-<!-- edit intro -->
-<Modal open={editIntro} on:close={() => editIntro = false} title={'Edit Intro'}>
-  <svelte:fragment slot="body">
-    <div>
-      <input type="text" class="bg-blue-800 p-2 rounded-lg w-full text-white" bind:value={tempIntro} placeholder={contact.intro ? contact.intro : 'Add Intro'} />
-      <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" on:click={() => {
-        contact.intro = tempIntro
-        editIntro = false
-      }}>
-    </div>
-  </svelte:fragment>
-</Modal>
-
-<!-- edit description -->
-<Modal open={editDescription} on:close={() => editDescription = false} title={'Edit Description'}>
-  <svelte:fragment slot="body">
-    <div>
-      <input type="text" class="bg-blue-800 p-2 rounded-lg w-full text-white" bind:value={tempDescription} placeholder={contact.description ? contact.description : 'Add Description'} />
-      <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" on:click={() => {
-        contact.description = tempDescription
-        editDescription = false
-      }}>
-    </div>
-  </svelte:fragment>
-</Modal>
-
-<!-- edit location -->
-<Modal open={editLocation} on:close={() => editLocation = false} title={'Edit Location'}>
-  <svelte:fragment slot="body">
-    <div>
-      <input type="text" class="bg-blue-800 p-2 rounded-lg w-full text-white" bind:value={tempLocation} placeholder={contact.location ? contact.location : 'Add Location'} />
-      <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" on:click={() => {
-        contact.location = tempLocation
-        editLocation = false
-      }}>
-    </div>
-  </svelte:fragment>
-</Modal>
+</BlurModal>
 
 <!-- edit socials -->
 <Modal open={editSocials} on:close={() => editSocials = false} title={'Edit Socials'}>

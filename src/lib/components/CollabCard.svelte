@@ -4,7 +4,6 @@
   import { Instagram, Music, Twitch, Twitter, Youtube } from '@steeze-ui/feather-icons'
   export let deal
   export let contact
-  export let owner
   let src
 
   if (deal) {
@@ -23,7 +22,7 @@
   <div class='flex'>
     <div class='bg-brandWhite rounded-full w-10 h-10 flex justify-center items-center'>
       <!-- <Fa icon={faUserCircle} size='2x' color="black" /> -->
-      <img src={src} class="rounded-full" />
+      <img src={src} class="rounded-full" alt={`${contact.firstName} ${contact.lastName} avatar`}/>
     </div>
     <span class="text-white ml-2 text-sm">{deal.dealName}</span>
   </div>

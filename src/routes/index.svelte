@@ -4,7 +4,7 @@
 
 
 
-  // onMount(() => {
-  //   goto('/auth')
-  // })
+  onMount(() => {
+    goto('/auth')
+  })
 </script>
