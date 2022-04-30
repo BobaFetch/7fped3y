@@ -36,6 +36,7 @@
 
 <div class="flex flex-row justify-between w-full mb-3 px-3">
   <h4 class="text-gray-300 text-2xl font-header ">{title}</h4>
+  
   <div class="relative">
     <input type="search" 
       placeholder={`Search ${title}`} 

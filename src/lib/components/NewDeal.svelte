@@ -4,6 +4,7 @@
   import { goto } from "$app/navigation";
   // import ContactCard from "$lib/components/ContactCard.svelte";
   import Modal from "$lib/components/Modal.svelte";
+  // import BlurModal from "$lib/BlurModal.svelte";
 
   const dispatch = createEventDispatcher()
 

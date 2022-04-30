@@ -10,7 +10,7 @@
 {#if open}
 <div class="modal z-50 fixed w-full h-full top-0 left-0 flex items-center justify-center p-8 lg:p-0">
   <!-- <div class="modal-overlay fixed w-full h-full bg-black opacity-75"></div> -->
-  <div class="bg-gray-900 w-full lg:h-max lg:w-1/2  mx-auto rounded-lg shadow-xl z-50 overflow-y-auto">
+  <div class="bg-gray-900 w-full lg:h-max lg:w-1/2  mx-auto rounded-lg shadow-lg shadow-brandTeal z-50 overflow-y-auto">
     <div class="flex items-center head text-2xl font-bold text-brandWhite" class:justify-end={!title}>
       {#if title}
         <p class="m-2 flex-1 font-header">{title}</p>

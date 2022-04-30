@@ -22,7 +22,7 @@
 
 </script>
 
-<div class="bg-slate-900 overflow-x-hidden">
+<div class="bg-slate-900 overflow-x-hidden" class:blur-2={showModal}>
   <!-- header stuff -->
   <div class=''>
     <SearchHeader title={'Collabs'} bind:showModal/>

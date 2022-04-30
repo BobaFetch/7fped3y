@@ -17,6 +17,7 @@
   let editAbout = false
   let editContact = false
   
+  let blur = false
   //temp variables
   let tempVals = {
     category: contact.category,
@@ -104,7 +105,7 @@
   const handleEditContact = () => {}
 </script>
 
-<div class="text-brandWhite mx-3" class:blur-sm={editAbout}>
+<div class="text-brandWhite mx-3" class:blur-sm={blur}>
   <div class="flex items-center p-2">
     <div class="flex-1 flex items-center">
       <div class="bg-white w-10 h-10 rounded-full flex justify-center items-center">
@@ -161,7 +162,7 @@
         <svelte:fragment slot="body">
           <div class="flex items-center justify-between">
             <h4 class="text-lg my-1 font-header">About</h4>
-            <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editAbout = true}>EDIT</span>
+            <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => {editAbout = true, blur = true}}>EDIT</span>
           </div>
           <div class="flex items-center justify-between">
             <div>
@@ -196,7 +197,7 @@
         
       <Card>
         <svelte:fragment slot="body">
-          <h4 class="text-lg my-1 font-header">Socials<span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editSocials = true}>EDIT</span></h4>
+          <h4 class="text-lg my-1 font-header">Socials<span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => {editSocials = true, blur = true}}>EDIT</span></h4>
           <p class="text-xs text-gray-400">SOCIALS</p>
           {#each socials as social}
             <div class="grid grid-cols-3 gap-2 my-1">
@@ -211,7 +212,7 @@
         
         <Card>
           <svelte:fragment slot="body">
-              <h4 class="text-lg my-1 font-header">Contact<span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editEmail = true}>EDIT</span></h4>
+              <h4 class="text-lg my-1 font-header">Contact<span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => {editContact = true, blur = true}}>EDIT</span></h4>
             <h6 class="text-xs text-gray-400 my-2">EMAIL</h6>
             <h6 class="text-xs my-1">{contact.email}</h6>
             <h6 class="text-xs text-gray-400 my-2">PHONE</h6>
@@ -227,7 +228,7 @@
 </div>
 
 <!-- MODALS -->
-<BlurModal open={editAbout} on:close={() => editAbout = false} title={'Edit Contact'}> 
+<BlurModal open={editAbout} on:close={() => {editAbout = false, blur = false}} title={'Edit Contact'}> 
   <svelte:fragment slot="body">
     <div class="">
       <div class="my-1">
@@ -252,7 +253,7 @@
 </BlurModal>
 
 <!-- edit socials -->
-<Modal open={editSocials} on:close={() => editSocials = false} title={'About'}>
+<BlurModal open={editSocials} on:close={() => {editSocials = false, blur = false}} title={'About'}>
   <svelte:fragment slot="body">
     <div>
      <!-- Need to make a select input -->
@@ -260,12 +261,12 @@
       <!--  -->
       {#each tempSocials as value, index}
         <div class="w-full flex justify-between">
-          <select bind:value={value.platform} class="m-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm">
+          <select bind:value={value.platform} class="m-1 p-2 rounded-lg bg-slate-700 text-brandWhite text-sm">
             {#each socialChoices as social}
             <option value={social}>{social}</option>
             {/each}
           </select>
-          <input type="text" class="my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm flex-1" bind:value={value.url} placeholder='ex: http://www.youtube.com/mrbeast' />
+          <input type="text" class="my-1 p-2 rounded-lg bg-slate-700 text-brandWhite text-sm flex-1" bind:value={value.url} placeholder='ex: http://www.youtube.com/mrbeast' />
           <button class="p-1 rounded-full m-4" on:click={() => deleteSocial(value.social_id)}>
             <svg height="15px" viewBox="0 0 24 24" width="24px" fill="#52c0cc"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
           </button>
@@ -278,10 +279,10 @@
       </div>
     </div>
   </svelte:fragment>
-</Modal>
+</BlurModal>
 
 <!-- edit email -->
-<BlurModal open={editContact} on:close={() => editContact = false} title={'Edit Contact'}>
+<BlurModal open={editContact} on:close={() => {editContact = false, blur = false}} title={'Edit Contact'}>
   <svelte:fragment slot="body">
     <div class="">
       <div class="my-1">
@@ -297,7 +298,7 @@
   </svelte:fragment>
 </BlurModal>
 
-<!-- START KEEPING IN CASE THESE NEED TO BE SEPARATE
+<!-- KEEPING IN CASE THESE NEED TO BE SEPARATE
 <Modal open={editEmail} on:close={() => editEmail = false} title={'Edit Email'}>
   <svelte:fragment slot="body">
     <div>
