@@ -39,7 +39,7 @@
   <div class="relative">
     <input type="search" 
       placeholder={`Search ${title}`} 
-      class="mx-auto rounded-xl w-1/2 sm:w-72 p-2 bg-gray-500 text-gray-200" 
+      class="mx-auto rounded-xl w-1/2 sm:w-72 p-2 bg-slate-600 text-gray-200" 
       list="search-data"
       on:change={doSomething}
     />

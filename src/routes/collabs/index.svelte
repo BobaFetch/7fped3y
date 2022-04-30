@@ -22,7 +22,7 @@
 
 </script>
 
-<div class="bg-gray-800 overflow-x-hidden">
+<div class="bg-slate-900 overflow-x-hidden">
   <!-- header stuff -->
   <div class=''>
     <SearchHeader title={'Collabs'} bind:showModal/>
@@ -31,9 +31,9 @@
   <!-- this is just thrown together a lot of copy/paste, need to break it down and streamline this bad boy -->
   <div class='overflow-x-hidden'>
 
-    <div class="flex flex-row justify-between overflow-auto py-5 h-screen">
+    <div class="flex flex-row justify-between overflow-auto py-5 mx-3 h-screen">
       <!--  -->
-      <div class='mx-1 p-1'>
+      <div class=''>
         <div class="flex justify-between">
           <h5 class="text-brandWhite text-xl font-header">Leads</h5>
           <div class='w-5 h-5 rounded-full flex items-center justify-center'>

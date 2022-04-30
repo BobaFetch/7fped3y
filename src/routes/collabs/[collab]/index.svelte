@@ -1,6 +1,8 @@
 <script>
   import { onDestroy } from "svelte";
   import { goto } from '$app/navigation'
+  import { Icon } from '@steeze-ui/svelte-icon'
+  import { ChevronLeft } from '@steeze-ui/feather-icons'
   import CreatorCard from '$lib/components/CreatorCard.svelte'
   import Modal from "$lib/components/Modal.svelte";
   import NewDeliverableModal from "$lib/components/NewDeliverableModal.svelte";
@@ -111,30 +113,32 @@
   })
 </script>
 
-<div>
+<div class="mx-3">
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center">
       <button
       on:click={() => goto('/collabs')} 
-      class="text-gray-900 border border-gray-900 px-4 py-2 rounded-lg bg-brandTeal">{"<"}</button>
-      <h1 class="text-brandWhite mx-5 text-4xl italic bold">{deal.dealName}</h1>
+      class="text-gray-900 border border-gray-900 p-3 rounded-lg bg-brandTeal">
+      <Icon src={ChevronLeft} size="20" />
+    </button>
+      <h1 class="text-brandWhite mx-5 text-4xl italic bold font-header">{deal.dealName}</h1>
     </div>
     <input class="bg-brandTeal p-2 rounded-lg" type="button" value="Delete" on:click={() => deleteDeal = true}>
   </div>
   <div class="grid grid-cols-12 gap-2 text-white my-2">
     <!-- details -->
-    <div class="col-span-8">
-      <div class="bg-blue-900 rounded-lg p-3">
-        <h3 class="text-2xl">Details</h3>
+    <div class="col-span-8 font-body">
+      <div class="bg-slate-800 rounded-lg p-3">
+        <h3 class="text-2xl font-header">Details</h3>
         <div class="my-5">
           <div class="flex justify-between">
-            <p class="text-gray-300 text-sm mb-2">DESCRIPTION</p>
+            <p class="text-gray-300 text-sm mb-2 font-header">DESCRIPTION</p>
             <input class="text-brandTeal cursor-pointer" type="button" value="Edit" on:click={() => editDescription = true}>
           </div>
           <p class="font-thin pl-1">{deal.dealDescription}</p>
         </div>
-        <div>
-          <p class="text-gray-300 text-sm">DELIVERABLES</p>
+        <div class="py-5">
+          <p class="text-gray-300 text-sm font-header">DELIVERABLES</p>
 
           {#if deliverables.length > 0}
           <table class="w-full">
@@ -179,12 +183,12 @@
     <div class="col-span-4">
       <div class="grid grid-rows-6 gap-2" >
         <!-- deal status -->
-        <div class="row-span-1 bg-blue-900 rounded-lg p-3">
+        <div class="row-span-1 bg-slate-800 rounded-lg p-3">
           <p class="text-brandWhite mb-3 font-bold">Status</p>
           <select 
             bind:value={deal.status}
             on:change={handleUpdateDealStatus}
-            class="bg-gray-800 p-2 rounded-lg w-full"  
+            class="bg-slate-900 p-2 rounded-lg w-full"  
           >
             {#each statusOptions as status}
               <option value={status}>{status}</option>
@@ -192,7 +196,7 @@
           </select>
         </div>
         <!-- team  -->
-        <div class='bg-blue-900 rounded-lg p-3 row-span-2'>
+        <div class='bg-slate-800 rounded-lg p-3 row-span-2'>
           <p class="font-bold">Team</p>
           <div>
             <p class="font-light text-gray-400 text-sm my-2">OWNER</p>
@@ -218,7 +222,7 @@
           </div>
         </div>
         <!-- creator -->
-        <div class="row-span-3 bg-blue-900 rounded-lg p-3">
+        <div class="row-span-3 bg-slate-800 rounded-lg p-3">
           <CreatorCard {creator} {socials} />
         </div>
       </div>

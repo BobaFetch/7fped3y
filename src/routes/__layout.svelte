@@ -14,7 +14,7 @@
 </script>
 
 {#if $authenticated}
-<div class="container-full h-screen bg-gray-800 flex flex-col overflow-hidden">
+<div class="container-full h-screen bg-slate-900 flex flex-col overflow-hidden">
   <div class="">
     <Header />
   </div>
@@ -23,7 +23,7 @@
   </div>
 </div>
 {:else}
-<div class="container-full h-screen bg-gray-800">
+<div class="container-full h-screen bg-slate-900">
   <slot />
 </div>
 {/if}

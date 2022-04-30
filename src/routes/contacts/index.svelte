@@ -14,7 +14,7 @@
 
 <div>
   <SearchHeader title={'Contacts'} bind:showModal />
-  <div class="my-10">
+  <div class="my-10 mx-3">
     {#each contacts as contact}
       <a href={`/contacts/${contact.contact_id}`}>
         <ContactCard {contact} />
