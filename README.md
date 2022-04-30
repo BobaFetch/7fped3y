@@ -1,18 +1,39 @@
-to enable/disable the authentication steps set /src/lib/stores/tempStores authenticated = true/false.
+# DEMO
 
-this process currently does not have any actual process in place, you can click the continue button to run through it. it's just a quick mock to step through the process with no real logic behind it.
+Registration flow is working.
+Following registration navigates to "collabs" screen
 
-not fully mobile friendly
+## Collabs
 
-## _ROUTES_
+Main screen shows a list of collab columns
 
-- /deals
-  - /deals/[deal_id]
-- /contacts
-  - /contacts/[contact_id]
-- /settings/[user_id]
+- Leads
+- Pitching
+- Pending Deliverables
+- Pending Payment
+- Paid
 
-## _TODO_
+Collab cards navigate to said collab
 
-- [ ] Break down pieces into reusable components
-- [ ] Search bar functionality
+### Collab
+
+Detail information of collab
+
+- Description
+- Deliverables
+- Status
+- Team
+- Creator
+
+## Contacts
+
+Screen listing contacts
+
+### Contact
+
+Contact Details
+
+- List of collabs
+- About (Category, Intro, Description, Location)
+- List of socials
+- Contact information (Email, phone)
