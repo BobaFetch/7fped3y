@@ -22,7 +22,7 @@
   <div class='flex'>
     <div class='bg-brandWhite rounded-full w-10 h-10 flex justify-center items-center'>
       <!-- <Fa icon={faUserCircle} size='2x' color="black" /> -->
-      <img src={src} class="rounded-full" alt={`${contact.firstName} ${contact.lastName} avatar`}/>
+      <img src={src} class="rounded-full" alt={`${contact.firstname} ${contact.lastname} avatar`}/>
     </div>
     <span class="text-white ml-2 text-sm">{deal.dealName}</span>
   </div>
@@ -30,7 +30,7 @@
   <div class="flex items-center justify-between mt-1">
     {#if contact.socials}
     <div class="text-right flex">
-      {#each JSON.parse(contact.socials) as social}
+      {#each contact.socials as social}
       <span class='text-xs text-white p-1 flex' title={`${social.platform}, ${social.followers} followers`}>
         <Icon src={
           (social.platform == 'Instagram' ? Instagram 
