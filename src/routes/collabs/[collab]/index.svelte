@@ -220,11 +220,11 @@
               {/each}
             {/if}
           </div>
-        </div>
+        </div> -->
          
         <div class="row-span-3 bg-slate-800 rounded-lg p-3">
           <CreatorCard {creator} {socials} />
-        </div> -->
+        </div> 
       </div>
       
     </div>
