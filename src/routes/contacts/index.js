@@ -1,10 +1,6 @@
 import db from '$lib/db';
-import { supabase } from '$lib/client';
 
 export async function get() {
-	const test = await supabase.from('contacts').select('*');
-
-	console.log(test);
 	const contacts = db
 		.prepare(
 			`SELECT contacts.contact_id, firstName, lastName, email, phone, category, info, description, location,

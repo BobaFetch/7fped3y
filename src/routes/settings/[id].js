@@ -1,4 +1,3 @@
-import data from '$lib/mock_data.json';
 import db from '$lib/db';
 
 export async function get({ params }) {

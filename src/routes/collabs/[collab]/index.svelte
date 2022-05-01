@@ -140,7 +140,7 @@
         <div class="py-5">
           <p class="text-gray-300 text-sm font-header">DELIVERABLES</p>
 
-          {#if deal.deliverables.length > 0}
+          {#if deliverables.length > 0}
           <table class="w-full">
             <thead>
               <tr>
@@ -152,10 +152,10 @@
               </tr>
             </thead>
             <tbody class='font-thin'>
-              {#each deal.deliverables as deliverable}
+              {#each deliverables as deliverable}
                 <tr class="py-3">
                   <td>{deliverable.description}</td>
-                  <td class="text-center">{new Date(deliverable.duedate).toDateString()}</td>
+                  <td class="text-center">{new Date(deliverable.dueDate).toDateString()}</td>
                   <td class="text-center">
                     <input 
                       type="checkbox" 
@@ -163,7 +163,7 @@
                       on:click={() => handleUpdateDeliverable(deliverable)}
                     />
                   </td>
-                  <td class="text-center">{deliverable.delivereddate === null ? '' : new Date(deliverable.delivereddate).toLocaleDateString()}</td>
+                  <td class="text-center">{deliverable.deliveredDate === null ? '' : new Date(deliverable.deliveredDate).toLocaleDateString()}</td>
                   <td><input class="text-brandTeal cursor-pointer p-2" type="button" value="X" on:click={() => handleDelDeliverable(deliverable)} /></td>
                 </tr>
               {/each}
@@ -196,7 +196,7 @@
           </select>
         </div>
         <!-- team  -->
-        <!-- <div class='bg-slate-800 rounded-lg p-3 row-span-2'>
+        <div class='bg-slate-800 rounded-lg p-3 row-span-2'>
           <p class="font-bold">Team</p>
           <div>
             <p class="font-light text-gray-400 text-sm my-2">OWNER</p>
@@ -207,8 +207,8 @@
               <p class='ml-5'>{deal.owner}</p>
             </div>
           </div>
-          <div> -->
-            <!-- {#if team}
+          <div>
+            {#if team}
             <p class="font-light text-gray-400 text-sm mt-8">MEMBERS</p>
               {#each team.filter(val => `${val.firstName} ${val.lastName}` !== deal.owner) as t}
               <div class="flex items-center my-2 ml-2">
@@ -220,7 +220,7 @@
               {/each}
             {/if}
           </div>
-        </div> -->
+        </div>
         <!-- creator -->
         <div class="row-span-3 bg-slate-800 rounded-lg p-3">
           <CreatorCard {creator} {socials} />
