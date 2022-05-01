@@ -8,6 +8,8 @@
   export let contacts
   export let users
 
+  console.log(deals)
+
   const leads = deals.filter(item => item.status === 'Lead')
   const contacting = deals.filter(item => item.status === 'Contacting')
   const negotiating = deals.filter(item => item.status === 'Negotiating')
@@ -41,11 +43,11 @@
           </div>
         </div>
         {#if leads.length > 0}
-        {#each leads as l}
+        {#each leads as lead}
         <CollabCard 
-          deal={l} 
-          contact={contacts.find(contact => contact.contact_id === l.client_id)}
-          owner={users.find(user => user.user_id === l.owner_id)}
+          deal={lead} 
+          contact={contacts.find(contact => contact.contact_id === lead.client_id)}
+          owner={users.find(user => user.user_id === lead.owner_id)}
         />
         {/each}
         {:else}
