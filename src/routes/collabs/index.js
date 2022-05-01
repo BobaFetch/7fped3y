@@ -13,7 +13,6 @@ export async function get() {
 		.all();
 	const users = db.prepare('SELECT * FROM users').all();
 
-	// console.log(contacts);
 	return {
 		status: 200,
 		body: {
