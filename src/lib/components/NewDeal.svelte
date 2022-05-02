@@ -3,7 +3,7 @@
   import {fly} from 'svelte/transition'
   import { goto } from "$app/navigation";
   // import ContactCard from "$lib/components/ContactCard.svelte";
-  import Modal from "$lib/components/Modal.svelte";
+  import BlurModal from "$lib/components/BlurModal.svelte";
   // import BlurModal from "$lib/BlurModal.svelte";
 
   const dispatch = createEventDispatcher()
@@ -18,7 +18,6 @@
   let selectedSocials = null
 
   let newDeal = {
-    // switch contact_id to creator_id in db for better readability
     contact_id: 0,
     owner_id: 0,
     team_id: 0,
@@ -35,7 +34,7 @@
       deal_id: 0,
       description: '',
       delivered: 0,
-      dueDate: ''
+      duedate: ''
     }
   ]
 
@@ -62,7 +61,7 @@
     {
       header: 'Add Deliverables',
       //Fix to dynamically display creator name without breaking 
-      description: `What will <Creator> be delivering for this deal`
+      description: `What will {creator} be delivering for this deal`
     }
   ]
 
@@ -72,12 +71,11 @@
     .then(json => {
       creators = json.creators
       socials = json.socials
-    })
+    }).then(() => console.log(selectedCreator))
     .catch(err => console.log(err))
 
     selectedCreator = creators[0]
     handleSocials(selectedCreator)
-    console.log(selectedCreator)
   }
 
   const handleSocials = (contact) => {
@@ -85,13 +83,14 @@
   }
 
   const handleAddDeal = async () => {
+    console.log(selectedCreator)
     newDeal.contact_id = selectedCreator.contact_id
-    newDeal.owner_id = selectedCreator.owner_id
-    newDeal.team_id = selectedCreator.team_id
-    const res = await fetch(`/api/deal`, {
+    newDeal.owner_id = selectedCreator.owner.user_id
+    newDeal.team_id = selectedCreator.owner.company_id
+    const res = await fetch(`/api/testdeal`, {
       method: 'POST',
       mode: 'cors',
-      body: JSON.stringify(newDeal)
+      body: JSON.stringify({newDeal, deliverablesArray})
     })
     if (res.ok) {
       let {lastInsertRowid} = await res.json()
@@ -104,7 +103,7 @@
       }).then(() => goto(`/deals/${lastInsertRowid}`))
     }
 
-    // deliverablesArray = [{deal_id: 0, description: '', dueDate: ''}]
+    deliverablesArray = [{deal_id: 0, description: '', dueDate: ''}]
   }
 
   onMount(() => {
@@ -119,13 +118,13 @@
 </script>
 
 {#if open}
-<div class="modal z-50 fixed w-full h-full top-0 left-0 flex items-center justify-center p-8 lg:0">
-  <div class="modal-overlay fixed w-full h-full bg-black opacity-75"></div>
-  <div class="bg-brandBlue w-full lg:h-max lg:w-1/2  mx-auto rounded-lg shadow-xl z-50 overflow-y-auto">
+<div class="modal z-50 fixed w-full h-full top-0 left-0 flex items-center justify-center p-8 lg:p-0 blur-none">
+  <!-- <div class="modal-overlay fixed w-full h-full bg-black opacity-75"></div> -->
+  <div class="bg-gray-900 w-full lg:h-max lg:w-1/2  mx-auto rounded-lg shadow-lg shadow-brandTeal z-50 overflow-y-auto">
     <div class="flex items-start head text-2xl font-bold text-brandWhite justify-between">
       <div class='m-5'>
         <p class="text-xs text-gray-400 font-light">STEP {step+1} of 4</p>
-        <h1 class="my-2">{stepContent[step].header}</h1>
+        <h1 class="my-2 font-header">{stepContent[step].header}</h1>
         <p class="text-sm text-gray-400 mt-2 font-light">{stepContent[step].description}</p>
       </div>
       <button class="rounded-full m-2 " on:click={() => dispatch('close')}>
@@ -140,14 +139,14 @@
             <p class="text-gray-400 text-xs">CREATOR</p>
             <div class='text-white flex items-center p-3 bg-gray-800 rounded-lg my-3' on:click={() => selectCreator = true}>
               <div class='bg-white flex items-center justify-center w-10 h-10 rounded-full'>
-                <p class='text-black'>{selectedCreator.firstName[0]}{selectedCreator.lastName[0]}</p>
+                <p class='text-black'>{selectedCreator.firstname[0]}{selectedCreator.lastname[0]}</p>
               </div>
-              <p class='ml-5'>{selectedCreator.firstName} {selectedCreator.lastName}</p>
+              <p class='ml-5'>{selectedCreator.firstname} {selectedCreator.lastname}</p>
             </div>
             <p class="text-gray-400 text-xs">SOCIALS</p>
             <div class='text-gray-400 text-xs'>
-              {#if selectedSocials}
-                {#each selectedSocials as social}
+              {#if selectedCreator}
+                {#each selectedCreator.socials as social}
                   <div class='my-2 grid grid-cols-3'>
                     <p>{social.platform}</p>
                     <p>{social.followers} Followers</p>
@@ -166,16 +165,16 @@
         <div class="w-full">
           <p class='text-gray-400 text-xs'>TITLE</p>
           <input type="text" 
-            class="w-full p-3 rounded-lg mt-3"
+            class="w-full p-3 rounded-lg mt-3 bg-slate-600 text-white"
             bind:value={newDeal.dealName} 
-            placeholder={`Ex: ${selectedCreator.firstName} ${selectedCreator.lastName} Deal`} 
+            placeholder={`Ex: ${selectedCreator.firstname} ${selectedCreator.lastname} Deal`} 
           />
           <div class='flex items-center justify-between'>
-            <input type="button" value="Back" class="bg-gray-400 text-white p-3 w-1/2 mr-1 rounded-lg my-3" on:click={() => step -= 1} />
+            <input type="button" value="Back" class="bg-slate-600 cursor-pointer text-white p-3 w-1/2 mr-1 rounded-lg my-3" on:click={() => step -= 1} />
             <input 
               type="button" 
               value="Next" 
-              class="bg-brandTeal p-3 w-1/2 ml-1 rounded-lg my-3"
+              class="bg-brandTeal p-3 w-1/2 ml-1 rounded-lg my-3 cursor-pointer"
               on:click={() => step += 1} 
               />
               <!-- disabled={!newDeal.dealName} -->
@@ -188,12 +187,12 @@
         <div class="w-full">
           <p class='text-gray-400 text-xs'>DESCRIPTION</p>
           <textarea 
-            class="w-full p-3 rounded-lg mt-3"
+            class="w-full p-3 rounded-lg mt-3 bg-slate-600 text-white"
             bind:value={newDeal.description} 
             placeholder={'Ex: This deal is to capture new sign-ups'} 
           />
           <div class='flex items-center justify-between'>
-            <input type="button" value="Back" class="bg-gray-400 text-white p-3 w-1/2 mr-1 rounded-lg my-3" on:click={() => step -= 1} />
+            <input type="button" value="Back" class="bg-slate-600 text-white p-3 w-1/2 mr-1 rounded-lg my-3" on:click={() => step -= 1} />
             <input 
               type="button" 
               value="Next" 
@@ -212,12 +211,12 @@
           {#each deliverablesArray as d}
             <div class='flex items-center justify-between'>
               <input type="text" 
-              class="flex-1 p-3 rounded-lg"
+              class="flex-1 p-3 rounded-lg bg-slate-600 text-white"
               bind:value={d.description} 
               placeholder={'Ex: 30 second ad read'} 
               />
               <input type="date" 
-                class='flex-1 ml-1 rounded-lg p-3' 
+                class='flex-1 ml-1 rounded-lg p-3 bg-slate-600 text-white' 
                 bind:value={d.dueDate} />
             </div>
           {/each}
@@ -227,12 +226,12 @@
             class="text-brandTeal my-3"
             on:click={handleNewDeliverable}>
           <div class='flex items-center justify-between'>
-            <input type="button" value="Back" class="bg-gray-400 text-white p-3 w-1/2 mr-1 rounded-lg my-3" on:click={() => step -= 1} />
+            <input type="button" value="Back" class="bg-slate-600 text-white p-3 w-1/2 mr-1 rounded-lg my-3" on:click={() => step -= 1} />
             <input 
               type="button" 
               value="Next" 
               class="bg-brandTeal p-3 w-1/2 ml-1 rounded-lg my-3" 
-              on:click={handleAddDeal} 
+              on:click|preventDefault={handleAddDeal} 
             />
           </div>
         </div>
@@ -242,13 +241,13 @@
     </div>
 {/if}
 
-<Modal open={selectCreator} title={''} on:close={() => selectCreator = false}>
+<BlurModal open={selectCreator} title={''} on:close={() => selectCreator = false}>
   <svelte:fragment slot="body">
     <div class="flex flex-col items-around">
       <!-- Need to add search funcitonality to creator selector -->
-      <select bind:value={selectedCreator} class='p-3 bg-blue-900 text-white'>
+      <select bind:value={selectedCreator} class='p-3 bg-slate-700 text-white rounded-lg'>
         {#each creators as creator}
-        <option value={creator}>{creator.firstName} {creator.lastName}</option>
+        <option value={creator}>{creator.firstname} {creator.lastname}</option>
         {/each}
       </select>
       <input type="button" value="Select" class="bg-brandTeal p-3 mt-3 rounded-lg" on:click|preventDefault={() => {
@@ -256,4 +255,4 @@
         selectCreator = false}}/>
     </div>
   </svelte:fragment>
-</Modal>
+</BlurModal>

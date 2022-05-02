@@ -1,13 +1,27 @@
-import { getAllContacts, getContactById } from '$lib/sb/contacts';
-import { getDeals, getDealById, getDealsByContact } from '$lib/sb/deals';
+import { getAllContacts, getContactById, getCreators, getSocials } from '$lib/sb/contacts';
+import {
+	getDeals,
+	getDealById,
+	getDealsByContact,
+	addDeal,
+	addDeliverables,
+	deleteDealById,
+	deleteDeliverablesByDealId
+} from '$lib/sb/deals';
 import { getAllUsers, getUserById, getTeam } from '$lib/sb/users';
 
 export const db = {
 	getAllContacts,
 	getContactById,
+	getCreators,
+	getSocials,
 	getDeals,
 	getDealById,
 	getDealsByContact,
+	addDeal,
+	addDeliverables,
+	deleteDealById,
+	deleteDeliverablesByDealId,
 	getAllUsers,
 	getUserById,
 	getTeam

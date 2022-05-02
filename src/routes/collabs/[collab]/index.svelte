@@ -100,10 +100,10 @@
   }
 
   const handleDeleteDeal = async () => {
-    await fetch(`/api/deal?deal_id=${deal.deal_id}`, {
+    await fetch(`/api/testdeal?deal_id=${deal.deal_id}`, {
       method: 'DELETE',
       mode: 'cors'
-    }).then(() => goto('/deals'))
+    }).then(() => goto('/collabs'))
   }
 
   onDestroy(() => {

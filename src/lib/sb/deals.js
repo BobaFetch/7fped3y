@@ -50,3 +50,53 @@ export const getDealsByContact = async (contact_id) => {
 	}
 	return data;
 };
+
+export const addDeal = async (deal) => {
+	const { data, error } = await supabase.from('deals').insert([
+		{
+			client_id: deal.contact_id,
+			owner_id: deal.owner_id,
+			team_id: deal.team_id,
+			dealName: deal.dealName,
+			dealDescription: deal.description,
+			active: deal.active,
+			status: deal.status
+		}
+	]);
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return data;
+};
+
+export const addDeliverables = async (deliverables) => {
+	const { data, error } = await supabase.from('deliverables').insert(deliverables);
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return data;
+};
+
+export const deleteDealById = async (deal_id) => {
+	const { data, error } = await supabase.from('deals').delete().match({ deal_id: deal_id });
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return data;
+};
+
+export const deleteDeliverablesByDealId = async (deal_id) => {
+	const { data, error } = await supabase.from('deliverables').delete().match({ deal_id: deal_id });
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return data;
+};

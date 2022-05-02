@@ -17,12 +17,13 @@
   const paid = deals.filter(item => item.status === 'Paid')
   const archived = deals.filter(item => item.status === 'Archived')
 
-  let showModal = false
+  let showModal = true
 
 
 </script>
 
-<div class="bg-slate-900 overflow-x-hidden" class:blur-2={showModal}>
+<div class="bg-slate-900 overflow-x-hidden" class:blur-sm={showModal}>
+  
   <!-- header stuff -->
   <div class=''>
     <SearchHeader title={'Collabs'} bind:showModal/>
@@ -135,5 +136,5 @@
       </div>
     </div>
   </div>
-  <NewDeal open={showModal} on:close={() => showModal = false} />
-  </div>
+</div>
+<NewDeal open={showModal} on:close={() => showModal = false} />
