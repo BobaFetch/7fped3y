@@ -10,7 +10,8 @@
   <div class='w-10 h-10 bg-brandWhite rounded-full mr-3 col-span-1'>
     <img src={`/avatars/${contact.contact_id}.jpg`} alt="" class="rounded-full">
   </div>
-  <p class='col-span-3'>{contact.firstname} {contact.lastname}</p>
+  <p class='col-span-3 font-header'>{contact.firstname} {contact.lastname}</p>
+  <p class="col-span-3 text-sm">{contact.category}</p>
   <p class="col-span-3 text-xs">{contact.location}</p>
   <!-- ADD DEAL COUNT -->
   <!-- <p class='col-span-3 text-xs'>{'DEALS'}</p> -->
