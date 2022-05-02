@@ -4,9 +4,6 @@
 
   export let member
   export let user
-  export let isRemoveModalOpen
-  export let index
-  export let i
   
   const dispatch = createEventDispatcher()
 
@@ -20,9 +17,9 @@
 
 <div class="bg-slate-700 rounded-lg text-brandWhite p-5 mb-1 grid grid-cols-12 gap-2 items-center">
   <div class="h-10 w-10 bg-brandTeal rounded-full col-span-1 col-start-1 flex items-center justify-center">
-      <p class="text-black text-bold font-header">{member.firstName[0].toUpperCase()}{member.lastName[0].toUpperCase()}</p>
+      <p class="text-black text-bold font-header">{member.firstname[0].toUpperCase()}{member.lastname[0].toUpperCase()}</p>
   </div>
-  <p class="text-xs col-span-2 col-start-2">{member.firstName} {member.lastName}</p>
+  <p class="text-xs col-span-2 col-start-2">{member.firstname} {member.lastname}</p>
   {#if user.role === 'Admin'}
     <select 
       bind:value={selectedValue} 

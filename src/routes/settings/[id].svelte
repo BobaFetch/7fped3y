@@ -17,7 +17,7 @@
 
   let selected 
   let i 
-  let toBeDeleted = team[0]
+  let toBeDeleted = team
   let newOwner
 
   const handleLogout = () => {
@@ -60,7 +60,7 @@
             <div class="">
               <p class="font-bold font-header my-1">Profile</p>
               <h6 class="text-xs text-gray-400">Name</h6>
-              <h5 class='text-xs'>{user.firstName} {user.lastName}</h5>
+              <h5 class='text-xs'>{user.firstname} {user.lastname}</h5>
             </div>
             <div class="">
               <input type="button" class="text-xs text-brandTeal" value="EDIT" on:click={() => isEditModalOpen = true} />
@@ -91,7 +91,7 @@
         <svelte:fragment slot="body">
           <h4 class="text-lg my-1">Company</h4>
           <h6 class="text-xs text-gray-400 my-2">NAME</h6>
-          <h6 class="text-xs my-1">{user.company}</h6>
+          <h6 class="text-xs my-1">{user.company.name}</h6>
         </svelte:fragment>
       </Card>
       <Card>
@@ -102,7 +102,7 @@
           <h6 class="text-xs text-gray-400 my-2">COMPANY ADMIN</h6>
           {#each team.filter(m => m.role === 'Admin') as admin}
           <h6 class="text-xs my-1">
-            {admin.firstName} {admin.lastName}
+            {admin.firstname} {admin.lastname}
           </h6>
           {/each}
         </svelte:fragment>

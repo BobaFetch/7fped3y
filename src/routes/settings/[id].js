@@ -1,23 +1,18 @@
-import db from '$lib/db';
+import { db } from '$lib/sb';
 
 export async function get({ params }) {
-	//pulls as an array, send first item from array
-	const user = db
-		.prepare(
-			`SELECT users.*, companies.name company FROM users LEFT JOIN companies ON users.company_id = companies.company_id WHERE users.user_id = ${params.id}`
-		)
-		.all();
+	const user_id = params.id;
+	let team;
+	const user = await db.getUserById(1);
+	if (user) {
+		team = await db.getTeam(user.company_id);
+	}
 
-	const team = db
-		.prepare(
-			`SELECT users.* FROM companies LEFT JOIN users on users.company_id = companies.company_id WHERE companies.company_id = ${user[0].company_id}`
-		)
-		.all();
+	console.log(user);
 
-	// console.log(user);
 	return {
 		body: {
-			user: user[0],
+			user,
 			team
 		}
 	};

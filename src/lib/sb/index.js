@@ -1,6 +1,6 @@
 import { getAllContacts, getContactById } from '$lib/sb/contacts';
 import { getDeals, getDealById, getDealsByContact } from '$lib/sb/deals';
-import { getAllUsers, getTeam } from '$lib/sb/users';
+import { getAllUsers, getUserById, getTeam } from '$lib/sb/users';
 
 export const db = {
 	getAllContacts,
@@ -9,5 +9,6 @@ export const db = {
 	getDealById,
 	getDealsByContact,
 	getAllUsers,
+	getUserById,
 	getTeam
 };
