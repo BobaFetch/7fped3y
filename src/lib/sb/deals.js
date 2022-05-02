@@ -41,3 +41,12 @@ export const getDealById = async (id) => {
 
 	return data;
 };
+
+export const getDealsByContact = async (contact_id) => {
+	const { data, error } = await supabase.from('deals').select('*').eq('client_id', contact_id);
+
+	if (error) {
+		throw new Error(error.message);
+	}
+	return data;
+};

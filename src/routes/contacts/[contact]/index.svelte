@@ -6,7 +6,6 @@
   import { goto } from '$app/navigation';
 
   export let contact
-  export let socials
   export let deals
   export let team
 
@@ -29,7 +28,7 @@
   }
   let tempCategory, tempIntro, tempDescription, tempLocation, tempSocials, tempEmail, tempPhone
   tempEmail = contact.email
-  tempSocials = socials
+  tempSocials = contact.socials
   tempPhone = contact.phone
 
   let socialChoices = ['Instagram', 'TikTok', 'Twitter', 'Youtube']
@@ -53,31 +52,31 @@
 
     //right now this will update all socials for a contact
     //not really affecting much so I'll save this issue for later
-    await fetch('/api/editSocial', {
-      method: 'PUT',
-      mode: 'cors',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(tempSocials)
-    }
-    ).then(res => res.json()).then(json => {
-      socials = json.socials
-      editSocials = false
-    })
+    // await fetch('/api/editSocial', {
+    //   method: 'PUT',
+    //   mode: 'cors',
+    //   headers: {
+    //     'content-type': 'application/json'
+    //   },
+    //   body: JSON.stringify(tempSocials)
+    // }
+    // ).then(res => res.json()).then(json => {
+    //   socials = json.socials
+    //   editSocials = false
+    // })
   }
 
   const deleteSocial = async (id) => {
-    await fetch(`/api/editSocial?id=${id}&contact=${contact.contact_id}`, {
-      method: 'DELETE',
-      mode: 'cors',
-      headers: {
-        'content-type': 'application/json'
-      }
-    }).then(res => res.json()).then(json => {
-      socials = json.socials 
-      tempSocials = socials
-    }).catch(err => console.log(err))
+    // await fetch(`/api/editSocial?id=${id}&contact=${contact.contact_id}`, {
+    //   method: 'DELETE',
+    //   mode: 'cors',
+    //   headers: {
+    //     'content-type': 'application/json'
+    //   }
+    // }).then(res => res.json()).then(json => {
+    //   socials = json.socials 
+    //   tempSocials = socials
+    // }).catch(err => console.log(err))
   }
 
   const handleMoreOptions = () => showMoreOptions = !showMoreOptions
@@ -109,9 +108,9 @@
   <div class="flex items-center p-2">
     <div class="flex-1 flex items-center">
       <div class="bg-white w-10 h-10 rounded-full flex justify-center items-center">
-        <p class="text-black font-bold font-header">{contact.firstName[0]}{contact.lastName[0]}</p>
+        <p class="text-black font-bold font-header">{contact.firstname[0]}{contact.lastname[0]}</p>
       </div>
-      <p class="mx-2 text-2xl font-bold italic font-header">{contact.firstName} {contact.lastName}</p>
+      <p class="mx-2 text-2xl font-bold italic font-header">{contact.firstname} {contact.lastname}</p>
     </div>
     <div class="block">
       <input type="button" value="More Options +" class="bg-brandTeal p-2 rounded-xl" on:click={handleMoreOptions}/>
@@ -129,7 +128,7 @@
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">
           <img src={imgSrc} class="rounded-full" alt="avatar" />
         </div>
-        <p class="font-bold text-2xl pt-3 font-header">{contact.firstName} {contact.lastName}</p>
+        <p class="font-bold text-2xl pt-3 font-header">{contact.firstname} {contact.lastname}</p>
       </div>
 
       <div class="bg-slate-800 mt-3 pb-5 rounded-xl">
@@ -199,7 +198,7 @@
         <svelte:fragment slot="body">
           <h4 class="text-lg my-1 font-header">Socials<span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => {editSocials = true, blur = true}}>EDIT</span></h4>
           <p class="text-xs text-gray-400">SOCIALS</p>
-          {#each socials as social}
+          {#each contact.socials as social}
             <div class="grid grid-cols-3 gap-2 my-1">
                <!-- no icons currently  -->
                 <p class="text-xs">{social.platform}</p>
@@ -331,8 +330,8 @@ END -->
   <svelte:fragment slot="body">
     <div>
       <div class="bg-blue-900 rounded-xl flex flex-col items-center justify-center p-10">
-        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">{contact.firstName[0]}{contact.lastName[0]}</div>
-        <p class="font-bold text-white text-2xl pt-3">{contact.firstName} {contact.lastName}</p>
+        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">{contact.firstname[0]}{contact.lastname[0]}</div>
+        <p class="font-bold text-white text-2xl pt-3">{contact.firstname} {contact.lastname}</p>
       </div>
       <p class='text-gray-300 text-center my-3 '>Are you sure you want to delete this contact?</p>
       <input type="button" value="Delete" class='bg-red-500 text-white text-xl p-2 w-full rounded-xl' on:click|preventDefault={deleteContact}/>

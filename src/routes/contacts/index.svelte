@@ -5,6 +5,7 @@
   import NewContactForm from "$lib/components/NewContactForm.svelte";
 
   export let contacts
+  console.log(contacts)
   let showModal = false
 
   const handleToggleModal = () => {

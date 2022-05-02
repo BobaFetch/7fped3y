@@ -1,16 +1,12 @@
-import db from '$lib/db';
+// import db from '$lib/db';
+import { db } from '$lib/sb';
 
 export async function get({ params }) {
 	const contact_id = parseInt(params.contact);
-	let socials, contact, deals, team;
+	let team;
 
-	contact = await db
-		.prepare(
-			`SELECT contact_id, firstName, lastName, email, phone, category, info, description, location FROM contacts WHERE contact_id = ${params.contact} LIMIT 1`
-		)
-		.all();
-
-	deals = await db.prepare(`SELECT * FROM deals WHERE client_id = ${params.contact}`).all();
+	const contact = await db.getContactById(contact_id);
+	const deals = await db.getDealsByContact(contact_id);
 
 	team = await db
 		.prepare(
@@ -19,12 +15,10 @@ export async function get({ params }) {
 		)
 		.all();
 
-	socials = await db.prepare(`SELECT * FROM socials where contact_id = ${params.contact}`).all();
-
-	// console.log(socials);
+	console.log(contact);
 	return {
 		body: {
-			contact: contact[0],
+			contact,
 			deals,
 			team,
 			socials

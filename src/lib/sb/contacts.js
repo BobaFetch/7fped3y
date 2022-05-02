@@ -19,7 +19,7 @@ export const getAllContacts = async () => {
   `);
 
 	if (error) {
-		throw new Error(error);
+		throw new Error(error.message);
 	}
 
 	return data;
