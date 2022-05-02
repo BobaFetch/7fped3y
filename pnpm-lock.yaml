@@ -10,6 +10,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.10.1
   autoprefixer: ^10.4.4
   better-sqlite3: ^7.5.0
+  cookie: ^0.5.0
   eslint: ^7.32.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^3.2.1
@@ -34,6 +35,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.16.0_eslint@7.32.0+typescript@4.6.2
   autoprefixer: 10.4.4_postcss@8.4.12
   better-sqlite3: 7.5.0
+  cookie: 0.5.0
   eslint: 7.32.0
   eslint-config-prettier: 8.5.0_eslint@7.32.0
   eslint-plugin-svelte3: 3.4.1_eslint@7.32.0+svelte@3.46.4
@@ -708,6 +710,11 @@ packages:
 
   /console-control-strings/1.1.0:
     resolution: {integrity: sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=}
+    dev: true
+
+  /cookie/0.5.0:
+    resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+    engines: {node: '>= 0.6'}
     dev: true
 
   /core-util-is/1.0.3:

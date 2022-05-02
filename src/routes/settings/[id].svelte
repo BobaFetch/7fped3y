@@ -21,7 +21,7 @@
   let newOwner
 
   const handleLogout = () => {
-    $authenticated = false 
+    fetch('/api/logout')
     goto('/auth')
   }
 
