@@ -83,7 +83,7 @@
   }
 
   const handleAddDeal = async () => {
-    console.log(selectedCreator)
+    // console.log(selectedCreator)
     newDeal.contact_id = selectedCreator.contact_id
     newDeal.owner_id = selectedCreator.owner.user_id
     newDeal.team_id = selectedCreator.owner.company_id
@@ -93,14 +93,20 @@
       body: JSON.stringify({newDeal, deliverablesArray})
     })
     if (res.ok) {
-      let {lastInsertRowid} = await res.json()
-      console.log(lastInsertRowid)
-      deliverablesArray.map(del => del.deal_id = lastInsertRowid)
-      await fetch('/api/deliverable', {
-        method: 'POST',
-        mode: 'cors',
-        body: JSON.stringify(deliverablesArray)
-      }).then(() => goto(`/deals/${lastInsertRowid}`))
+      
+      let {deal_id} = await res.json()
+      // console.log(json)
+
+      // console.log(lastInsertRowid)
+      // deliverablesArray.map(del => del.deal_id = deal_id)
+      // await fetch('/api/deliverable', {
+      //   method: 'POST',
+      //   mode: 'cors',
+      //   body: JSON.stringify(deliverablesArray)
+      // }
+      // )
+      // .then(() => 
+      goto(`/collabs/${deal_id}`)
     }
 
     deliverablesArray = [{deal_id: 0, description: '', dueDate: ''}]

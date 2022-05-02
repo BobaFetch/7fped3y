@@ -8,7 +8,7 @@ export async function post({ request }) {
 
 	return {
 		body: {
-			deal_id: newDeal.deal_id
+			deal_id: newDeal[0].deal_id
 		}
 	};
 }

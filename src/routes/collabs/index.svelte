@@ -17,7 +17,7 @@
   const paid = deals.filter(item => item.status === 'Paid')
   const archived = deals.filter(item => item.status === 'Archived')
 
-  let showModal = true
+  let showModal = false
 
 
 </script>
