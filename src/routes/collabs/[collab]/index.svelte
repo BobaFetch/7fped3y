@@ -124,9 +124,9 @@
     </div>
     <input class="bg-brandTeal p-2 rounded-lg" type="button" value="Delete" on:click={() => deleteDeal = true}>
   </div>
-  <div class="grid grid-cols-12 gap-2 text-white my-2">
+  <div class="sm:grid sm:grid-cols-12 sm:gap-2 text-white my-2 flex flex-col">
     <!-- details -->
-    <div class="col-span-8 font-body">
+    <div class="sm:col-span-8 font-body mb-2">
       <div class="bg-slate-800 rounded-lg p-3">
         <h3 class="text-2xl font-header">Details</h3>
         <div class="my-5">

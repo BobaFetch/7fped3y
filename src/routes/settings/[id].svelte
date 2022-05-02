@@ -51,7 +51,7 @@
     <h1 class="text-2xl text-gray-300 font-header">Settings</h1>
     <input type="button" value="Logout" class="bg-brandTeal p-2 cursor-pointer rounded-lg" on:click|preventDefault={handleLogout} />
   </div>
-  <div class='grid sm:grid-cols-12 gird-cols-13 gap-2'>
+  <div class='sm:grid sm:grid-cols-12 flex flex-col gap-2'>
     <!-- LEFT SIDE -->
     <div class="col-span-8">
       <Card>

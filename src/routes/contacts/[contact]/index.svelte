@@ -122,7 +122,7 @@
     
   </div>
   <!--  -->
-  <div class=" grid grid-cols-12 gap-2 my-5">
+  <div class="sm:grid sm:grid-cols-12 gap-2 my-5 flex flex-col">
     <div class="col-span-7">
       <div class="bg-slate-800 rounded-xl flex flex-col items-center justify-center p-10">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">
@@ -135,7 +135,7 @@
 
         {#if deals.length > 0}
           <p class="text-white text-2xl p-2 font-header">Deals</p>
-          <div class="grid grid-cols-2 gap-2">
+          <div class="sm:grid sm:grid-cols-2 flex flex-col gap-2">
             <!-- active -->
             <div class="px-2">
               <p class="text-xs text-gray-400">ACTIVE</p>
@@ -144,19 +144,21 @@
               {/each}
             </div>
             <!-- archived -->
-            <div class="px-2">
-              <p class="text-xs text-gray-400">ARCHIVED</p>
-              {#each archivedDeals as deal}
-              <CollabCard deal={deal} contact={contact} owner={team.find(owner => owner.user_id === deal.owner_id)}/>
-              {/each}
-            </div>
+            {#if archivedDeals.length > 0}
+              <div class="px-2">
+                <p class="text-xs text-gray-400">ARCHIVED</p>
+                {#each archivedDeals as deal}
+                <CollabCard deal={deal} contact={contact} owner={team.find(owner => owner.user_id === deal.owner_id)}/>
+                {/each}
+              </div>
+            {/if}
           </div>
         {:else}
         <p class="text-white text-2xl p-2 text-center">No Current Deals</p>
         {/if}
       </div>
     </div>
-    <div class="col-span-5">
+    <div class="sm:col-span-5 flex flex-col gap-2">
       <Card>
         <svelte:fragment slot="body">
           <div class="flex items-center justify-between">

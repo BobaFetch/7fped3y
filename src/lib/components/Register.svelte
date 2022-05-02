@@ -24,8 +24,8 @@
   const handleDelay = () => {
     loadingModal = false
     setTimeout(() => {
-      goto('/collabs')
       $authenticated = true
+      goto('/collabs')
     }, 2000)
   }
 </script>
