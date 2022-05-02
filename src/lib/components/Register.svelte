@@ -25,8 +25,8 @@
     loadingModal = false
     setTimeout(() => {
       goto('/collabs')
+      $authenticated = true
     }, 2000)
-    $authenticated = true
   }
 </script>
 
