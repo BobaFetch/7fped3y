@@ -1,20 +1,20 @@
 import { supabase } from '$lib/supabase';
 
 export const getDeals = async () => {
-  const { data, error } = await supabase.from('deals').select('*');
+	const { data, error } = await supabase.from('deals').select('*');
 
-  if (error) {
-    throw new Error(error);
-  }
+	if (error) {
+		throw new Error(error);
+	}
 
-  return data;
+	return data;
 };
 
 export const getDealById = async (id) => {
-  const { data, error } = await supabase
-    .from('deals')
-    .select(
-      `
+	const { data, error } = await supabase
+		.from('deals')
+		.select(
+			`
 		deal_id,
 		client_id,
 		owner_id,
@@ -29,14 +29,15 @@ export const getDealById = async (id) => {
 			delivered,
 			delivereddate
 		)
-	`
     )
-    .eq('deal_id', id)
-    .single();
+	`
+		)
+		.eq('deal_id', id)
+		.single();
 
-  if (error) {
-    throw new Error(error);
-  }
+	if (error) {
+		throw new Error(error);
+	}
 
-  return data;
+	return data;
 };

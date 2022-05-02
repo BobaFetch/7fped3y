@@ -1,7 +1,9 @@
 # DEMO
 
+_https://7fped3y.vercel.app/_
+
 Registration flow is working.
-Following registration navigates to "collabs" screen
+Following registration navigates to "collabs" screen _Need to fix delay_
 
 ## Collabs
 

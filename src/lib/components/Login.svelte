@@ -16,13 +16,14 @@
     setTimeout(() => {
       handleLogin()
     }, 2000)
+    
   }
 
   const handleSignUp = () => {
     newSignUp = true
   }
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     $authenticated = true
     goto('/collabs')
   }

@@ -21,16 +21,12 @@
     registrationStep += 1
   }
 
-  const handleRegistrationComplete = () => {
-    $authenticated = true
-    goto('/collabs')
-  }
-
   const handleDelay = () => {
     loadingModal = false
     setTimeout(() => {
-      handleRegistrationComplete()
+      goto('/collabs')
     }, 2000)
+    $authenticated = true
   }
 </script>
 

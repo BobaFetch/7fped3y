@@ -12,15 +12,14 @@
   // export let deals
   export let deal 
   export let deliverables
-  export let socials 
   export let creator
   export let team
+  console.log(deal)
 
   let deliverableModal = false
   let editDescription = false
   let deleteDeal = false
 
-  // console.log(deal)
 
   const statusOptions =[
     'Lead',
@@ -196,31 +195,31 @@
           </select>
         </div>
         <!-- team  -->
-        <!-- <div class='bg-slate-800 rounded-lg p-3 row-span-2'>
+        <div class='bg-slate-800 rounded-lg p-3 row-span-2'>
           <p class="font-bold">Team</p>
           <div>
             <p class="font-light text-gray-400 text-sm my-2">OWNER</p>
             <div class="flex items-center my-2 ml-2">
               <div class="h-10 w-10 bg-brandWhite rounded-full flex justify-center items-center">
-                <p class='text-black'>{deal.owner.split(' ').map(n => n[0]).join('')}</p>
+                <p class='text-black'>{team.find(member => member.user_id === deal.owner_id).firstname[0] + team.find(member => member.user_id === deal.owner_id).lastname[0]}</p>
               </div>
-              <p class='ml-5'>{deal.owner}</p>
+              <p class='ml-5'>{team.find(member => member.user_id === deal.owner_id).firstname} {team.find(member => member.user_id === deal.owner_id).lastname}</p>
             </div>
           </div>
           <div>
             {#if team}
             <p class="font-light text-gray-400 text-sm mt-8">MEMBERS</p>
-              {#each team.filter(val => `${val.firstName} ${val.lastName}` !== deal.owner) as t}
+              {#each team.filter(val => val.user_id !== deal.owner_id) as t}
               <div class="flex items-center my-2 ml-2">
                 <div class="h-10 w-10 bg-brandWhite rounded-full flex justify-center items-center">
-                  <p class="text-black">{t.firstName[0]+t.lastName[0]}</p>
+                  <p class="text-black">{t.firstname[0]+t.lastname[0]}</p>
                 </div>
-                <p class="ml-5">{t.firstName} {t.lastName}</p>
+                <p class="ml-5">{t.firstname} {t.lastname}</p>
               </div>
               {/each}
             {/if}
-          </div>
-        </div> -->
+          </div> 
+        </div>
          
         <div class="row-span-3 bg-slate-800 rounded-lg p-3">
           <CreatorCard {creator} />
