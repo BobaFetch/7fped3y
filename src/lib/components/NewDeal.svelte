@@ -114,12 +114,6 @@
 
   onMount(() => {
     getCreators()
-    console.log('open')
-    //get previous deal_id  this is trash and only woeks one at a time
-    fetch('/api/deliverable',
-    {
-      method: 'GET'
-    }).then(res => res.json()).then(json => console.log(json))
   })
 </script>
 

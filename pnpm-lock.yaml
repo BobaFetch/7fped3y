@@ -19,6 +19,7 @@ specifiers:
   prettier-plugin-svelte: ^2.5.0
   svelte: ^3.44.0
   svelte-check: ^2.2.6
+  svelte-dnd-action: ^0.9.18
   svelte-fa: ^2.4.0
   svelte-preprocess: ^4.10.1
   tailwindcss: ^3.0.23
@@ -44,6 +45,7 @@ devDependencies:
   prettier-plugin-svelte: 2.6.0_prettier@2.6.0+svelte@3.46.4
   svelte: 3.46.4
   svelte-check: 2.4.6_postcss@8.4.12+svelte@3.46.4
+  svelte-dnd-action: 0.9.18
   svelte-fa: 2.4.0
   svelte-preprocess: 4.10.4_d6d3472f638d32ef88915fa6412751db
   tailwindcss: 3.0.23_autoprefixer@10.4.4
@@ -2295,6 +2297,10 @@ packages:
       - sass
       - stylus
       - sugarss
+    dev: true
+
+  /svelte-dnd-action/0.9.18:
+    resolution: {integrity: sha512-b2R8dxlA5az1eBwmptzR/9qzAyhBHPpMwLDfhgNgD5pwEGuhMQnyDUN3dyh8pQmyPz0IL3k0Seaa7X9hC+hpIw==}
     dev: true
 
   /svelte-fa/2.4.0:
