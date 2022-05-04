@@ -89,7 +89,7 @@
   }
 
   const handleUpdateDealStatus = async () => {
-    const res = await fetch(`/api/deal`, {
+    const res = await fetch(`/api/testdeal`, {
       method: 'PUT',
       mode: 'cors',
       headers: {'content-type': 'application/json'},

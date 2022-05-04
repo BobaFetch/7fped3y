@@ -4,6 +4,7 @@ import {
 	getDealById,
 	getDealsByContact,
 	addDeal,
+	updateDeal,
 	addDeliverables,
 	deleteDealById,
 	deleteDeliverablesByDealId
@@ -19,6 +20,7 @@ export const db = {
 	getDealById,
 	getDealsByContact,
 	addDeal,
+	updateDeal,
 	addDeliverables,
 	deleteDealById,
 	deleteDeliverablesByDealId,

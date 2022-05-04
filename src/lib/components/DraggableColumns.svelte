@@ -16,6 +16,13 @@
     columns = [...columns]
   }
 
+  const handleFinalizeCards = async (id, e) => {
+    // need to figure out how to update status to send to db
+    const colIndex = columns.findIndex(c => c.id === id);
+    columns[colIndex].items = e.detail.items;
+    columns = [...columns]
+    
+  }
 
 </script>
 
@@ -33,7 +40,7 @@
       <div
         class="h-full"
         use:dndzone={{items: column.items, flipDurationMs}}
-        on:consider={(e) => handleCards(column.id, e)} on:finalize={(e) => handleCards(column.id, e)}
+        on:consider={(e) => handleCards(column.id, e)} on:finalize={(e) => handleFinalizeCards(column.id, e)}
       >
       {#if column.items.length > 0 }
         {#each column.items as item (item.id)}

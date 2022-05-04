@@ -2,7 +2,6 @@ import { db } from '$lib/sb';
 
 export async function post({ request }) {
 	const body = await request.json();
-	console.log(body);
 
 	const newDeal = await db.addDeal(body.newDeal);
 
@@ -10,6 +9,16 @@ export async function post({ request }) {
 		body: {
 			deal_id: newDeal[0].deal_id
 		}
+	};
+}
+
+export async function put({ request }) {
+	const body = await request.json();
+
+	await db.updateDeal(body);
+
+	return {
+		status: 200
 	};
 }
 

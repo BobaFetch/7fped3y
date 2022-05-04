@@ -23,7 +23,7 @@
     columnItems = [
       {
         id: 1,
-        title: 'Leads',
+        title: 'Lead',
         items: [...leads]
       },
       {

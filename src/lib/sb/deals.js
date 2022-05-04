@@ -71,6 +71,27 @@ export const addDeal = async (deal) => {
 	return data;
 };
 
+export const updateDeal = async (deal) => {
+	const { data, error } = await supabase
+		.from('deals')
+		.update({
+			client_id: deal.client_id,
+			owner_id: deal.owner_id,
+			team_id: deal.team_id,
+			dealName: deal.dealName,
+			dealDescription: deal.description,
+			active: deal.active,
+			status: deal.status
+		})
+		.match({ deal_id: deal.deal_id });
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return data;
+};
+
 export const addDeliverables = async (deliverables) => {
 	const { data, error } = await supabase.from('deliverables').insert(deliverables);
 
