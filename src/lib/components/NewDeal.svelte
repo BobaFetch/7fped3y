@@ -2,32 +2,31 @@
   import { createEventDispatcher, onMount } from "svelte";
   import {fly} from 'svelte/transition'
   import { goto } from "$app/navigation";
-  // import ContactCard from "$lib/components/ContactCard.svelte";
   import BlurModal from "$lib/components/BlurModal.svelte";
-  // import BlurModal from "$lib/BlurModal.svelte";
 
   const dispatch = createEventDispatcher()
 
   export let open = false
   let step = 0
   // modal on modal action
+  export let loadingModal
   let selectCreator = false
   let creators 
   let socials
+  let selectedSocials
   let selectedCreator = null
-  let selectedSocials = null
 
   let newDeal = {
     contact_id: 0,
     owner_id: 0,
     team_id: 0,
     dealName: '',
-    description: '',
+    dealDescription: '',
     active: 1,
     status: 'Lead'
   }
 
-  let deliverable = {deal_id: 0, description: '', delivered: 0, dueDate: ''}
+  let deliverable = {deal_id: 0, description: '', delivered: 0, duedate: ''}
 
   let deliverablesArray = [
     {
@@ -41,6 +40,7 @@
   const handleNewDeliverable = () => {
     deliverablesArray.push(deliverable)
     deliverablesArray = deliverablesArray
+    deliverable = {deal_id: 0, description: '', delivered: 0, duedate: ''}
   }
 
 
@@ -83,33 +83,26 @@
   }
 
   const handleAddDeal = async () => {
-    // console.log(selectedCreator)
+    open = false
+    loadingModal = false
     newDeal.contact_id = selectedCreator.contact_id
     newDeal.owner_id = selectedCreator.owner.user_id
     newDeal.team_id = selectedCreator.owner.company_id
-    const res = await fetch(`/api/testdeal`, {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify({newDeal, deliverablesArray})
-    })
-    if (res.ok) {
+    setTimeout( async () => {
       
-      let {deal_id} = await res.json()
-      // console.log(json)
+      const res = await fetch(`/api/deal`, {
+        method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify({newDeal, deliverablesArray})
+      })
+      if (res.ok) {
+        
+        let {deal_id} = await res.json()
+        goto(`/collabs/${deal_id}`)
+      }
+      deliverablesArray = [{deal_id: 0, description: '', duedate: ''}]
+    }, 1000)
 
-      // console.log(lastInsertRowid)
-      // deliverablesArray.map(del => del.deal_id = deal_id)
-      // await fetch('/api/deliverable', {
-      //   method: 'POST',
-      //   mode: 'cors',
-      //   body: JSON.stringify(deliverablesArray)
-      // }
-      // )
-      // .then(() => 
-      goto(`/collabs/${deal_id}`)
-    }
-
-    deliverablesArray = [{deal_id: 0, description: '', dueDate: ''}]
   }
 
   onMount(() => {
@@ -118,7 +111,7 @@
 </script>
 
 {#if open}
-<div class="modal z-50 fixed w-full h-full top-0 left-0 flex items-center justify-center p-8 lg:p-0 blur-none">
+<div class="modal z-50 fixed w-full h-full top-0 left-0 flex items-center justify-center p-8 lg:p-0">
   <!-- <div class="modal-overlay fixed w-full h-full bg-black opacity-75"></div> -->
   <div class="bg-gray-900 w-full lg:h-max lg:w-1/2  mx-auto rounded-lg shadow-lg shadow-brandTeal z-50 overflow-y-auto">
     <div class="flex items-start head text-2xl font-bold text-brandWhite justify-between">
@@ -188,7 +181,7 @@
           <p class='text-gray-400 text-xs'>DESCRIPTION</p>
           <textarea 
             class="w-full p-3 rounded-lg mt-3 bg-slate-600 text-white"
-            bind:value={newDeal.description} 
+            bind:value={newDeal.dealDescription} 
             placeholder={'Ex: This deal is to capture new sign-ups'} 
           />
           <div class='flex items-center justify-between'>
@@ -217,7 +210,7 @@
               />
               <input type="date" 
                 class='flex-1 ml-1 rounded-lg p-3 bg-slate-600 text-white' 
-                bind:value={d.dueDate} />
+                bind:value={d.duedate} />
             </div>
           {/each}
           <input 
@@ -256,3 +249,4 @@
     </div>
   </svelte:fragment>
 </BlurModal>
+

@@ -1,6 +1,5 @@
 <script>
   export let creator
-  // export let socials
 </script>
 
 <div class="">

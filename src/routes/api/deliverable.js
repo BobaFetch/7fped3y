@@ -1,77 +1,54 @@
-import db from '$lib/db';
+import { db } from '$lib/sb';
 
-export async function get() {
-	const dealId = db.prepare('SELECT deal_id FROM deals ORDER BY deal_id desc LIMIT 1').all();
+export async function get({ url }) {
+	const deal_id = await url.searchParams.get('deal_id');
+
+	const data = await db.getDealById(deal_id);
 
 	return {
-		body: {
-			dealId: dealId[0]
-		}
+		body: data
 	};
 }
 
 export async function post({ request }) {
 	const body = await request.json();
-	console.log(body);
-	// if (body.length > 1) {
-	// 	body.map((deliverable) =>
-	// 		db
-	// 			.prepare(
-	// 				`INSERT INTO deliverables(deal_id, description, dueDate, delivered) VALUES (${deliverable.deal_id}, '${deliverable.description}', '${deliverable.dueDate}', '${deliverable.delivered}')`
-	// 			)
-	// 			.run()
-	// 	);
-	// } else {
-	// 	db.prepare(
-	// 		`
-	// 			  INSERT INTO deliverables(deal_id, description, dueDate, delivered)
-	// 			  VALUES
-	// 			  (${body.deal_id}, '${body.description}', '${body.dueDate}', '${body.delivered}')
-	// 			`
-	// 	).run();
-	// }
+	const { data } = await db.addDeliverables(body);
 
-	// const row_id = db.prepare('SELECT last_insert_rowid()').all();
-
-	// const data = db.prepare(`SELECT * FROM deliverables WHERE deal_id = ${body.deal_id}`).all();
 	return {
-		// body: {
-		// 	data: data
-		// }
+		status: 200
 	};
 }
 
-export async function put({ request }) {
-	const body = await request.json();
-	const delivered = body.delivered == true ? 0 : 1;
-	const deliveredDate = new Date(Date.now());
+// export async function put({ request }) {
+// 	const body = await request.json();
+// 	const delivered = body.delivered == true ? 0 : 1;
+// 	const deliveredDate = new Date(Date.now());
 
-	if (delivered == 1) {
-		db.prepare(
-			`UPDATE deliverables SET delivered = 1, deliveredDate = '${deliveredDate}' WHERE deliverable_id = ${body.deliverable_id}`
-		).run();
-	} else {
-		db.prepare(
-			`UPDATE deliverables SET delivered = 0, deliveredDate = NULL WHERE deliverable_id = ${body.deliverable_id}`
-		).run();
-	}
+// 	if (delivered == 1) {
+// 		db.prepare(
+// 			`UPDATE deliverables SET delivered = 1, deliveredDate = '${deliveredDate}' WHERE deliverable_id = ${body.deliverable_id}`
+// 		).run();
+// 	} else {
+// 		db.prepare(
+// 			`UPDATE deliverables SET delivered = 0, deliveredDate = NULL WHERE deliverable_id = ${body.deliverable_id}`
+// 		).run();
+// 	}
 
-	const data = db.prepare(`SELECT * FROM deliverables WHERE deal_id = ${body.deal_id}`).all();
-	console.log(data);
-	return {
-		body: {
-			data
-		}
-	};
-}
+// 	const data = db.prepare(`SELECT * FROM deliverables WHERE deal_id = ${body.deal_id}`).all();
+// 	console.log(data);
+// 	return {
+// 		body: {
+// 			data
+// 		}
+// 	};
+// }
 
 export async function del({ url }) {
 	const deliverable_id = await url.searchParams.get('deliverable');
 	const deal_id = await url.searchParams.get('deal');
 
-	db.prepare(`DELETE FROM deliverables WHERE deliverable_id = ${deliverable_id}`).run();
-
-	const data = db.prepare(`SELECT * FROM deliverables WHERE deal_id = ${deal_id}`).all();
+	const data = await db.deleteDeliverableById(deliverable_id);
+	console.log(data);
 
 	return {
 		body: {

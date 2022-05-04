@@ -13,8 +13,6 @@ export async function get({ params }) {
 		team = await db.getTeam(deal.team_id);
 	}
 
-	console.log(team);
-
 	return {
 		body: {
 			deal,

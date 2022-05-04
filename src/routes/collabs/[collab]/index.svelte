@@ -1,24 +1,23 @@
 <script>
-  import { onDestroy } from "svelte";
   import { goto } from '$app/navigation'
   import { Icon } from '@steeze-ui/svelte-icon'
-  import { ChevronLeft } from '@steeze-ui/feather-icons'
+  import { ChevronLeft, Loader } from '@steeze-ui/feather-icons'
   import CreatorCard from '$lib/components/CreatorCard.svelte'
-  import Modal from "$lib/components/Modal.svelte";
+  import BlurModal from "$lib/components/BlurModal.svelte";
   import NewDeliverableModal from "$lib/components/NewDeliverableModal.svelte";
 
 
   //get data
-  // export let deals
   export let deal 
-  export let deliverables
+  export let deliverables = []
   export let creator
   export let team
-  console.log(deal)
 
   let deliverableModal = false
+  let loadingModal = true
   let editDescription = false
   let deleteDeal = false
+  let blur = false
 
 
   const statusOptions =[
@@ -35,41 +34,54 @@
   let newDeliverable = {
     deal_id: deal.deal_id,
     description: '',
-    dueDate: '',
+    duedate: '',
     delivered: 0,
-    deliveredDate: null
+    delivereddate: null
   }
 
   const handleAddDeliverable = async () => {
     const res = await fetch('/api/deliverable', {
       method: 'POST',
-      mode: 'cors',
       headers: {
         'content-type': 'application/json'
       },
       body: JSON.stringify(newDeliverable)
     })
     if(res.ok) {
-      let { data } = await res.json()
-      deliverables = data
+      const returned = await fetch(`/api/deliverable?deal_id=${deal.deal_id}`, {method: 'GET'})
+      if (returned.ok) {
+        const json = await returned.json()
+        deal = json
+      }
+    }
+    newDeliverable = {
+      deal_id: deal.deal_id,
+      description: '',
+      duedate: '',
+      delivered: 0,
+      delivereddate: null
     }
     deliverableModal = false
+    blur = false
   }
 
   const handleDelDeliverable = async (deliverable) => {
-    const res = await fetch(`/api/deliverable?deliverable=${deliverable.deliverable_id}&deal=${deliverable.deal_id}`, {
-      method: 'DELETE',
-      mode: 'cors',
-      headers: {
-        'content-type': 'application/json'
+  
+      const res = await fetch(`/api/deliverable?deliverable=${deliverable.deliverable_id}&deal=${deliverable.deal_id}`, {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      
+      if (res.ok) {
+        const returned = await fetch(`/api/deliverable?deal_id=${deal.deal_id}`, {method: 'GET'})
+        if (returned.ok) {
+          const json = await returned.json()
+          deal = json
+        }
       }
-    })
-
-    if (res.ok) {
-      let { data } = await res.json()
-      deliverables = data
-    }
-    
+      
   }
 
   const handleUpdateDeliverable = async (deliverable) => {
@@ -89,30 +101,30 @@
   }
 
   const handleUpdateDealStatus = async () => {
-    const res = await fetch(`/api/testdeal`, {
+    console.log(deal)
+    const res = await fetch(`/api/deal`, {
       method: 'PUT',
       mode: 'cors',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify(deal)
     })
-    //just in case
     editDescription = false
+    blur = false
   }
 
   const handleDeleteDeal = async () => {
-    await fetch(`/api/testdeal?deal_id=${deal.deal_id}`, {
+    deleteDeal = false
+    blur = true
+    loadingModal = false
+
+    await fetch(`/api/deal?deal_id=${deal.deal_id}`, {
       method: 'DELETE',
       mode: 'cors'
     }).then(() => goto('/collabs'))
   }
-
-  onDestroy(() => {
-    // update database
-    
-  })
 </script>
 
-<div class="mx-3">
+<div class="mx-3" class:blur-sm={blur}>
   <div class="flex items-center justify-between mb-5">
     <div class="flex items-center">
       <button
@@ -122,7 +134,7 @@
     </button>
       <h1 class="text-brandWhite mx-5 text-4xl italic bold font-header">{deal.dealName}</h1>
     </div>
-    <input class="bg-brandTeal p-2 rounded-lg" type="button" value="Delete" on:click={() => deleteDeal = true}>
+    <input class="bg-brandTeal p-2 rounded-lg" type="button" value="Delete" on:click={() => {deleteDeal = true, blur = true, loadingModal = false}}>
   </div>
   <div class="sm:grid sm:grid-cols-12 sm:gap-2 text-white my-2 flex flex-col">
     <!-- details -->
@@ -132,7 +144,7 @@
         <div class="my-5">
           <div class="flex justify-between">
             <p class="text-gray-300 text-sm mb-2 font-header">DESCRIPTION</p>
-            <input class="text-brandTeal cursor-pointer" type="button" value="Edit" on:click={() => editDescription = true}>
+            <input class="text-brandTeal cursor-pointer" type="button" value="Edit" on:click={() => {editDescription = true, blur = true}}>
           </div>
           <p class="font-thin pl-1">{deal.dealDescription}</p>
         </div>
@@ -174,7 +186,7 @@
             class="my-3 text-brandTeal italic font-light"
             type="button" 
             value="+ Add a deliverable" 
-            on:click={() => deliverableModal = true}/>
+            on:click={() => {deliverableModal = true, blur = true}}/>
         </div>
       </div>
     </div>
@@ -229,15 +241,16 @@
     </div>
   </div>
 
+</div>
   <!-- Deliverable Modal -->
-  <Modal open={deliverableModal} title={'Add a New Deliverable'} on:close={() => deliverableModal = false}>
+  <BlurModal open={deliverableModal} title={'Add a New Deliverable'} on:close={() => {deliverableModal = false, blur = false}}>
     <svelte:fragment slot="body">
       <NewDeliverableModal on:addDeliverable={handleAddDeliverable} bind:newDeliverable  />
     </svelte:fragment>
-  </Modal>
+  </BlurModal>
 
   <!-- Description Modal -->
-  <Modal open={editDescription} title={"Edit Description"} on:close={() => editDescription = false}>
+  <BlurModal open={editDescription} title={"Edit Description"} on:close={() => {editDescription = false}}>
     <svelte:fragment slot="body">
       <div class="flex flex-col">
         <input 
@@ -252,10 +265,10 @@
           value="Update">
       </div>
     </svelte:fragment>
-  </Modal>
+  </BlurModal>
 
   <!-- DELETE CONFIRMATION -->
-  <Modal open={deleteDeal} title={"Delete Deal"} on:close={() => deleteDeal = false}>
+  <BlurModal open={deleteDeal} title={"Delete Deal"} on:close={() => {deleteDeal = false, blur = false}}>
     <svelte:fragment slot="body">
       <div class="flex flex-col">
         <!-- <p class="text-2xl text-white font-bold">DELETE DEAL</p> -->
@@ -266,5 +279,10 @@
         </div>
       </div>
     </svelte:fragment>
-  </Modal>
+  </BlurModal>
+
+<div class:hidden={loadingModal} class="absolute top-0 left-0 w-screen h-screen z-0">
+  <div class="flex items-center justify-center h-full">
+      <Icon src={Loader} width="100" height="100" class="text-teal-500 animate-spin-slow" />
+  </div>
 </div>

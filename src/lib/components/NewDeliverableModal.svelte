@@ -3,28 +3,7 @@
 
   const dispatch = createEventDispatcher()
 
-  let id;
-
-
-  export let newDeliverable = {
-    deal_id: id,
-    description: '',
-    dueDate: '',
-    delivered: 0,
-    deliveredDate: null
-  }
-
-
-  onMount(async () => {
-    const res = await fetch('/api/deliverable', {
-      method: 'GET',
-      mode: 'cors'
-    })
-    if (res.ok) {
-      const {dealId} = await res.json()
-      id = dealId.dealId
-    }
-  })
+  export let newDeliverable
 
 </script>
 
@@ -44,7 +23,7 @@
             type="date" 
             name="due-date" 
             class="text-gray-800 p-3 rounded-lg"
-            bind:value={newDeliverable.dueDate} 
+            bind:value={newDeliverable.duedate} 
             />
         </label>
       </div>

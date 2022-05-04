@@ -24,6 +24,7 @@ export const getDealById = async (id) => {
 		active,
 		status,
 		deliverables(
+			deliverable_id,
 			description,
 			duedate,
 			delivered,
@@ -52,17 +53,15 @@ export const getDealsByContact = async (contact_id) => {
 };
 
 export const addDeal = async (deal) => {
-	const { data, error } = await supabase.from('deals').insert([
-		{
-			client_id: deal.contact_id,
-			owner_id: deal.owner_id,
-			team_id: deal.team_id,
-			dealName: deal.dealName,
-			dealDescription: deal.description,
-			active: deal.active,
-			status: deal.status
-		}
-	]);
+	const { data, error } = await supabase.from('deals').insert({
+		client_id: deal.contact_id,
+		owner_id: deal.owner_id,
+		team_id: deal.team_id,
+		dealName: deal.dealName,
+		dealDescription: deal.dealDescription,
+		active: deal.active,
+		status: deal.status
+	});
 
 	if (error) {
 		throw new Error(error.message);
@@ -79,7 +78,7 @@ export const updateDeal = async (deal) => {
 			owner_id: deal.owner_id,
 			team_id: deal.team_id,
 			dealName: deal.dealName,
-			dealDescription: deal.description,
+			dealDescription: deal.dealDescription,
 			active: deal.active,
 			status: deal.status
 		})
@@ -103,7 +102,19 @@ export const addDeliverables = async (deliverables) => {
 };
 
 export const deleteDealById = async (deal_id) => {
+	await supabase.from('deliverables').delete().match({ deal_id: deal_id });
 	const { data, error } = await supabase.from('deals').delete().match({ deal_id: deal_id });
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return data;
+};
+
+export const getDeliverablesByDealId = async (deal_id) => {
+	const { data, error } = await supabase.from('deliverables').select('*').eq({ deal_id: deal_id });
+	console.log('api', data);
 
 	if (error) {
 		throw new Error(error.message);
@@ -114,6 +125,19 @@ export const deleteDealById = async (deal_id) => {
 
 export const deleteDeliverablesByDealId = async (deal_id) => {
 	const { data, error } = await supabase.from('deliverables').delete().match({ deal_id: deal_id });
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return data;
+};
+
+export const deleteDeliverableById = async (deliverable_id) => {
+	const { data, error } = await supabase
+		.from('deliverables')
+		.delete()
+		.match({ deliverable_id: deliverable_id });
 
 	if (error) {
 		throw new Error(error.message);

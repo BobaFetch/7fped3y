@@ -1,48 +1,43 @@
-import db from '$lib/db';
-
-export async function put({ request }) {
-	const body = await request.json();
-	console.log(body);
-
-	db.prepare(
-		`UPDATE deals SET dealDescription = '${body.dealDescription}', status = '${body.status}' WHERE deal_id = ${body.deal_id}`
-	).run();
-
-	return {};
-}
+import { db } from '$lib/sb';
 
 export async function post({ request }) {
-	const body = await request.json();
-	let newDealId;
-	console.log(body);
-	db.prepare(
-		`
-		INSERT INTO deals (client_id, owner_id, team_id, dealName, dealDescription, active, status)
-		VALUES
-		(${body.contact_id}, ${body.owner_id}, ${body.team_id}, '${body.dealName}', '${body.description}', ${body.active}, '${body.status}')
-	`
-	).run();
+	const { newDeal, deliverablesArray } = await request.json();
 
-	// get back last_insert_rowid() and set newDealId
-	const { lastInsertRowid } = db.prepare(`SELECT last_insert_rowid() FROM deals`).run();
+	const inserted = await db.addDeal(newDeal);
+
+	if (inserted) {
+		deliverablesArray.map((d) => {
+			d.deal_id = inserted[0].deal_id;
+		});
+		await db.addDeliverables(deliverablesArray);
+	}
 
 	return {
 		body: {
-			lastInsertRowid
+			deal_id: inserted[0].deal_id
 		}
+	};
+}
+
+export async function put({ request }) {
+	const body = await request.json();
+
+	await db.updateDeal(body);
+
+	return {
+		status: 200
 	};
 }
 
 export async function del({ url }) {
 	const deal_id = await url.searchParams.get('deal_id');
 
-	db.prepare(`DELETE FROM deals WHERE deal_id = ${deal_id}`).run();
-	db.prepare(`DELETE FROM deliverables WHERE deal_id = ${deal_id}`).run();
+	const deleted = await db.deleteDealById(deal_id);
 
 	return {
 		status: 303,
 		headers: {
-			Location: '/deals'
+			Location: '/collabs'
 		}
 	};
 }

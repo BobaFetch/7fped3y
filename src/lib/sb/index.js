@@ -3,11 +3,13 @@ import {
 	getDeals,
 	getDealById,
 	getDealsByContact,
+	getDeliverablesByDealId,
 	addDeal,
 	updateDeal,
 	addDeliverables,
 	deleteDealById,
-	deleteDeliverablesByDealId
+	deleteDeliverablesByDealId,
+	deleteDeliverableById
 } from '$lib/sb/deals';
 import { getAllUsers, getUserById, getTeam } from '$lib/sb/users';
 
@@ -19,11 +21,13 @@ export const db = {
 	getDeals,
 	getDealById,
 	getDealsByContact,
+	getDeliverablesByDealId,
 	addDeal,
 	updateDeal,
 	addDeliverables,
 	deleteDealById,
 	deleteDeliverablesByDealId,
+	deleteDeliverableById,
 	getAllUsers,
 	getUserById,
 	getTeam

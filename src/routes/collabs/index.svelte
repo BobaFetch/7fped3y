@@ -1,4 +1,7 @@
 <script>
+  import { Icon } from '@steeze-ui/svelte-icon'
+  import { Loader } from '@steeze-ui/feather-icons'
+
   import SearchHeader from '$lib/components/SearchHeader.svelte'
   import NewDeal from '$lib/components/NewDeal.svelte'
 
@@ -16,6 +19,7 @@
   const paid = deals.filter(item => item.status === 'Paid')
 
   let showModal = false
+  export let loadingModal = true
   let columnItems
 
   if (deals) {
@@ -63,4 +67,10 @@
   </div>
 
 </div>
-<NewDeal open={showModal} on:close={() => showModal = false} />
+<NewDeal open={showModal} on:close={() => showModal = false} bind:loadingModal/>
+
+  <div class:hidden={loadingModal} class="absolute top-0 left-0 w-screen h-screen z-0">
+    <div class="flex items-center justify-center h-full">
+        <Icon src={Loader} width="100" height="100" class="text-teal-500 animate-spin-slow" />
+    </div>
+  </div>

@@ -24,8 +24,7 @@
     <select 
       bind:value={selectedValue} 
       on:change={() => {
-        member.role = selectedValue
-        console.log(member)}
+        member.role = selectedValue}
       } 
       class="bg-slate-900 text-xs mr-2 col-span-2 col-start-4">
       <option value={member.role}>{member.role}</option>
