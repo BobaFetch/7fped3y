@@ -50,7 +50,6 @@ export const getContactById = async (id) => {
 		.single();
 
 	if (error) {
-		// console.log(error);
 		throw new Error(error.message);
 	}
 

@@ -9,7 +9,6 @@
   if (deal) {
     src = `/avatars/${contact.contact_id}.jpg`
   }
-  // console.log(contact)
 
 </script>
 

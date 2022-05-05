@@ -1,8 +1,8 @@
 import { db } from '$lib/sb';
+import { supabase } from '$lib/supabase';
 
 export async function get() {
 	const contacts = await db.getAllContacts();
-	console.log(contacts);
 
 	return {
 		body: {
@@ -11,42 +11,33 @@ export async function get() {
 	};
 }
 
-// export async function post({ request }) {
-// 	let body = await request.json();
-// 	console.log(body.socials);
-// 	const { firstName, lastName, email, phone, category, info, description, location, owner_id } =
-// 		body;
+export async function post({ request }) {
+	const { contact, socials } = await request.json();
+	let contact_id;
 
-// 	const newContact = db.prepare(`
-// 		INSERT INTO contacts(firstName, lastName, email, phone, category, info, description, location, owner_id)
-// 		VALUES('${firstName}', '${lastName}', '${email}', '${phone}', '${category}', '${info}', '${description}', '${location}', ${owner_id}) RETURNING *`);
+	await supabase
+		.from('contacts')
+		.insert(contact)
+		.then((data) => (contact_id = data.data[0].contact_id));
 
-// 	// if (body.socials.length > 0) {
-// 	// 	const { platform, url } = body.socials;
-// 	// 	const newSocial = `INSERT INTO socials ()`;
-// 	// }
+	if (socials.length > 0) {
+		if (contact_id) {
+			socials.map((social) => (social.contact_id = contact_id));
+			console.log(socials);
+			await supabase.from('socials').insert(socials);
+		}
+	}
 
-// 	console.log(newContact.run());
+	return {};
+}
 
-// 	const contacts = db
-// 		.prepare(
-// 			`SELECT contacts.contact_id, firstName, lastName, email, phone, category, info, description, location,
-// 			json_group_array(json_object('platform', socials.platform, 'url', socials.url, 'followers', socials.followers))
-// 			 as socials from contacts LEFT JOIN socials on contacts.contact_id = socials.contact_id group by contacts.contact_id`
-// 		)
-// 		.all();
-// 	return {
-// 		status: 200,
-// 		body: {
-// 			contacts
-// 		}
-// 	};
-// }
+export async function del({ url }) {
+	const contact_id = url.searchParams.get('id');
 
-// export async function del({ url }) {
-// 	const contact_id = url.searchParams.get('id');
-
-// 	db.prepare(`DELETE FROM contacts WHERE contact_id = ${contact_id}`).run();
-
-// 	return {};
-// }
+	await db
+		.from('socials')
+		.delete()
+		.match({ contact_id: contact_id })
+		.then(await db.from('contacts').delete().match({ contact_id: contact_id }));
+	return {};
+}

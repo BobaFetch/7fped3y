@@ -1,4 +1,5 @@
 import { db } from '$lib/sb';
+import { supabase } from '$lib/supabase';
 
 export async function get({ url }) {
 	const deal_id = await url.searchParams.get('deal_id');
@@ -19,29 +20,60 @@ export async function post({ request }) {
 	};
 }
 
-// export async function put({ request }) {
-// 	const body = await request.json();
-// 	const delivered = body.delivered == true ? 0 : 1;
-// 	const deliveredDate = new Date(Date.now());
+export async function put({ url, request }) {
+	const body = await request.json();
+	const deal_id = await url.searchParams.get('deal');
+	const delivered = body.delivered == true ? 0 : 1;
+	const deliveredDate = new Date(Date.now());
+	let data;
+	console.log(body);
 
-// 	if (delivered == 1) {
-// 		db.prepare(
-// 			`UPDATE deliverables SET delivered = 1, deliveredDate = '${deliveredDate}' WHERE deliverable_id = ${body.deliverable_id}`
-// 		).run();
-// 	} else {
-// 		db.prepare(
-// 			`UPDATE deliverables SET delivered = 0, deliveredDate = NULL WHERE deliverable_id = ${body.deliverable_id}`
-// 		).run();
-// 	}
+	if (delivered == 1) {
+		await supabase
+			.from('deliverables')
+			.update({ delivered: 1, delivereddate: deliveredDate })
+			.match({ deliverable_id: body.deliverable_id });
+		// .then((res) => (data = res.data));
+	} else {
+		await supabase
+			.from('deliverables')
+			.update({ delivered: 0, delivereddate: null })
+			.match({ deliverable_id: body.deliverable_id });
+		// .then((res) => (data = res.data));
+	}
 
-// 	const data = db.prepare(`SELECT * FROM deliverables WHERE deal_id = ${body.deal_id}`).all();
-// 	console.log(data);
-// 	return {
-// 		body: {
-// 			data
-// 		}
-// 	};
-// }
+	await supabase
+		.from('deals')
+		.select(
+			`
+		deal_id,
+		client_id,
+		owner_id,
+		team_id,
+		dealName,
+		dealDescription,
+		active,
+		status,
+		deliverables(
+			deliverable_id,
+			description,
+			duedate,
+			delivered,
+			delivereddate
+		)
+		)
+	`
+		)
+		.eq('deal_id', deal_id)
+		.single()
+		.then((res) => (data = res.data));
+
+	return {
+		body: {
+			data
+		}
+	};
+}
 
 export async function del({ url }) {
 	const deliverable_id = await url.searchParams.get('deliverable');

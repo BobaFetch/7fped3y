@@ -9,9 +9,9 @@
   export let deals
   export let team
 
-  let imgSrc = `/avatars/${contact.contact_id}.jpg`
+  let imgSrc = `/avatars/${contact.contact_id}.jpg` 
 
-  let editCategory, editIntro, editDescription, editLocation, editSocials, editEmail, editPhone, moreOptionsModal= false
+  let editSocials, editEmail, editPhone, moreOptionsModal= false
   let showMoreOptions = true
   let editAbout = false
   let editContact = false
@@ -88,17 +88,17 @@
       headers: {
         'content-type': 'application/json'
       }
-    }).then(() => goto('/contacts')).catch(err => console.log(err))
+    }).then(() => goto('/contacts')).catch(err => console.log("error", err))
   }
 
-  const handleEditAbout = () => {
-    //does not permanently save
-    contact.category = tempCategory
-    contact.intro = tempIntro
-    contact.description = tempDescription
-    contact.location = tempLocation
-
+  const handleEditAbout = async () => {
+    // contact.category = tempCategory
+    // contact.intro = tempIntro
+    // contact.description = tempDescription
+    // contact.location = tempLocation
+    await fetch(`/contacts/${contact.contact_id}`, {method: 'PUT', body: JSON.stringify(contact)})
     editAbout = false
+    blur = false
   }
 
   const handleEditContact = () => {}
@@ -204,7 +204,7 @@
             <div class="grid grid-cols-3 gap-2 my-1">
                <!-- no icons currently  -->
                 <p class="text-xs">{social.platform}</p>
-                <p class="text-xs">{social.followers} Followers</p>
+                <p class="text-xs">{social.followers ? social.followers : 100} Followers</p>
                 <p class="text-xs">{'50% Engagement'}</p>
             </div>
           {/each}
@@ -234,19 +234,19 @@
     <div class="">
       <div class="my-1">
         <label for="category" class="text-gray-200">Category</label>
-        <input id="category" name="category" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={tempVals.category} placeholder={'Ex: Influencer'} />
+        <input id="category" name="category" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={contact.category} placeholder={'Ex: Influencer'} />
       </div>
       <div class="my-1">
         <label for="intro" class="text-gray-200">Intro</label>
-        <input id="intro" name="intro" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={tempVals.intro} placeholder={'Add Intro'} />
+        <input id="intro" name="intro" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={contact.info} placeholder={'Add Intro'} />
       </div>
       <div class="my-1">
         <label for="description" class="text-gray-200">Description</label>
-        <input id="description" name="description" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={tempVals.description} placeholder={'Add Description'} />
+        <input id="description" name="description" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={contact.description} placeholder={'Add Description'} />
       </div>
       <div class="my-1">
         <label for="location" class="text-gray-200">Location</label>
-        <input id="location" name="location" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={tempVals.location} placeholder={'Add Location'} />
+        <input id="location" name="location" type="text" class="bg-gray-600 p-2 rounded-lg w-full text-white" bind:value={contact.location} placeholder={'Add Location'} />
       </div>
         <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" on:click={handleEditAbout}>
     </div>
