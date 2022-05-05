@@ -1,28 +1,19 @@
 import db from '$lib/db';
+import { supabase } from '$lib/supabase';
 
 export async function put({ request }) {
-	const body = await request.json();
+	const { socials } = await request.json();
 
-	console.log(body);
-	let socials;
-
-	body.map((social) => {
-		!social.social_id
-			? db.exec(
-					`INSERT INTO socials (contact_id, platform, url, followers) VALUES(${social.contact_id}, '${social.platform}', '${social.url}', '0')`
-			  )
-			: db.exec(
-					`UPDATE socials SET url='${social.url}', platform='${social.platform}' WHERE social_id=${social.social_id} RETURNING * `
-			  );
-	});
-
-	socials = db.prepare(`SELECT * FROM socials WHERE contact_id = ${body[0].contact_id}`).all();
-
+	console.log(socials);
+	await supabase
+		.from('socials')
+		.upsert(socials)
+		.then((res) => console.log(res));
 	return {
-		status: 200,
-		body: {
-			socials
-		}
+		status: 200
+		// body: {
+		// 	socials
+		// }
 	};
 }
 
@@ -30,14 +21,39 @@ export async function del({ url }) {
 	const id = url.searchParams.get('id');
 	const contact = url.searchParams.get('contact');
 
-	db.exec(`DELETE FROM socials WHERE social_id = ${id}`);
+	await supabase.from('socials').delete().match({ social_id: id });
 
-	let socials = db.prepare(`SELECT * FROM socials where contact_id = ${contact}`).all();
+	const { data, error } = await supabase
+		.from('contacts')
+		.select(
+			`
+contact_id,
+	firstname,
+	lastname,
+	email,
+	phone,
+	category,
+	info,
+	description,
+	location,
+	socials (
+		social_id,
+		contact_id,
+		platform,
+		url,
+		followers
+	)
+`
+		)
+		.eq('contact_id', contact)
+		.single();
+
+	console.log(data);
 
 	return {
 		status: 200,
 		body: {
-			socials
+			contact: data
 		}
 	};
 }

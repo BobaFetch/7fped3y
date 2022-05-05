@@ -20,7 +20,7 @@
 <div class='flex flex-col justify-center bg-slate-700 p-2 w-64 h-20 rounded my-1 hover:bg-slate-600 font-body hover:cursor-pointer' on:click={() => goto(`/collabs/${deal.deal_id}`)}>
   <div class='flex'>
     <div class='bg-brandWhite rounded-full w-10 h-10 flex justify-center items-center'>
-      <img src={src} class="rounded-full" alt={`${contact.firstname} ${contact.lastname} avatar`}/>
+      <img src={src} class="rounded-full" alt={``}/>
     </div>
     <span class="text-white ml-2 text-sm">{deal.dealName}</span>
   </div>

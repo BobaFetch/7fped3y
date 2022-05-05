@@ -24,6 +24,7 @@ export async function get({ params }) {
 export async function put({ request }) {
 	const body = await request.json();
 	//need to find a more efficient way to do this
+
 	const contact = {
 		firstname: body.firstname,
 		lastname: body.lastname,

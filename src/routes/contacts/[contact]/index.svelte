@@ -17,18 +17,11 @@
   let editContact = false
   
   let blur = false
-  //temp variables
-  let tempVals = {
-    category: contact.category,
-    intro: contact.intro,
-    description: contact.description,
-    location: contact.location,
-    email: contact.email,
-    phone: contact.phone
-  }
-  let tempCategory, tempIntro, tempDescription, tempLocation, tempSocials, tempEmail, tempPhone
+
+  let newSocials, tempEmail, tempPhone
   tempEmail = contact.email
-  tempSocials = contact.socials
+  newSocials = contact.socials
+  // newSocials.map(social => social.contact_id = contact.contact_id)
   tempPhone = contact.phone
 
   let socialChoices = ['Instagram', 'TikTok', 'Twitter', 'Youtube']
@@ -37,46 +30,37 @@
   const archivedDeals = deals.filter(deal => deal.active === 0)
 
   const handleNewSocial = () => {
-    tempSocials.push({
+    newSocials.push({
+      social_id: null,
       contact_id: contact.contact_id,
       platform: '',
       url: '',
-      followers: ''
+      followers: '100k'
     })
 
-    tempSocials = tempSocials
+    newSocials = newSocials
   }
 
   const editSocial = async () => {
-    let toBeChanged = []
-
-    //right now this will update all socials for a contact
-    //not really affecting much so I'll save this issue for later
-    // await fetch('/api/editSocial', {
-    //   method: 'PUT',
-    //   mode: 'cors',
-    //   headers: {
-    //     'content-type': 'application/json'
-    //   },
-    //   body: JSON.stringify(tempSocials)
-    // }
-    // ).then(res => res.json()).then(json => {
-    //   socials = json.socials
-    //   editSocials = false
-    // })
+    
+    blur = false
+    editSocials = false
+    await fetch(`/api/editSocial`, {method: 'PUT', body: JSON.stringify({socials: newSocials})})
+    
   }
 
   const deleteSocial = async (id) => {
-    // await fetch(`/api/editSocial?id=${id}&contact=${contact.contact_id}`, {
-    //   method: 'DELETE',
-    //   mode: 'cors',
-    //   headers: {
-    //     'content-type': 'application/json'
-    //   }
-    // }).then(res => res.json()).then(json => {
-    //   socials = json.socials 
-    //   tempSocials = socials
-    // }).catch(err => console.log(err))
+    await fetch(`/api/editSocial?id=${id}&contact=${contact.contact_id}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).then(res => res.json()).then(json => {
+      console.log(json)
+      contact = json.contact
+      // socials = json.socials 
+      newSocials = contact.socials
+    }).catch(err => console.log(err))
   }
 
   const handleMoreOptions = () => showMoreOptions = !showMoreOptions
@@ -126,7 +110,7 @@
     <div class="col-span-7">
       <div class="bg-slate-800 rounded-xl flex flex-col items-center justify-center p-10">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">
-          <img src={imgSrc} class="rounded-full" alt="avatar" />
+          <img src={imgSrc} class="rounded-full" alt="" />
         </div>
         <p class="font-bold text-2xl pt-3 font-header">{contact.firstname} {contact.lastname}</p>
       </div>
@@ -176,21 +160,18 @@
               <h6 class="text-xs text-gray-400 my-2">INTRO</h6>
               <h6 class="text-xs my-1">{contact.intro ? contact.intro : 'No Intro'}</h6>
             </div>
-            <!-- <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editIntro = true}>EDIT</span> -->
           </div>
           <div class="flex items-center justify-between">
             <div>
               <h6 class="text-xs text-gray-400 my-2">DESCRIPTION</h6>
               <h6 class="text-xs my-1">{contact.description ? contact.description : 'No Description'}</h6>
             </div>
-            <!-- <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editDescription = true}>EDIT</span> -->
           </div>
           <div class="flex items-center justify-between">
             <div>
               <h6 class="text-xs text-gray-400 my-2">LOCATION</h6>
               <h6 class="text-xs my-1">{contact.location ? contact.location : 'Not Set'}</h6>
             </div>
-            <!-- <span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => editLocation = true}>EDIT</span> -->
           </div>
           
         </svelte:fragment>
@@ -200,11 +181,11 @@
         <svelte:fragment slot="body">
           <h4 class="text-lg my-1 font-header">Socials<span class="text-xs text-brandTeal float-right hover:cursor-pointer" on:click={() => {editSocials = true, blur = true}}>EDIT</span></h4>
           <p class="text-xs text-gray-400">SOCIALS</p>
-          {#each contact.socials as social}
+          {#each newSocials as social}
             <div class="grid grid-cols-3 gap-2 my-1">
                <!-- no icons currently  -->
                 <p class="text-xs">{social.platform}</p>
-                <p class="text-xs">{social.followers ? social.followers : 100} Followers</p>
+                <p class="text-xs">{social.followers ? social.followers : "100k"} Followers</p>
                 <p class="text-xs">{'50% Engagement'}</p>
             </div>
           {/each}
@@ -260,7 +241,7 @@
      <!-- Need to make a select input -->
      <h6 class='text-gray-400 my-2'>SOCIALS</h6>
       <!--  -->
-      {#each tempSocials as value, index}
+      {#each newSocials as value, index}
         <div class="w-full flex justify-between">
           <select bind:value={value.platform} class="m-1 p-2 rounded-lg bg-slate-700 text-brandWhite text-sm">
             {#each socialChoices as social}
@@ -298,34 +279,6 @@
     </div>
   </svelte:fragment>
 </BlurModal>
-
-<!-- KEEPING IN CASE THESE NEED TO BE SEPARATE
-<Modal open={editEmail} on:close={() => editEmail = false} title={'Edit Email'}>
-  <svelte:fragment slot="body">
-    <div>
-      <input type="text" class="bg-blue-800 p-2 rounded-lg w-full text-white" bind:value={tempEmail} placeholder={tempEmail ? tempEmail : 'ex: mail@mail.com'} />
-      <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" disabled={tempEmail ? false : true}
-        on:click|preventDefault={() => {
-          contact.email = tempEmail 
-          editEmail = false
-        }}>
-    </div>
-  </svelte:fragment>
-</Modal>
-
-<Modal open={editPhone} on:close={() => editPhone = false} title={tempPhone ? 'Edit Phone Number' : 'Add Phone Number'}>
-  <svelte:fragment slot="body">
-    <div>
-      <input type="text" class="bg-blue-800 p-2 rounded-lg w-full text-white" bind:value={tempPhone} placeholder={tempPhone ? tempPhone : 'XXX-XXX-XXXX'} />
-      <input type="button" class="p-2 rounded-lg bg-brandTeal w-full mt-10" value="SAVE" disabled={tempPhone ? false : true}
-        on:click|preventDefault={() => {
-          contact.phone = tempPhone 
-          editPhone = false
-        }}>
-    </div>
-  </svelte:fragment>
-</Modal>
-END -->
 
 <!-- more options/delete contact change to dropdown-->
 <Modal open={moreOptionsModal} on:close={() => moreOptionsModal = false} title={'Delete Contact'}>

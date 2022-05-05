@@ -40,6 +40,8 @@ export const getContactById = async (id) => {
 		description,
 		location,
 		socials (
+			social_id,
+			contact_id,
 			platform,
 			url,
 			followers
