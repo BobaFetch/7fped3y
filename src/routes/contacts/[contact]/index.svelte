@@ -4,6 +4,7 @@
   import Modal from '$lib/components/Modal.svelte'
   import BlurModal from '$lib/components/BlurModal.svelte';
   import { goto } from '$app/navigation';
+import Blurmodal from '$lib/components/BlurModal.svelte';
 
   export let contact
   export let deals
@@ -66,7 +67,7 @@
   const handleMoreOptions = () => showMoreOptions = !showMoreOptions
 
   const deleteContact = async () => {
-    await fetch(`/contacts?id=${contact.contact_id}`, {
+    await fetch(`/contacts/${contact.contact_id}`, {
       method: 'DELETE',
       mode: 'cors',
       headers: {
@@ -281,10 +282,10 @@
 </BlurModal>
 
 <!-- more options/delete contact change to dropdown-->
-<Modal open={moreOptionsModal} on:close={() => moreOptionsModal = false} title={'Delete Contact'}>
+<BlurModal open={moreOptionsModal} on:close={() => moreOptionsModal = false} title={'Delete Contact'}>
   <svelte:fragment slot="body">
     <div>
-      <div class="bg-blue-900 rounded-xl flex flex-col items-center justify-center p-10">
+      <div class="bg-slate-700 rounded-xl flex flex-col items-center justify-center p-10">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">{contact.firstname[0]}{contact.lastname[0]}</div>
         <p class="font-bold text-white text-2xl pt-3">{contact.firstname} {contact.lastname}</p>
       </div>
@@ -292,4 +293,4 @@
       <input type="button" value="Delete" class='bg-red-500 text-white text-xl p-2 w-full rounded-xl' on:click|preventDefault={deleteContact}/>
     </div>
   </svelte:fragment>
-</Modal>
+</BlurModal>

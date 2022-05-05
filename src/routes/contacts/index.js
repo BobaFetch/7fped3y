@@ -31,13 +31,13 @@ export async function post({ request }) {
 	return {};
 }
 
-export async function del({ url }) {
-	const contact_id = url.searchParams.get('id');
+// export async function del({ url }) {
+// 	const contact_id = url.searchParams.get('id');
 
-	await db
-		.from('socials')
-		.delete()
-		.match({ contact_id: contact_id })
-		.then(await db.from('contacts').delete().match({ contact_id: contact_id }));
-	return {};
-}
+// 	await db
+// 		.from('socials')
+// 		.delete()
+// 		.match({ contact_id: contact_id })
+// 		.then(await db.from('contacts').delete().match({ contact_id: contact_id }));
+// 	return {};
+// }

@@ -39,3 +39,15 @@ export async function put({ request }) {
 	await supabase.from('contacts').update(contact).match({ contact_id: body.contact_id });
 	return {};
 }
+
+export async function del({ params }) {
+	const contact_id = parseInt(params.contact);
+
+	await supabase
+		.from('socials')
+		.delete()
+		.match({ contact_id: contact_id })
+		.then(await supabase.from('contacts').delete().match({ contact_id: contact_id }));
+
+	return {};
+}
