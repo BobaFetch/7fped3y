@@ -44,13 +44,14 @@
     
     blur = false
     editSocials = false
-    await fetch(`/api/editSocial`, {method: 'PUT', body: JSON.stringify({socials: newSocials})})
+    await fetch(`/api/editSocial`, {method: 'PUT', mode: 'cors', body: JSON.stringify({socials: newSocials})})
     
   }
 
   const deleteSocial = async (id) => {
     await fetch(`/api/editSocial?id=${id}&contact=${contact.contact_id}`, {
       method: 'DELETE',
+      mode: 'cors',
       headers: {
         'content-type': 'application/json'
       }
@@ -79,7 +80,7 @@
     // contact.intro = tempIntro
     // contact.description = tempDescription
     // contact.location = tempLocation
-    await fetch(`/contacts/${contact.contact_id}`, {method: 'PUT', body: JSON.stringify(contact)})
+    await fetch(`/contacts/${contact.contact_id}`, {method: 'PUT', mode: 'cors', body: JSON.stringify(contact)})
     editAbout = false
     blur = false
   }
