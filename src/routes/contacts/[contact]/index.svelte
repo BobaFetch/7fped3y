@@ -1,10 +1,8 @@
 <script>
   import CollabCard from '$lib/components/CollabCard.svelte'
   import Card from '$lib/components/Card.svelte'
-  import Modal from '$lib/components/Modal.svelte'
   import BlurModal from '$lib/components/BlurModal.svelte';
   import { goto } from '$app/navigation';
-import Blurmodal from '$lib/components/BlurModal.svelte';
 
   export let contact
   export let deals
