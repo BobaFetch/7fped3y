@@ -29,7 +29,7 @@
 <section 
   use:dndzone={{items: columns, flipDurationMs, type: "columns"}}
   on:consider={handleColumns} on:finalize={handleColumns}
-  class="flex flex-row overflow-auto py-5 mx-3 h-screen"
+  class="flex flex-row overflow-auto py-5 h-full"
 >
   {#each columns as column (column.id)}
     <div animate:flip={{duration: flipDurationMs}} class="mx-3">
@@ -38,7 +38,7 @@
         <div class="text-gray-500 hover:text-gray-300 text-xs">{column.items.length}</div>
       </div>
       <div
-        class="h-full"
+        class=""
         use:dndzone={{items: column.items, flipDurationMs}}
         on:consider={(e) => handleCards(column.id, e)} on:finalize={(e) => handleFinalizeCards(column.id, e)}
       >

@@ -56,7 +56,7 @@
 
 </script>
 
-<div class="bg-slate-900 overflow-x-hidden" class:blur-sm={showModal}>
+<div class="bg-slate-900 overflow-x-hidden h-full" class:blur-sm={showModal}>
   
   <div class=''>
     <SearchHeader title={'Collabs'} bind:showModal options={deals} />

@@ -3,6 +3,8 @@
   import Card from '$lib/components/Card.svelte'
   import BlurModal from '$lib/components/BlurModal.svelte';
   import { goto } from '$app/navigation';
+  import { Icon } from '@steeze-ui/svelte-icon';
+  import { Music, Twitter, Instagram, Youtube} from '@steeze-ui/feather-icons'
 
   export let contact
   export let deals
@@ -20,7 +22,6 @@
   let newSocials, tempEmail, tempPhone
   tempEmail = contact.email
   newSocials = contact.socials
-  // newSocials.map(social => social.contact_id = contact.contact_id)
   tempPhone = contact.phone
 
   let socialChoices = ['Instagram', 'TikTok', 'Twitter', 'Youtube']
@@ -82,6 +83,13 @@
   }
 
   const handleEditContact = () => {}
+
+  const icon = {
+    Instagram,
+    TikTok: Music,
+    Youtube,
+    Twitter
+  }
 </script>
 
 <div class="text-brandWhite mx-3" class:blur-sm={blur}>
@@ -180,7 +188,10 @@
           {#each newSocials as social}
             <div class="grid grid-cols-3 gap-2 my-1">
                <!-- no icons currently  -->
-                <p class="text-xs">{social.platform}</p>
+                <div class='flex items-center'>
+                  <Icon src={icon[social.platform]} size={'10'} />
+                  <p class="text-xs pl-2">{social.platform}</p>
+                </div>
                 <p class="text-xs">{social.followers ? social.followers : "100k"} Followers</p>
                 <p class="text-xs">{'50% Engagement'}</p>
             </div>
