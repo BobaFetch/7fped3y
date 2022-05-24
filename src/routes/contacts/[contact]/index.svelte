@@ -106,7 +106,7 @@
     <div class="col-span-7">
       <div class="bg-slate-800 rounded-xl flex flex-col items-center justify-center p-10">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">
-          <img src={imgSrc} class="rounded-full w-10 h-10" alt="" />
+          <img src={imgSrc} class="rounded-full w-16 h-16" alt="" />
         </div>
         <p class="font-bold text-2xl pt-3 font-header">{contact.firstname} {contact.lastname}</p>
       </div>
