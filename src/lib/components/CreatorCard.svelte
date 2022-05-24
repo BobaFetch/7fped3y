@@ -7,7 +7,7 @@
   <a href={`/contacts/${creator.contact_id}`}>
     <div class="my-2 flex items-center">
       <div class="h-10 w-10 bg-white rounded-full flex items-center justify-center">
-        <img src={`/avatars/${creator.contact_id}.jpg`} class="rounded-full" alt=""/>
+        <img src={`/avatars/${creator.contact_id}.jpg`} class="rounded-full w-10 h-10" alt=""/>
       </div>
       <p class="ml-5">{creator.firstname} {creator.lastname}</p>
     </div>
