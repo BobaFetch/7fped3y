@@ -1,4 +1,10 @@
-import { getAllContacts, getContactById, getCreators, getSocials } from '$lib/sb/contacts';
+import {
+	deleteContact,
+	getAllContacts,
+	getContactById,
+	getCreators,
+	getSocials
+} from '$lib/sb/contacts';
 import {
 	getDeals,
 	getDealById,
@@ -30,5 +36,6 @@ export const db = {
 	deleteDeliverableById,
 	getAllUsers,
 	getUserById,
-	getTeam
+	getTeam,
+	deleteContact
 };

@@ -7,13 +7,15 @@
   export let contacts
   let showModal = false
 
+  let searchMenu
+
   const handleToggleModal = () => {
     showModal = !showModal
   }
 </script>
 
-<div>
-  <SearchHeader title={'Contacts'} bind:showModal options={contacts} />
+<div class:blurred={searchMenu} class='w-full overflow-y-hidden'>
+  <SearchHeader title={'Contacts'} bind:showModal bind:searchMenu children={contacts} />
   <div class="my-10 mx-3">
     {#each contacts as contact}
       <a href={`/contacts/${contact.contact_id}`}>
@@ -32,3 +34,11 @@
     </svelte:fragment>
   </BlurModal>
 </div>
+
+<style lang="postcss">
+  .blurred {
+    @apply
+      bg-black 
+      opacity-75;
+  }
+</style>

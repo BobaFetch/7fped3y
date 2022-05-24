@@ -1,9 +1,9 @@
-import db from '$lib/db';
+import { db } from '$lib/sb';
 
 export async function del({ url }) {
 	const contact_id = url.searchParams.get('id');
 
-	db.prepare(`DELETE FROM contacts WHERE contact_id = ${contact_id}`).run();
+	db.deleteContact(contact_id);
 
 	return {
 		status: 302,

@@ -1,41 +1,17 @@
 <script>
-  import { goto } from '$app/navigation';
-  import { onMount } from 'svelte'
   export let title
-  export let options
 
-  let children
-  let searchMenu = false
-
-  console.log('options', options)
+  export let children
+  export let searchMenu = false
 
 
-  let searchParams
+  let searchParams = ''
 
   export let showModal = false
   let page = title.split('').slice(0, -1).join('')
 
   const handleToggleModal = () => {
     showModal = !showModal
-  }
-
-  
-
-  onMount(async () => {
-    //get the correct data
-    const res = await fetch(`/api/search?query=${title}`, {
-      method: 'GET',
-      mode: 'cors'
-    })
-    if (res.ok) {
-      let {data} = await res.json()
-      children = data
-      console.log('children', children)
-    }
-  })
-
-  const doSomething = () => {
-    console.log(searchParams)
   }
 
 </script>
@@ -52,10 +28,19 @@
       on:focus={() => searchMenu = true}
       on:click={() => searchMenu = true}
     />
-    <ul class='bg-white absolute w-full' class:hidden={!searchMenu} on:mouseleave={() => searchMenu = false}>
-      {#each options as option}
-        <li class='hover:bg-brandTeal' on:click={() => console.log(option)}>{option.dealName}</li>
-      {/each}
+    <ul class='bg-slate-600 text-white absolute w-full max-h-52 overflow-auto rounded-lg' class:hidden={!searchMenu} on:mouseleave={() => searchMenu = false}>
+      {#if title === 'Collabs'}
+        {#each children.filter(op => op.dealName.toLowerCase().includes(searchParams.toLowerCase())) as option}
+          <li class='hover:bg-brandTeal p-1' on:click={() => console.log(option)}><a href={`/collabs/${option.deal_id}`}>{option.dealName}</a></li>
+        {/each}
+      {:else if title === 'Contacts'}
+        {#each children.filter(op => op.firstname.toLowerCase().includes(searchParams.toLowerCase())) as option}
+          <li class='hover:bg-brandTeal p-1 flex items-center' on:click={() => console.log(option)}>
+            <img src={`/avatars/${option.contact_id}.jpg`} class='w-8 h-8 mr-2 rounded-full' alt='avatar' />
+            <a href={`/contacts/${option.contact_id}`}>{option.firstname} {option.lastname}</a>
+          </li>
+        {/each}
+      {/if}
     </ul>
   </div>
  

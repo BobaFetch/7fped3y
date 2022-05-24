@@ -95,3 +95,13 @@ export const getSocials = async () => {
 	}
 	return data;
 };
+
+export const deleteContact = async (id) => {
+	const { data, error } = await supabase.from('contacts').delete().match({ contact_id: id });
+
+	if (error) {
+		throw new Error(error.message);
+	}
+
+	return data;
+};

@@ -19,6 +19,7 @@
   const paid = deals.filter(item => item.status === 'Paid')
 
   let showModal = false
+  let searchMenu
   export let loadingModal = true
   let columnItems
 
@@ -56,10 +57,10 @@
 
 </script>
 
-<div class="bg-slate-900 overflow-x-hidden h-full" class:blur-sm={showModal}>
+<div class="bg-slate-900 overflow-hidden h-full" class:blur-sm={showModal} class:blurred={searchMenu}>
   
   <div class=''>
-    <SearchHeader title={'Collabs'} bind:showModal options={deals} />
+    <SearchHeader title={'Collabs'} bind:showModal bind:searchMenu children={deals} />
   </div>
 
   <div class='overflow-hidden'>
@@ -74,3 +75,11 @@
         <Icon src={Loader} width="100" height="100" class="text-teal-500 animate-spin-slow" />
     </div>
   </div>
+
+  <style lang="postcss">
+    .blurred {
+      @apply
+      bg-black
+      opacity-75;
+    }
+  </style>
