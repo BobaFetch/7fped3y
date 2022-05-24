@@ -8,7 +8,7 @@
 
 <div class='w-full my-3 bg-slate-700 hover:bg-slate-600 text-brandWhite rounded grid grid-cols-13 sm:grid-cols-12 gap-0.5 p-5 content-center'>
   <div class='w-10 h-10 bg-brandWhite rounded-full mr-3 col-span-1'>
-    <img src={`/avatars/${contact.contact_id}.jpg`} alt="" class="rounded-full">
+    <img src={`/avatars/${contact.contact_id}.jpg`} alt="" class="rounded-full w-10 h-10">
   </div>
   <p class='col-span-3 font-header'>{contact.firstname} {contact.lastname}</p>
   <p class="col-span-3 text-sm">{contact.category}</p>
