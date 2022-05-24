@@ -10,7 +10,7 @@ export async function get({ url }) {
 			.all();
 	}
 
-	if (query === 'Deals') {
+	if (query === 'Collabs') {
 		data = db.prepare('SELECT deal_id id, dealName name FROM deals').all();
 	}
 

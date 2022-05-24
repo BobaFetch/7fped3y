@@ -69,8 +69,8 @@
   <h4 class="text-2xl font-bold my-1">Add a New Contact</h4>
   <h6 class="text-xs text-gray-400 my-2">First, what's the creator's name?</h6>
   <label for="name" class="text-gray-400 my-2">NAME</label>
-  <input type="text" name='first-name' id='first-name' class='my-1 p-2 rounded-lg bg-blue-900 text-brandWhite' bind:value={contact.firstname} placeholder="First name">
-  <input type="text" name='last-name' id='last-name' class='my-1 p-2 rounded-lg bg-blue-900 text-brandWhite' bind:value={contact.lastname} placeholder='Last name'>
+  <input type="text" name='first-name' id='first-name' class='my-1 p-2 rounded-lg bg-slate-600 text-brandWhite' bind:value={contact.firstname} placeholder="First name">
+  <input type="text" name='last-name' id='last-name' class='my-1 p-2 rounded-lg bg-slate-600 text-brandWhite' bind:value={contact.lastname} placeholder='Last name'>
   <input type="submit" value="CONTINUE" class=' bg-brandTeal rounded-lg p-2 mt-8' on:click|preventDefault={handleNextScreen} disabled={(!contact.firstname && contact.lastname) ? true : false}>
 </div>
 
@@ -83,12 +83,12 @@
       <!--  -->
       {#each socials as value, index}
         <div>
-          <select bind:value={value.platform} class="my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm">
+          <select bind:value={value.platform} class="my-1 p-2 rounded-lg bg-slate-600 text-brandWhite text-sm">
             {#each socialsChoices as social}
             <option value={social}>{social}</option>
             {/each}
           </select>
-          <input type="text" class="my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm w-1/2" bind:value={value.url} placeholder='ex:http://www.youtube.com/mrbeast' />
+          <input type="text" class="my-1 p-2 rounded-lg bg-slate-600 text-brandWhite text-sm w-1/2" bind:value={value.url} placeholder='ex:http://www.youtube.com/mrbeast' />
           <button class="p-1 rounded-full m-4" on:click={() => {
             socials.splice(index, 1)
             socials = socials
@@ -100,8 +100,8 @@
       <button class=" text-brandTeal text-xs text-left my-2" on:click|preventDefault={handleNewSocial}>+ Add a social channel</button>
       <!--  -->
       <div class='mt-8 flex justify-around '>
-        <input class="bg-gray-500 text-black p-2 mr-1 rounded-lg w-full" type="submit" on:click|preventDefault={handlePrevScreen} value="Back">
-        <input class="bg-brandTeal p-2 rounded-lg ml-1 w-full" type="submit" on:click|preventDefault={handleNextScreen} disabled={(!contact.firstname && contact.lastname) ? true : false}>
+        <input class="bg-gray-500 text-black p-2 mr-1 rounded-lg w-full" type="submit" on:click|preventDefault={handlePrevScreen} value="BACK">
+        <input class="bg-brandTeal p-2 rounded-lg ml-1 w-full" type="submit" value="CONTINUE" on:click|preventDefault={handleNextScreen} disabled={(!contact.firstname && contact.lastname) ? true : false}>
       </div>
   </div>
 
@@ -111,12 +111,12 @@
     <h4 class='text-2xl font-bold my-1'>Add Contact Info</h4>
     <h6 class="text-xs text-gray-400 my-2">How will you get in touch with {contact.firstname} {contact.lastname} </h6>
     <label class='text-gray-400 mt-2' for='email'>EMAIL</label>
-      <input class='my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm ' type="email" name='email' id='email' bind:value={contact.email} placeholder="ex:hello@creator.com">
+      <input class='my-1 p-2 rounded-lg bg-slate-600 text-brandWhite text-sm ' type="email" name='email' id='email' bind:value={contact.email} placeholder="ex:hello@creator.com">
     <label class='text-gray-400 mt-2' for="phone">PHONE</label>
-      <input class='my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm ' type="text" name='phone' id='phone' bind:value={contact.phone} placeholder='XXX-XXX-XXX (optional)'>
+      <input class='my-1 p-2 rounded-lg bg-slate-600 text-brandWhite text-sm ' type="text" name='phone' id='phone' bind:value={contact.phone} placeholder='XXX-XXX-XXX (optional)'>
     <div class="mt-8 flex justify-around">
       <input class='bg-gray-500 text-black p-2 mr-1 rounded-lg w-full' type="submit" on:click|preventDefault={handlePrevScreen} value="Back">
-      <input class="bg-brandTeal p-2 rounded-lg ml-1 w-full" type="submit" on:click|preventDefault={handleNextScreen} disabled={(!contact.email) ? true : false}>
+      <input class="bg-brandTeal p-2 rounded-lg ml-1 w-full" type="submit" value="CONTINUE" on:click|preventDefault={handleNextScreen} disabled={(!contact.email) ? true : false}>
     </div>
   </div>
 
@@ -126,16 +126,16 @@
     <h4 class='text-2xl font-bold my-1'>Add About Info</h4>
     <h6 class="text-xs text-gray-400 my-2">Lastyly, let's add some details about {contact.firstname} {contact.lastname} </h6>
     <label class='text-gray-400 mt-2' for='category'>CATEGORY</label>
-      <input class='my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm '  type="text" name='category' id='category' bind:value={contact.category} placeholder="How would you categorize this creator?">
+      <input class='my-1 p-2 rounded-lg bg-slate-600 text-brandWhite text-sm '  type="text" name='category' id='category' bind:value={contact.category} placeholder="How would you categorize this creator?">
     
     <label class='text-gray-400 mt-2'  for="intro">INTRO</label>
-      <input class='my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm '  type="text" name='intro' id='intro' bind:value={contact.intro} placeholder='How did you get introduced to this creator?'>
+      <input class='my-1 p-2 rounded-lg bg-slate-600 text-brandWhite text-sm '  type="text" name='intro' id='intro' bind:value={contact.intro} placeholder='How did you get introduced to this creator?'>
     
     <label class='text-gray-400 mt-2'  for="description">DESCRIPTION</label>
-      <input class='my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm '  type="text" name='description' id='description' bind:value={contact.description} placeholder='1-liner to summarize this creator'>
+      <input class='my-1 p-2 rounded-lg bg-slate-600 text-brandWhite text-sm '  type="text" name='description' id='description' bind:value={contact.description} placeholder='1-liner to summarize this creator'>
     
     <label class='text-gray-400 mt-2'  for="location">LOCATION</label>
-      <input class='my-1 p-2 rounded-lg bg-blue-900 text-brandWhite text-sm '  type="text" name='location' id='location' bind:value={contact.location} placeholder='Where is this creator currently located?'>
+      <input class='my-1 p-2 rounded-lg bg-slate-600 text-brandWhite text-sm '  type="text" name='location' id='location' bind:value={contact.location} placeholder='Where is this creator currently located?'>
     <div class="mt-8 flex justify-around">
       <input class='bg-gray-500 text-black p-2 mr-1 rounded-lg w-full'  type="submit" on:click|preventDefault={handlePrevScreen} value="Back">
       <input class="bg-brandTeal p-2 rounded-lg ml-1 w-full"  type="submit" on:click|preventDefault={handleAddCreator} disabled={false}>

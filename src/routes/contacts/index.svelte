@@ -1,7 +1,7 @@
 <script>
   import SearchHeader from "$lib/components/SearchHeader.svelte";
   import ContactCard from '$lib/components/ContactCard.svelte'
-  import Modal from '$lib/components/Modal.svelte'
+  import BlurModal from '$lib/components/BlurModal.svelte'
   import NewContactForm from "$lib/components/NewContactForm.svelte";
 
   export let contacts
@@ -13,7 +13,7 @@
 </script>
 
 <div>
-  <SearchHeader title={'Contacts'} bind:showModal />
+  <SearchHeader title={'Contacts'} bind:showModal options={contacts} />
   <div class="my-10 mx-3">
     {#each contacts as contact}
       <a href={`/contacts/${contact.contact_id}`}>
@@ -22,7 +22,7 @@
     {/each}
   </div>
 
-  <Modal 
+  <BlurModal 
     open={showModal}
     title={false}
     on:close={handleToggleModal}
@@ -30,5 +30,5 @@
     <svelte:fragment slot="body">
       <NewContactForm bind:showModal/>
     </svelte:fragment>
-</Modal>
+  </BlurModal>
 </div>

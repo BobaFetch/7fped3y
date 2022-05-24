@@ -10,7 +10,7 @@
 
   let imgSrc = `/avatars/${contact.contact_id}.jpg` 
 
-  let editSocials, editEmail, editPhone, moreOptionsModal= false
+  let editSocials, moreOptionsModal= false
   let showMoreOptions = true
   let editAbout = false
   let editContact = false
@@ -76,10 +76,6 @@
   }
 
   const handleEditAbout = async () => {
-    // contact.category = tempCategory
-    // contact.intro = tempIntro
-    // contact.description = tempDescription
-    // contact.location = tempLocation
     await fetch(`/contacts/${contact.contact_id}`, {method: 'PUT', mode: 'cors', body: JSON.stringify(contact)})
     editAbout = false
     blur = false
@@ -110,7 +106,7 @@
     <div class="col-span-7">
       <div class="bg-slate-800 rounded-xl flex flex-col items-center justify-center p-10">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black text-2xl font-bold">
-          <img src={imgSrc} class="rounded-full" alt="" />
+          <img src={imgSrc} class="rounded-full w-10 h-10" alt="" />
         </div>
         <p class="font-bold text-2xl pt-3 font-header">{contact.firstname} {contact.lastname}</p>
       </div>

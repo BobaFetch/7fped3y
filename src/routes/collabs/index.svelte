@@ -59,7 +59,7 @@
 <div class="bg-slate-900 overflow-x-hidden" class:blur-sm={showModal}>
   
   <div class=''>
-    <SearchHeader title={'Collabs'} bind:showModal/>
+    <SearchHeader title={'Collabs'} bind:showModal options={deals} />
   </div>
 
   <div class='overflow-x-hidden'>

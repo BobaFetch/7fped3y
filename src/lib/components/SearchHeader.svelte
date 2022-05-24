@@ -2,7 +2,15 @@
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte'
   export let title
+  export let options
+
   let children
+  let searchMenu = false
+
+  console.log('options', options)
+
+
+  let searchParams
 
   export let showModal = false
   let page = title.split('').slice(0, -1).join('')
@@ -22,14 +30,12 @@
     if (res.ok) {
       let {data} = await res.json()
       children = data
+      console.log('children', children)
     }
   })
 
-  const doSomething = (e) => {
-    const h = children.filter(d => d.name === e.target.value)
-    if (h.length > 0) {
-      goto(`/${title.toLowerCase()}/${h[0].id}`)
-    }
+  const doSomething = () => {
+    console.log(searchParams)
   }
 
 </script>
@@ -38,19 +44,19 @@
   <h4 class="text-gray-300 text-2xl font-header ">{title}</h4>
   
   <div class="relative">
-    <input type="search" 
+    <input type="text" 
       placeholder={`Search ${title}`} 
       class="mx-auto rounded-xl w-1/2 sm:w-72 p-2 bg-slate-600 text-gray-200" 
       list="search-data"
-      on:change={doSomething}
+      bind:value={searchParams}
+      on:focus={() => searchMenu = true}
+      on:click={() => searchMenu = true}
     />
-    <datalist id="search-data" >
-      {#if children}
-        {#each children as temp}
-          <option value={temp.name} />
-        {/each}
-      {/if}
-    </datalist>
+    <ul class='bg-white absolute w-full' class:hidden={!searchMenu} on:mouseleave={() => searchMenu = false}>
+      {#each options as option}
+        <li class='hover:bg-brandTeal' on:click={() => console.log(option)}>{option.dealName}</li>
+      {/each}
+    </ul>
   </div>
  
   <input type="button" value={`+ Add a ${page}`} class="bg-brandTeal rounded p-2 cursor-pointer" on:click|preventDefault={handleToggleModal} />
