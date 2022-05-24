@@ -62,7 +62,7 @@
     <SearchHeader title={'Collabs'} bind:showModal options={deals} />
   </div>
 
-  <div class='overflow-x-hidden overflow-y-hidden'>
+  <div class='overflow-hidden'>
     <DraggableColumns columns={columnItems} contacts={contacts} />
   </div>
 
